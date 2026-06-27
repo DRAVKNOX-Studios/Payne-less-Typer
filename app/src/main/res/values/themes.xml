@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme -->
+    <style name="Theme.SwiftLite" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorPrimary">#4F98A3</item>
+        <item name="android:colorPrimaryDark">#1C6970</item>
+        <item name="android:colorAccent">#4F98A3</item>
+        <item name="android:statusBarColor">#FF111827</item>
+        <item name="android:navigationBarColor">#FF111827</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <!-- Setup / Settings activity theme -->
+    <style name="Theme.SwiftLite.Setup" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">#FF111827</item>
+        <item name="android:colorPrimary">#4F98A3</item>
+        <item name="android:colorPrimaryDark">#1C6970</item>
+        <item name="android:colorAccent">#4F98A3</item>
+        <item name="android:textColorPrimary">#FFF9FAFB</item>
+        <item name="android:textColorSecondary">#99F9FAFB</item>
+        <item name="android:statusBarColor">#FF111827</item>
+        <item name="android:navigationBarColor">#FF111827</item>
+    </style>
+
+</resources>

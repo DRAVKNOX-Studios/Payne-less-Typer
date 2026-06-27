@@ -1,0 +1,17 @@
+{
+  "themes": ["Light", "Dark", "AMOLED", "Ocean", "Forest", "Dusk"],
+  "accents": [
+    {"name": "Blue",   "color": "0xFF3B82F6"},
+    {"name": "Purple", "color": "0xFF8B5CF6"},
+    {"name": "Green",  "color": "0xFF10B981"},
+    {"name": "Amber",  "color": "0xFFF59E0B"},
+    {"name": "Red",    "color": "0xFFEF4444"},
+    {"name": "Pink",   "color": "0xFFEC4899"},
+    {"name": "Cyan",   "color": "0xFF06B6D4"},
+    {"name": "Indigo", "color": "0xFF6366F1"},
+    {"name": "Lime",   "color": "0xFF84CC16"},
+    {"name": "Orange", "color": "0xFFF97316"},
+    {"name": "Sky",    "color": "0xFF0EA5E9"},
+    {"name": "Slate",  "color": "0xFF64748B"}
+  ]
+}

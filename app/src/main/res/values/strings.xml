@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Payne-less: Typer</string>
+    <string name="theme_settings">Customize</string>
+    <string name="subtype_label">English (US)</string>
+    <string name="file_provider_authority">com.swiftlite.keyboard.fileprovider</string>
+</resources>

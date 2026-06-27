@@ -1,0 +1,86 @@
+<!--suppress InjectedReferences, InjectedReferences -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.swiftlite.keyboard">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Required to open content:// screenshot URIs from the system clipboard.
+         READ_MEDIA_IMAGES is the API 33+ replacement for READ_EXTERNAL_STORAGE. -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:minSdkVersion="33"
+        tools:ignore="all" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SwiftLite"
+        android:largeHeap="false"
+        tools:ignore="all">
+
+        <activity
+            android:name=".SetupActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SwiftLite.Setup">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".clipboard.ClipboardShareActivity"
+            android:exported="true"
+            android:label="Copy to Typer Clipboard"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".ime.SwiftLiteIME"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
+        <!--
+            FileProvider for sharing clipboard image files via content:// URIs.
+            authorities must match SwiftLiteIME.FILE_PROVIDER_AUTHORITY.
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.swiftlite.keyboard.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:directBootAware="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

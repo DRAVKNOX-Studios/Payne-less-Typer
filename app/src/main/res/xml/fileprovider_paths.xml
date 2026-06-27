@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider path configuration for SwiftLite.
+  Exposes the clipboard_images/ subdirectory inside getFilesDir() so the
+  IME can hand out content:// URIs to receiving apps via commitContent().
+-->
+<paths>
+    <files-path
+        name="clipboard_images"
+        path="clipboard_images/" />
+</paths>
