@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read Before Opening an Issue
+    url: https://github.com/thedinyamum/SwiftLite/blob/main/CONTRIBUTING.md
+    about: Please read the contributing guidelines before submitting anything
