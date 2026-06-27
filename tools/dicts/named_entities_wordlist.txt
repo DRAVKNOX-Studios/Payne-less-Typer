@@ -1,0 +1,520 @@
+# fictional characters, youtubers, streamers, and dravknox studio properties.
+# lines starting with # are comments and are skipped.
+# loaded under cat_named (case-preserved, lowest weight) — supplement only.
+# named entities dictionary — companies, products, apps, games, tv shows, movies,
+# ── anime ─────────────────────────────────────────────────────────────────────
+# ── brands (fashion, food, retail, auto) ──────────────────────────────────────
+# ── dravknox studio properties ────────────────────────────────────────────────
+# ── fictional characters (games, anime, shows, movies) ─────────────────────────
+# ── gaming companies & platforms ───────────────────────────────────────────────
+# ── movies ────────────────────────────────────────────────────────────────────
+# ── music artists & bands ──────────────────────────────────────────────────────
+# ── popular apps & services ────────────────────────────────────────────────────
+# ── popular video games ────────────────────────────────────────────────────────
+# ── popular youtubers & streamers ─────────────────────────────────────────────
+# ── social media & creator platforms ──────────────────────────────────────────
+# ── tech companies ─────────────────────────────────────────────────────────────
+# ── tv shows ──────────────────────────────────────────────────────────────────
+2k games
+343 industries
+aang
+ac/dc
+activision
+adele
+adidas
+airbnb
+aladdin
+alan becker
+alanbecker
+ali abdaal
+aliabdaal
+alibaba
+aliexpress
+aloy
+alt-j
+alt-right
+alt-tab
+amazon fresh
+amazon music
+amazon prime
+amd
+among us
+amul
+anz
+apex legends
+apple music
+apple pay
+apple tv
+apple watch
+ariana grande
+arthas
+arya stark
+assassin's creed
+asus
+at&t
+atlassian
+attack on titan
+audi
+autodesk
+avataar
+baldur's gate
+bandai namco
+beauty and the beast
+behance
+better call saul
+beyonce
+beyoncé
+billie eilish
+bioware
+bkfc
+black mirror
+black panther
+blueface
+bmw
+bosch
+breaking bad
+broly
+bruno mars
+bts
+bungie
+call of duty
+capcom
+carryminati
+cd projekt red
+cdpr
+cersei
+cgp grey
+cgpgrey
+chainsaw man
+chanel
+charli d'amelio
+charlid'amelio
+chernobyl
+chipotle
+chiptle
+chromebook
+chromecast
+cloud strife
+cloud striff
+coca-cola
+cocacola
+code geass
+coinbase
+cold fusion
+coldfusion
+coldplay
+copilot+
+counter-strike
+cowboy bebop
+cratos
+critical role
+criticalrole
+crystal dynamics
+cyberpunk
+cyberpunk 2077
+daenerys
+daft punk
+dantdm
+dark knight
+dark souls
+darth vader
+dead by daylight
+deku
+demon slayer
+dhar mann
+diablo
+domino's
+dota 2
+dr. stone
+dragon ball
+dragon ball z
+dravknox
+dravknox studio
+dreamwastaken
+dribbble
+dropbox
+dua lipa
+dunkirk
+duolingo
+ed sheeran
+elden ring
+ellie
+elrond
+embrvaal
+eminem
+encanto
+epic games
+ericsson
+eternal sunshine
+facebook
+far cry
+fargo
+ferrari
+ferris bueller
+fifa
+fight club
+figma
+final fantasy
+firefox
+flipkart
+fma
+fortnite
+frodo
+fromsoftware
+fujimoto
+full metal jacket
+fullmetal alchemist
+game of thrones
+gandalf
+genshin impact
+georgenotfound
+geralt
+gilmore girls
+gintama
+gmail
+god of war
+gog
+goku
+goodfellas
+goodfelllas
+google
+google docs
+google drive
+google meet
+google pay
+google photos
+googlepay
+gordon ramsay
+gordonramsay
+grand theft auto
+graystillplays
+grogu
+gta
+gta v
+gta vi
+gucci
+gun n roses
+guns n' roses
+h&m
+haikyuu
+harley quinn
+harleyquinn
+harry styles
+hasan abi
+hasan piker
+hasanabi
+hasanpiker
+hbo
+hermione
+hollow knight
+home alone
+honkai star rail
+horizon zero dawn
+house of cards
+house of the dragon
+hp
+htc
+huawei
+hunter x hunter
+hyundai
+ibm
+idubbbz
+ikea
+ikean
+imagine dragons
+immarksman
+instagram
+intel
+ios app store
+iron man
+ishowspeed
+jacksepticeye
+jaiden animations
+jaideneanimations
+jake paul
+jakeandlogan
+jakepaul
+jay-z
+jayz
+jeremih
+jetbrains
+jjk
+johnny harris
+johnnyharris
+jojo
+jojo's bizarre adventure
+jon snow
+jujutsu kaisen
+jurassic park
+justin bieber
+karljacobs
+kendrick lamar
+kfc
+khalid
+kickstarter
+killing eve
+konami
+kratos
+ksi
+kung fu panda
+kurzgesagt
+lady gaga
+lana del rey
+lara croft
+lazarbeam
+league of legends
+lego
+lenovo
+lg
+lilypichu
+linkedin
+linkin park
+linktree
+linus tech tips
+linustechtips
+lion king
+logan paul
+loganpaul
+loki
+louis vuitton
+luffy
+lv
+macrosoft
+maeshal
+manchester by the sea
+mandalorian
+mario kart
+markiplier
+maroon 5
+marvel rivals
+mass effect
+master chief
+maximilianmus
+mcdonald's
+mcdonalds
+mercedes-benz
+metallica
+metroid
+microsoft
+midoriya
+mikasa
+minecraft
+mirosoft
+mkbhd
+moana
+mob psycho
+money heist
+monzo
+morgott
+mortal kombat
+mozilla
+mr. robot
+mrbeast
+mulholland drive
+my hero academia
+nakeyjakey
+nanayasong
+naruto
+natasha romanoff
+naughty dog
+ncs
+neon genesis evangelion
+netflix
+nge
+nickeh30
+nicki minaj
+nickiminaj
+nicolascage
+nike
+nintendo
+nito
+no country for old men
+nocopyrightsounds
+nokia
+nolan
+nomadland
+nordvpn
+nvidia
+olivia rodrigo
+one piece
+one punch man
+oneplus
+oppenheimer
+overwatch
+ozark
+parasyte
+patreon
+payne-less
+payne-less ui
+payne-less ui: metal
+payne-less: typer
+paypal
+paytm
+peaky blinders
+pewdiepie
+phonepe
+pikachu
+pink floyd
+pinterest
+playstation
+pokemon
+pokimane
+pokémon
+porsche
+post malone
+prada
+prestonplayz
+protonmail
+pulp fiction
+qualcomm
+radiohead
+raiden
+rainbow six siege
+re:zero
+red dead redemption
+reddit
+resident evil
+rick and morty
+rihanna
+riot games
+roblox
+rockstar
+roosterteeth
+sabrina carpenter
+samsung
+sarah z
+saraisstressed
+sauron
+schindler's list
+sega
+sekiro
+sephiroth
+shang-chi
+shutter island
+sicario
+silicon valley
+siri
+skype
+skyrim
+snapchat
+someordinarygamer
+someordinarygamers
+sony
+spider-man
+spiderman
+spotify
+spy x family
+square enix
+squid game
+star wars
+starbucks
+stardew valley
+steins;gate
+stranger things
+strangers things
+street fighter
+styarbucks
+substack
+super smash bros
+swiftkey
+swiggy
+talindra
+talvrek
+tata
+taylor swift
+taylorswift
+techlinked
+tgfbro
+thanos
+the boys
+the crown
+the dark knight
+the godfather
+the grand budapest hotel
+the last of us
+the legend of zelda
+the office
+the shawshank redemption
+the sims
+the social network
+the weeknd
+the wire
+theorionsound
+theweeknd
+thor
+thumbsup
+tifa
+tifa lockhart
+tiktok
+timthetatman
+titanfall
+tokyo ghoul
+tom scott
+tomb raider
+tommyinnit
+tomscott
+tomsimons
+tony stark
+top gun
+toy story
+toyota
+travis scott
+true detective
+tubbo
+tumblr
+twilio
+uber
+ubisoft
+uniqlo
+unreal engine
+upi
+valorant
+vegeta
+veltrun
+venosaurus
+versace
+viktor
+vinland saga
+viralocity
+vlog brothers
+vlogbrothers
+vmware
+voldemort
+volkswagen
+vw
+wall-e
+wargaming
+warner bros games
+westworld
+whatsapp
+white lotus
+willne
+witcher
+witcher 3
+withcher
+wordpress
+world of warcraft
+x-men
+xayah
+xbox
+xbox game pass
+xenoblade
+xiaomi
+xqc
+xxxtentacion
+xxxtentacionzedd
+yeezy
+yennefer
+yennefer of vengerberg
+ymir
+your name
+youtube
+youtubeshorts
+zachary
+zara
+zarya
+zedd
+zelda
+zoho
+zomato
+zoro

@@ -1,0 +1,668 @@
+# Named Entities dictionary — companies, products, apps, games, TV shows, movies,
+# fictional characters, YouTubers, streamers, and DRAVKNOX Studio properties.
+# Loaded under CAT_NAMED (case-preserved, lowest weight) — supplement only.
+# Lines starting with # are comments and are skipped.
+
+# ── DRAVKNOX Studio properties ────────────────────────────────────────────────
+DRAVKNOX
+DRAVKNOX Studio
+Talvrek
+Embrvaal
+Veltrun
+Payne-less
+Payne-less UI
+Payne-less: Typer
+Payne-less UI: METAL
+
+# ── Tech companies ─────────────────────────────────────────────────────────────
+Adobe
+Airbnb
+AliExpress
+Alibaba
+Alphabet
+Amazon
+AMD
+Android
+Apple
+Asus
+AT&T
+Atlassian
+Autodesk
+BlackBerry
+BMW
+Bosch
+Canon
+Cisco
+Coinbase
+Dell
+Discord
+Dropbox
+Ericsson
+Figma
+Flipkart
+GitHub
+GitLab
+Google
+Huawei
+HTC
+HP
+IBM
+Intel
+iOS
+JetBrains
+Lenovo
+LinkedIn
+LG
+Meta
+Microsoft
+Mozilla
+Netflix
+Nokia
+NVIDIA
+OnePlus
+OpenAI
+Oracle
+PayPal
+Pixel
+Qualcomm
+Reddit
+Samsung
+Slack
+Snapchat
+Sony
+Spotify
+Stripe
+Telegram
+Tesla
+TikTok
+Twilio
+Twitter
+Uber
+Vercel
+VMware
+WhatsApp
+Xbox
+Xiaomi
+Yahoo
+Zoom
+Zoho
+
+# ── Social media & creator platforms ──────────────────────────────────────────
+Behance
+Dribbble
+Facebook
+Instagram
+Kickstarter
+Linktree
+Mastodon
+Patreon
+Pinterest
+Substack
+Threads
+Tumblr
+Twitch
+X
+YouTube
+
+# ── Popular apps & services ────────────────────────────────────────────────────
+AirDrop
+Amazon Prime
+Amazon Music
+Apple Music
+Apple Pay
+Apple TV
+Brave
+Chrome
+Chromebook
+Chromecast
+Claude
+Copilot
+Copilot+
+Duolingo
+Edge
+Firefox
+Gemini
+Gmail
+Googlepay
+Google Drive
+Google Docs
+Google Meet
+Google Pay
+Google Photos
+Maps
+Mirosoft
+Monzo
+Notion
+Obsidian
+Paytm
+Perplexity
+PhonePe
+ProtonMail
+Safari
+Siri
+Skype
+SwiftKey
+UPI
+VSCode
+Windows
+WordPress
+Zomato
+Swiggy
+
+# ── Gaming companies & platforms ───────────────────────────────────────────────
+2K Games
+343 Industries
+Activision
+Bandai Namco
+Bethesda
+BioWare
+Blizzard
+Bungie
+Capcom
+CD Projekt Red
+CDPR
+Crystal Dynamics
+EA
+Epic Games
+Frostbite
+FromSoftware
+Gearbox
+GOG
+iOS App Store
+Konami
+Naughty Dog
+Nintendo
+Origin
+PlayStation
+Riot Games
+Roblox
+Rockstar
+Sega
+Square Enix
+Steam
+Ubisoft
+Unity
+Unreal Engine
+Valve
+Wargaming
+Warner Bros Games
+Xbox Game Pass
+
+# ── Popular video games ────────────────────────────────────────────────────────
+Among Us
+Apex Legends
+Assassin's Creed
+Baldur's Gate
+Battlefield
+Call of Duty
+Civilization
+Counter-Strike
+Cyberpunk 2077
+Dark Souls
+Dead by Daylight
+Diablo
+Dota 2
+Elden Ring
+Fallout
+Far Cry
+FIFA
+Final Fantasy
+Fortnite
+Genshin Impact
+God of War
+Grand Theft Auto
+GTA
+GTA V
+GTA VI
+Halo
+Hollow Knight
+Honkai Star Rail
+Horizon Zero Dawn
+Journey
+League of Legends
+Lego
+Limbo
+Mario
+Mario Kart
+Marvel Rivals
+Mass Effect
+Metroid
+Minecraft
+Mortal Kombat
+Overwatch
+Pokémon
+Pokemon
+Portal
+Rainbow Six Siege
+Red Dead Redemption
+Resident Evil
+Roblox
+Sekiro
+Skyrim
+Sonic
+Spider-Man
+Stardew Valley
+Street Fighter
+Super Smash Bros
+The Last of Us
+The Legend of Zelda
+The Sims
+Titanfall
+Tomb Raider
+Uncharted
+Valorant
+Withcher
+Witcher
+Witcher 3
+World of Warcraft
+WoW
+Xenoblade
+Zelda
+
+# ── Movies ────────────────────────────────────────────────────────────────────
+Aladdin
+Avengers
+Avataar
+Avatar
+Batman
+Beauty and the Beast
+Black Panther
+Casablanca
+Clueless
+Coco
+Dark Knight
+Dunkirk
+Encanto
+Eternal Sunshine
+Ferris Bueller
+Fight Club
+Frozen
+Full Metal Jacket
+Gladiator
+Godfather
+Goodfelllas
+Goodfellas
+Gravity
+Home Alone
+Inception
+Interstellar
+Iron Man
+Jaws
+Joker
+Jurassic Park
+Kung Fu Panda
+Leon
+Lion King
+Manchester by the Sea
+Matrix
+Moana
+Mulholland Drive
+No Country for Old Men
+Nolan
+Nomadland
+Oppenheimer
+Parasite
+Pulp Fiction
+Schindler's List
+Shang-Chi
+Shutter Island
+Sicario
+Spiderman
+Spider-Man
+Star Wars
+Superman
+Tenet
+The Dark Knight
+The Godfather
+The Grand Budapest Hotel
+The Shawshank Redemption
+The Social Network
+Top Gun
+Toy Story
+Up
+Wall-E
+Whiplash
+
+# ── TV Shows ──────────────────────────────────────────────────────────────────
+Alt-J
+Alt-right
+Alt-tab
+Arcane
+Atlanta
+Better Call Saul
+Black Mirror
+Breaking Bad
+Chernobyl
+Community
+Cyberpunk
+Dark
+Dexter
+Fargo
+Fleabag
+Friends
+Game of Thrones
+Gilmore Girls
+Glitch
+HBO
+House of Cards
+House of the Dragon
+Killing Eve
+Loki
+Lupin
+Mandalorian
+Money Heist
+Mr. Robot
+Narcos
+Netflix
+Ozark
+Peaky Blinders
+Rick and Morty
+Severance
+Sherlock
+Shogun
+Silicon Valley
+Squid Game
+Strangers Things
+Stranger Things
+Succession
+Suited
+Suits
+The Boys
+The Crown
+The Office
+The Wire
+True Detective
+Westworld
+White Lotus
+X-Men
+
+# ── Anime ─────────────────────────────────────────────────────────────────────
+Attack on Titan
+Berserk
+Bleach
+Chainsaw Man
+Code Geass
+Cowboy Bebop
+Demon Slayer
+Dr. STONE
+Dragon Ball
+Dragon Ball Z
+Fullmetal Alchemist
+FMA
+Fujimoto
+Gintama
+Haikyuu
+Hunter x Hunter
+JJK
+JoJo
+JoJo's Bizarre Adventure
+Jujutsu Kaisen
+Mob Psycho
+My Hero Academia
+Naruto
+One Piece
+One Punch Man
+Neon Genesis Evangelion
+NGE
+Parasyte
+Re:Zero
+Spy x Family
+Steins;Gate
+Tokyo Ghoul
+Vinland Saga
+Your Name
+
+# ── Fictional characters (games, anime, shows, movies) ─────────────────────────
+Aang
+Aloy
+Arya Stark
+Arthas
+Batman
+Broly
+Cersei
+Cloud Striff
+Cloud Strife
+Cratos
+Daenerys
+Darth Vader
+Deku
+Ellie
+Elrond
+Frodo
+Gandalf
+Geralt
+Goku
+Grogu
+HarleyQuinn
+Harley Quinn
+Hermione
+Jinx
+Joel
+Jon Snow
+Kratos
+Lara Croft
+Link
+Loki
+Luffy
+Master Chief
+Midoriya
+Mikasa
+Morgott
+Naruto
+Natasha Romanoff
+Nito
+Pikachu
+Raiden
+Sauron
+Sephiroth
+Shaggy
+Sherlock
+Thanos
+Thor
+Tifa
+Tifa Lockhart
+Tony Stark
+Vegeta
+Viktor
+Voldemort
+Xayah
+Yennefer
+Yennefer of Vengerberg
+Ymir
+Zarya
+Zelda
+Zoro
+
+# ── Popular YouTubers & streamers ─────────────────────────────────────────────
+AlanBecker
+Alan Becker
+AliAbdaal
+Ali Abdaal
+BKFC
+BlueFace
+CarryMinati
+CharliD'Amelio
+Charli D'Amelio
+CGPGrey
+CGP Grey
+Coldfusion
+Cold Fusion
+CriticalRole
+Critical Role
+DanTDM
+Dhar Mann
+DreamWasTaken
+Dream
+GeorgeNotFound
+Graystillplays
+GrayStillPlays
+HasanAbi
+Hasan Abi
+HasanPiker
+Hasan Piker
+idubbbz
+iDubbbz
+Immarksman
+ImMarksman
+iShowSpeed
+JackSepticEye
+jackSepticEye
+Jaiden Animations
+JaideneAnimations
+JakeandLogan
+JakePaul
+Jake Paul
+JohnnyHarris
+Johnny Harris
+KarlJacobs
+KSI
+Kurzgesagt
+Lazarbeam
+LazarBeam
+LilyPichu
+LinusTechTips
+Linus Tech Tips
+Logan Paul
+LoganPaul
+Markiplier
+MaximilianMus
+MaximilianMUS
+MKBHD
+MrBeast
+NakeyJakey
+Nanayasong
+NicolasCage
+NickEh30
+Nocopyrightsounds
+NoCopyrightSounds
+NCS
+NordVPN
+PewDiePie
+Pokimane
+PrestonPlayz
+Prestonplayz
+RoosterTeeth
+SaraIsStressed
+Sarah Z
+SomeOrdinaryGamers
+SomeOrdinaryGamer
+Talindra
+TechLinked
+TGFbro
+TGFBro
+TheOrionSound
+ThumbsUp
+TimTheTatman
+TomScott
+Tom Scott
+TomSimons
+TommyInnit
+Tubbo
+Venosaurus
+Viralocity
+VlogBrothers
+Vlog Brothers
+WillNE
+xQc
+YouTubeShorts
+Zachary
+
+# ── Music artists & bands ──────────────────────────────────────────────────────
+AC/DC
+Adele
+Ariana Grande
+Billie Eilish
+BTS
+Beyoncé
+Beyonce
+Bruno Mars
+Coldplay
+Daft Punk
+Drake
+Dua Lipa
+Ed Sheeran
+Eminem
+Future
+Gun N Roses
+Guns N' Roses
+Harry Styles
+Imagine Dragons
+JayZ
+Jay-Z
+Jeremih
+Justin Bieber
+Kendrick Lamar
+Khalid
+Lady Gaga
+Lana Del Rey
+Linkin Park
+Macrosoft
+Maeshal
+Maroon 5
+Metallica
+Nicki Minaj
+Nirvana
+Nickiminaj
+Nocturne
+Olivia Rodrigo
+Pink Floyd
+Post Malone
+Radiohead
+Rihanna
+Sabrina Carpenter
+The Weeknd
+TheWeeknd
+Taylor Swift
+TaylorSwift
+Travis Scott
+XXXTentacion
+XXXTentacionZedd
+Zedd
+
+# ── Brands (fashion, food, retail, auto) ──────────────────────────────────────
+Adidas
+Amazon Fresh
+AMUL
+ANZ
+Apple Watch
+Audi
+BMW
+Chanel
+Chiptle
+Chipotle
+Coca-Cola
+CocaCola
+Domino's
+Dominos
+Ferrari
+GordonRamsay
+Gordon Ramsay
+Gucci
+H&M
+Honda
+Hyundai
+IKEA
+IKEAN
+KFC
+Louis Vuitton
+LV
+McDonald's
+McDonalds
+Mercedes
+Mercedes-Benz
+Nike
+Porsche
+Prada
+Starbucks
+Styarbucks
+Subway
+Supreme
+Tata
+Tesla
+Toyota
+UNIQLO
+Versace
+VW
+Volkswagen
+Yeezy
+Zara

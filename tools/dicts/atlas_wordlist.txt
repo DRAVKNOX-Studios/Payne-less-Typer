@@ -1,0 +1,698 @@
+# atlas dictionary — countries, capitals, major cities, us states, territories, oceans, continents
+# loaded under cat_proper (case-preserved) by suggestionengine.
+# sorted alphabetically within each section.
+# ── australian states & territories ───────────────────────────────────────
+# ── canadian provinces & territories ──────────────────────────────────────
+# ── capitals ───────────────────────────────────────────────────────────────
+# ── common demonyms & nationality adjectives ──────────────────────────────
+# ── continents ─────────────────────────────────────────────────────────────
+# ── countries ──────────────────────────────────────────────────────────────
+# ── indian states & uts (most common) ─────────────────────────────────────
+# ── major deserts ──────────────────────────────────────────────────────────
+# ── major mountain ranges & peaks ─────────────────────────────────────────
+# ── major rivers ───────────────────────────────────────────────────────────
+# ── major world cities ─────────────────────────────────────────────────────
+# ── notable regions & areas ────────────────────────────────────────────────
+# ── oceans & major seas ────────────────────────────────────────────────────
+# ── us states ──────────────────────────────────────────────────────────────
+# ── us territories & dc ────────────────────────────────────────────────────
+abidjan
+abu dhabi
+abuja
+accra
+aconcagua
+addis ababa
+afghanistan
+africa
+albanian
+alexandria
+algeria
+algerian
+algiers
+amazon basin
+american samoa
+amman
+amsterdam
+amur
+anatolia
+andes
+andhra pradesh
+andorra
+andorra la vella
+andorran
+angolan
+ankara
+antananarivo
+antarctic desert
+antigua
+apia
+appalachians
+arabian desert
+arabian peninsula
+arabian sea
+arctic ocean
+arcticdesert
+armenia
+armenian
+arunachal pradesh
+ashgabat
+asia
+asmara
+assam
+astana
+asuncion
+atacama desert
+atlantic ocean
+auckland
+australian capital territory
+austria
+austrian
+azerbaijan
+azerbaijani
+baghdad
+bahamas
+bahrain
+baku
+balkan peninsula
+balkans
+baltic states
+bamako
+bangladesh
+bangladeshi
+banjul
+basseterre
+bay of bengal
+beijing
+beirut
+belarus
+belgian
+belgium
+belgrade
+belize
+belizean
+belmopan
+benelux
+bengaluru
+benin
+bergen
+bering sea
+bern
+bhutan
+bhutanese
+bihar
+bissau
+black sea
+bogota
+bolivian
+bosnia
+bosnian
+botswana
+botswanan
+brasilia
+bratislava
+brazzaville
+bridgetown
+brisbane
+british columbia
+brunei
+bucharest
+budapest
+buenos aires
+bujumbura
+bulgaria
+burkina faso
+burundi
+cairo
+calgary
+cambodia
+cambodian
+cameroon
+cameroonian
+cape town
+cape verde
+caracas
+caribean sea
+carpathians
+casablanca
+caspian sea
+castries
+caucasus
+central african
+central america
+central asia
+central europe
+chengdu
+chennai
+chhattisgarh
+chicago
+chilean
+chisinau
+chongqing
+cleveland
+colombia
+colombian
+colorado river
+columbus
+comoros
+conakry
+congo river
+congolese
+connecticut
+copenhagen
+coral sea
+costa rica
+costa rican
+costarican
+croatia
+croatian
+cuban
+cypriot
+cypriote
+czechia
+dakar
+dallas
+damascus
+danube
+denali
+denver
+detroit
+dhaka
+dili
+district of columbia
+djibouti
+djiboutian
+doha
+dominica
+dominican republic
+douala
+dubai
+dublin
+durban
+dushanbe
+dusseldorf
+east africa
+east china sea
+eastern europe
+ecuador
+ecuadorian
+edmonton
+el salvador
+equatorial guinea
+erithrean
+eritrea
+estonia
+estonian
+eswatini
+ethiopian
+euphrates
+europe
+everest
+fertile crescent
+fijian
+france
+freetown
+funafuti
+gabon
+gabonese
+gaborone
+gambian
+ganges
+georgetown
+georgian
+germany
+ghana
+ghanaian
+gobi desert
+great plains
+greece
+grenada
+guam
+guangzhou
+guatemala
+guatemalan
+guinea-bissau
+guinean
+gujarat
+guyana
+haiti
+haitian
+hangzhou
+harare
+harbin
+hartford
+haryana
+havana
+hawaii
+helsinki
+himachal pradesh
+himalayas
+ho chi minh city
+honduran
+honduras
+honiara
+honolulu
+horn of africa
+houston
+huang he
+hungary
+hyderabad
+iberian peninsula
+icelandic
+indian ocean
+indianapolis
+indochina
+indonesia
+indus
+iranian
+ireland
+islamabad
+istanbul
+italy
+ivorian
+jakarta
+jamaican
+jharkhand
+joburg
+johannesburg
+jordanian
+k2
+kabul
+kalahari
+kampala
+kansas
+karachi
+karakoram
+karnataka
+kathmandu
+kazakh
+kazakhstan
+kenya
+kenyan
+kerala
+kharkiv
+khartoum
+kiev
+kigali
+kilimanjaro
+kingston
+kinshasa
+kiribati
+kobe
+kolkata
+kosovo
+kuala lumpur
+kuwait
+kuwait city
+kyrgyz
+kyrgyzstan
+lagos
+lahore
+laos
+laotian
+las vegas
+latin america
+latvia
+latvian
+lebanese
+lebanon
+leipzig
+lena
+lesotho
+liberian
+libreville
+libya
+libyan
+liechtenstein
+lille
+lilongwe
+lisbon
+lithuania
+lithuanian
+ljubljana
+lome
+london
+los angeles
+luanda
+lusaka
+luxembourg
+luxembourg city
+luxembourgian
+luzon
+lyon
+madhya pradesh
+maghreb
+maharashtra
+majuro
+malabo
+malagasy
+malawi
+malawian
+malaysia
+malaysian
+maldives
+maldivian
+malian
+malta
+maltese
+managua
+manama
+manipur
+manitoba
+maputo
+marseille
+marselle
+marshall islands
+maseru
+massachusetts
+mauritania
+mauritanian
+mauritius
+mbabane
+mckinley
+medellín
+mediterranean sea
+meghalaya
+mekong
+melbourne
+memphis
+mesoamerica
+mexico
+mexiko city
+micronesia
+middle east
+minneapolis
+minnesota
+minsk
+missouri river
+mizoram
+mogadishu
+mojave
+moldova
+moldovan
+monaco
+monegasque
+mongolia
+mongolian
+monrovia
+mont blanc
+monte rosa
+montenegrin
+montenegro
+monterrey
+montevideo
+montreal
+moroccan
+moroni
+mozambican
+mumbai
+myanmar
+nagaland
+nagoya
+nairobi
+namib
+namibia
+nanjing
+naples
+nashville
+nassau
+nauru
+ndjamena
+nebraska
+nepalese
+netherlands
+new brunswick
+new delhi
+new hampshire
+new jersey
+new mexico
+new orleans
+new south wales
+new york
+new zealand
+newark
+niamey
+nicaraguan
+nicosia
+niger
+niger river
+nigeria
+nigerian
+nigerien
+nile
+north america
+north carolina
+north dakota
+north korea
+north macedonia
+north sea
+northern europe
+northern ireland
+northern mariana islands
+northern territory
+northwest territories
+nouakchott
+nova scotia
+nuku'alofa
+nunavut
+ob river
+oceania
+odisha
+oklahoma city
+omani
+ontario
+oregon
+orinoco
+osaka
+oslo
+pacific islands
+pacific northwest
+pacific ocean
+pakistan
+pakistani
+palau
+palestine
+panamaian
+panamanian
+papete
+papua new guinea
+paraguayan
+paramaribo
+patagonian desert
+persian gulf
+perth
+peruvian
+philadelphia
+philippine
+phnom penh
+poland
+port louis
+port moresby
+port vila
+port-au-prince
+port-of-spain
+portland
+prague
+praia
+pretoria
+prince edward island
+pristina
+puerto rico
+pune
+punjab
+pyongyang
+qatar
+qatari
+quebec
+queensland
+quito
+rajasthan
+ramallah
+red sea
+reykjavik
+rhine
+rhode island
+riga
+rio de janeiro
+riyadh
+rochester
+rocky mountains
+romania
+romanian
+roseau
+rub al khali
+rwanda
+rwandan
+sahara
+sahel
+saint kitts and nevis
+saint lucia
+saint vincent
+salt lake city
+saltlakecity
+salvadoran
+samoa
+san antonio
+san diego
+san francisco
+san jose
+san marino
+san salvador
+sana'a
+santiago
+santo domingo
+sao tome
+sao tome and principe
+sarajevo
+saskatchewan
+saudi
+saudi arabia
+scandanavia
+scandinavia
+seattle
+senegaleese
+senegalese
+seoul
+serbia
+serbian
+seville
+seychelles
+shenyang
+shenzhen
+sierra leone
+sierra nevada
+sikkim
+singapore
+singaporean
+skopje
+slovakia
+slovenia
+sofia
+solomon islands
+somali
+somalia
+sonoran desert
+south africa
+south african
+south america
+south australia
+south carolina
+south china sea
+south dakota
+south korea
+south sudan
+southeast asia
+southern africa
+southern ocean
+spain
+sri jayawardenepura kotte
+sri lanka
+sri lankan
+srilankan
+st. george's
+st. lawrence
+st. louis
+stockholm
+sub-saharan africa
+sudanese
+suriname
+suva
+sweden
+switzerland
+sydney
+syria
+syrian
+syrian desert
+são paulo
+taipei
+taiwan
+taiwanese
+tajik
+tajikistan
+tallinn
+tamil nadu
+tanzania
+tanzanian
+tashkent
+tasmania
+tbilisi
+tegucigalpa
+tehran
+telangana
+tennessee
+thailand
+thar desert
+thimphu
+tianjin
+tibet
+tigris
+timor-leste
+tirana
+togo
+togolese
+tokyo
+toronto
+trinidad and tobago
+trinidadian
+tripura
+tunis
+tunisia
+tunisian
+turin
+turkmen
+turkmenistan
+tuvalu
+uganda
+ugandan
+ukraine
+ukrainian
+ulaanbaatar
+united arab emirates
+united kingdom
+united states
+ural mountains
+uruguay
+uruguayan
+us virgin islands
+uttar pradesh
+uttarakhand
+uzbek
+uzbekistan
+vaduz
+valletta
+vancouver
+vanuatu
+vaticancity
+venezuela
+venezuelan
+vientiane
+vietnam
+vilnius
+vinson massif
+volga
+washington dc
+west africa
+west bengal
+west virginia
+western australia
+western europe
+windhoek
+wisconsin
+wuhan
+wyoming
+xian
+yamoussoukro
+yangtze
+yaounde
+yellow river
+yemeni
+yenisei
+yerevan
+yokohama
+yukon
+yukon river
+zagreb
+zambezi
+zambia
+zambian
+zimbabwean
+zurich

@@ -1,0 +1,123 @@
+SwiftKey-Lite
+├── .github
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   ├── config.yml
+│   │   ├── feature_request.md
+│   │   └── PULL_REQUEST_TEMPLATE.md
+│   └── workflows
+│       ├── android.yml
+│       └── gradle.yml
+├── app
+│   ├── src
+│   │   └── main
+│   │       ├── @xml
+│   │       ├── assets
+│   │       │   ├── emoji_data.json
+│   │       │   ├── emoji_skin_tones.json
+│   │       │   ├── engine_config.json
+│   │       │   ├── keyboard_layout.json
+│   │       │   ├── numbers_layout.json
+│   │       │   ├── predictions.json
+│   │       │   └── themes.json
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── swiftlite
+│   │       │           └── keyboard
+│   │       │               ├── clipboard
+│   │       │               │   ├── ClipboardAdapter.java
+│   │       │               │   ├── ClipboardDao.java
+│   │       │               │   ├── ClipboardDatabase.java
+│   │       │               │   ├── ClipboardItem.java
+│   │       │               │   ├── ClipboardRepository.java
+│   │       │               │   └── ClipboardShareActivity.java
+│   │       │               ├── emoji
+│   │       │               │   ├── EmojiAdapter.java
+│   │       │               │   ├── EmojiData.java
+│   │       │               │   ├── EmojiPanel.java
+│   │       │               │   ├── EmojiSkinToneHelper.java
+│   │       │               │   └── SkinTonePopupManager.java
+│   │       │               ├── ime
+│   │       │               │   ├── BaseKeyCanvas.java
+│   │       │               │   ├── ClipboardMonitor.java
+│   │       │               │   ├── ClipboardPanelView.java
+│   │       │               │   ├── ContractionHelper.java
+│   │       │               │   ├── EmojiHistoryManager.java
+│   │       │               │   ├── ExtraIcons.java
+│   │       │               │   ├── GooglyEyesView.java
+│   │       │               │   ├── IconButton.java
+│   │       │               │   ├── IconView.java
+│   │       │               │   ├── InputCorrectionLogic.java
+│   │       │               │   ├── InputLogicHandler.java
+│   │       │               │   ├── InputSuggestionLogic.java
+│   │       │               │   ├── Key.java
+│   │       │               │   ├── KeyboardView.java
+│   │       │               │   ├── KeyIcons.java
+│   │       │               │   ├── KeyPopupManager.java
+│   │       │               │   ├── KeyPreviewManager.java
+│   │       │               │   ├── KeysCanvas.java
+│   │       │               │   ├── KeyVibrator.java
+│   │       │               │   ├── NumbersCanvas.java
+│   │       │               │   ├── PanelManager.java
+│   │       │               │   ├── PopupViewFactory.java
+│   │       │               │   ├── PrivacyHandler.java
+│   │       │               │   ├── SuggestionBarView.java
+│   │       │               │   ├── SuggestionChipBuilder.java
+│   │       │               │   ├── SwiftLiteIME.java
+│   │       │               │   └── UndoManager.java
+│   │       │               ├── setup
+│   │       │               │   ├── CustomizeView.java
+│   │       │               │   ├── SetupView.java
+│   │       │               │   ├── TesterView.java
+│   │       │               │   ├── ThemePickerView.java
+│   │       │               │   └── UserDictionaryView.java
+│   │       │               ├── suggestions
+│   │       │               │   ├── CompactDictionary.java
+│   │       │               │   ├── CorrectionManager.java
+│   │       │               │   ├── DictionaryLoader.java
+│   │       │               │   ├── DictWord.java
+│   │       │               │   ├── MmapDictionary.java
+│   │       │               │   ├── PredictionData.java
+│   │       │               │   ├── PredictionEngine.java
+│   │       │               │   ├── SuggestionEngine.java
+│   │       │               │   ├── SuggestionSearcher.java
+│   │       │               │   └── UsageManager.java
+│   │       │               ├── theme
+│   │       │               │   ├── KeyboardTheme.java
+│   │       │               │   └── ThemeManager.java
+│   │       │               ├── utils
+│   │       │               │   ├── SuggestionUtils.java
+│   │       │               │   ├── UIUtils.java
+│   │       │               │   └── VibrationUtils.java
+│   │       │               └── SetupActivity.java
+│   │       └── AndroidManifest.xml
+│   ├── build.gradle
+│   └── proguard-rules.pro
+├── gradle
+│   ├── wrapper
+│   │   └── gradle-wrapper.properties
+│   ├── gradle-daemon-jvm.properties
+│   └── libs.versions.toml
+├── screenshots
+│   ├── Clipboard.png
+│   ├── Customize.jpg
+│   ├── Emoji.png
+│   ├── Numbers.png
+│   ├── Setup.png
+│   └── Typing.png
+├── tools
+│   ├── build_dict.py
+│   ├── dict_join.py
+│   ├── dict_sep.py
+│   ├── folder_structure.txt
+│   ├── gen_tree.py
+│   └── priority_dedup.py
+├── .gitignore
+├── build.gradle
+├── CODE_DOCS.md
+├── CONTRIBUTING.md
+├── gradle.properties
+├── LICENSE
+├── local.properties
+├── README.md
+└── settings.gradle

@@ -1,0 +1,925 @@
+# Atlas dictionary — countries, capitals, major cities, US states, territories, oceans, continents
+# Loaded under CAT_PROPER (case-preserved) by SuggestionEngine.
+# Sorted alphabetically within each section.
+
+# ── Continents ─────────────────────────────────────────────────────────────
+Africa
+Antarctica
+Asia
+Australia
+Europe
+North America
+Oceania
+South America
+
+# ── Oceans & major seas ────────────────────────────────────────────────────
+Arctic Ocean
+Atlantic Ocean
+Indian Ocean
+Pacific Ocean
+Southern Ocean
+Arabian Sea
+Bay of Bengal
+Bering Sea
+Black Sea
+Caribean Sea
+Caspian Sea
+Coral Sea
+East China Sea
+Mediterranean Sea
+North Sea
+Red Sea
+South China Sea
+
+# ── Countries ──────────────────────────────────────────────────────────────
+Afghanistan
+Albania
+Algeria
+Andorra
+Angola
+Antigua
+Argentina
+Armenia
+Australia
+Austria
+Azerbaijan
+Bahamas
+Bahrain
+Bangladesh
+Barbados
+Belarus
+Belgium
+Belize
+Benin
+Bhutan
+Bolivia
+Bosnia
+Botswana
+Brazil
+Brunei
+Bulgaria
+Burkina Faso
+Burundi
+Cambodia
+Cameroon
+Canada
+Cape Verde
+Chad
+Chile
+China
+Colombia
+Comoros
+Congo
+Costa Rica
+Croatia
+Cuba
+Cyprus
+Czechia
+Denmark
+Djibouti
+Dominica
+Dominican Republic
+Ecuador
+Egypt
+El Salvador
+Equatorial Guinea
+Eritrea
+Estonia
+Eswatini
+Ethiopia
+Fiji
+Finland
+France
+Gabon
+Gambia
+Georgia
+Germany
+Ghana
+Greece
+Grenada
+Guatemala
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Honduras
+Hungary
+Iceland
+India
+Indonesia
+Iran
+Iraq
+Ireland
+Israel
+Italy
+Jamaica
+Japan
+Jordan
+Kazakhstan
+Kenya
+Kiribati
+Kosovo
+Kuwait
+Kyrgyzstan
+Laos
+Latvia
+Lebanon
+Lesotho
+Liberia
+Libya
+Liechtenstein
+Lithuania
+Luxembourg
+Madagascar
+Malawi
+Malaysia
+Maldives
+Mali
+Malta
+Marshall Islands
+Mauritania
+Mauritius
+Mexico
+Micronesia
+Moldova
+Monaco
+Mongolia
+Montenegro
+Morocco
+Mozambique
+Myanmar
+Namibia
+Nauru
+Nepal
+Netherlands
+New Zealand
+Nicaragua
+Niger
+Nigeria
+North Korea
+North Macedonia
+Norway
+Oman
+Pakistan
+Palau
+Palestine
+Panama
+Papua New Guinea
+Paraguay
+Peru
+Philippines
+Poland
+Portugal
+Qatar
+Romania
+Russia
+Rwanda
+Saint Kitts and Nevis
+Saint Lucia
+Saint Vincent
+Samoa
+San Marino
+Sao Tome and Principe
+Saudi Arabia
+Senegal
+Serbia
+Seychelles
+Sierra Leone
+Singapore
+Slovakia
+Slovenia
+Solomon Islands
+Somalia
+South Africa
+South Korea
+South Sudan
+Spain
+Sri Lanka
+Sudan
+Suriname
+Sweden
+Switzerland
+Syria
+Taiwan
+Tajikistan
+Tanzania
+Thailand
+Timor-Leste
+Togo
+Tonga
+Trinidad and Tobago
+Tunisia
+Turkey
+Turkmenistan
+Tuvalu
+Uganda
+Ukraine
+United Arab Emirates
+United Kingdom
+United States
+Uruguay
+Uzbekistan
+Vanuatu
+Vatican
+Venezuela
+Vietnam
+Yemen
+Zambia
+Zimbabwe
+
+# ── Capitals ───────────────────────────────────────────────────────────────
+Abu Dhabi
+Abuja
+Accra
+Addis Ababa
+Algiers
+Amman
+Amsterdam
+Andorra la Vella
+Ankara
+Antananarivo
+Apia
+Ashgabat
+Asmara
+Astana
+Asuncion
+Athens
+Baghdad
+Baku
+Bamako
+Bangkok
+Banjul
+Basseterre
+Beijing
+Beirut
+Belgrade
+Belmopan
+Berlin
+Bern
+Bissau
+Bogota
+Brasilia
+Bratislava
+Brazzaville
+Bridgetown
+Brussels
+Bucharest
+Budapest
+Bujumbura
+Cairo
+Canberra
+Cape Town
+Caracas
+Castries
+Chisinau
+Conakry
+Copenhagen
+Dakar
+Damascus
+Dhaka
+Dili
+Djibouti
+Doha
+Douala
+Dublin
+Dushanbe
+Freetown
+Funafuti
+Gaborone
+Georgetown
+Harare
+Havana
+Helsinki
+Honiara
+Islamabad
+Jakarta
+Jerusalem
+Juba
+Kabul
+Kampala
+Kathmandu
+Khartoum
+Kiev
+Kigali
+Kingston
+Kinshasa
+Kuala Lumpur
+Kuwait City
+Libreville
+Lilongwe
+Lima
+Lisbon
+Ljubljana
+Lome
+London
+Luanda
+Lusaka
+Luxembourg City
+Madrid
+Majuro
+Malabo
+Male
+Managua
+Manama
+Manila
+Maputo
+Maseru
+Mbabane
+Mexiko City
+Minsk
+Mogadishu
+Monrovia
+Montevideo
+Moroni
+Moscow
+Muscat
+Nairobi
+Nassau
+Ndjamena
+Niamey
+Nicosia
+Nouakchott
+Nuku'alofa
+Nurse
+Oslo
+Ottawa
+Papete
+Paramaribo
+Paris
+Phnom Penh
+Port Louis
+Port Moresby
+Port Vila
+Port-au-Prince
+Port-of-Spain
+Praia
+Pretoria
+Pristina
+Pyongyang
+Quito
+Rabat
+Ramallah
+Reykjavik
+Riga
+Riyadh
+Rome
+Roseau
+San Jose
+San Marino
+San Salvador
+Sana'a
+Santiago
+Santo Domingo
+Sao Tome
+Sarajevo
+Seoul
+Singapore
+Skopje
+Sofia
+Sri Jayawardenepura Kotte
+St. George's
+Stockholm
+Suva
+Tallinn
+Tashkent
+Tbilisi
+Tegucigalpa
+Tehran
+Thimphu
+Tirana
+Tokyo
+Tripoli
+Tunis
+Ulaanbaatar
+Vaduz
+Valletta
+VaticanCity
+Victoria
+Vienna
+Vientiane
+Vilnius
+Warsaw
+Washington DC
+Wellington
+Windhoek
+Yamoussoukro
+Yaounde
+Yerevan
+Zagreb
+
+# ── Major world cities ─────────────────────────────────────────────────────
+Abidjan
+Alexandria
+Amsterdam
+Anchorage
+Atlanta
+Auckland
+Baltimore
+Barcelona
+Beirut
+Bengaluru
+Bergen
+Birmingham
+Bogota
+Boston
+Brisbane
+Brussels
+Buenos Aires
+Buffalo
+Calgary
+Casablanca
+Charlotte
+Chengdu
+Chennai
+Chicago
+Chongqing
+Cleveland
+Cologne
+Columbus
+Dallas
+Denver
+Detroit
+Dubai
+Dublin
+Durban
+Dusseldorf
+Edmonton
+Frankfurt
+Guangzhou
+Guangzhou
+Guangzhou
+Hamburg
+Hangzhou
+Harbin
+Hartford
+Ho Chi Minh City
+Honolulu
+Houston
+Hyderabad
+Indianapolis
+Istanbul
+Jakarta
+Joburg
+Johannesburg
+Karachi
+Kharkiv
+Kobe
+Kolkata
+Kuala Lumpur
+Lagos
+Lahore
+Las Vegas
+Leipzig
+Lille
+London
+Los Angeles
+Luzon
+Lyon
+Madrid
+Manchester
+Marselle
+Marseille
+Medellín
+Melbourne
+Memphis
+Miami
+Milan
+Minneapolis
+Monterrey
+Montreal
+Moscow
+Mumbai
+Munich
+Nagoya
+Nanjing
+Naples
+Nashville
+New Delhi
+New Orleans
+New York
+Newark
+Oklahoma City
+Omaha
+Ontario
+Osaka
+Paris
+Perth
+Philadelphia
+Phoenix
+Portland
+Prague
+Puerto Rico
+Pune
+Rio de Janeiro
+Rochester
+Rome
+Sacramento
+SaltLakeCity
+Salt Lake City
+San Antonio
+San Diego
+San Francisco
+San Jose
+Santiago
+São Paulo
+Seattle
+Seville
+Shanghai
+Shenyang
+Shenzhen
+Singapore
+St. Louis
+Stockholm
+Sydney
+Taipei
+Tehran
+Tianjin
+Toronto
+Turin
+Ulaanbaatar
+Vancouver
+Venice
+Vienna
+Wuhan
+Xian
+Yokohama
+Zurich
+
+# ── US States ──────────────────────────────────────────────────────────────
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+Florida
+Georgia
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+# ── US Territories & DC ────────────────────────────────────────────────────
+American Samoa
+District of Columbia
+Guam
+Northern Mariana Islands
+Puerto Rico
+US Virgin Islands
+
+# ── Canadian provinces & territories ──────────────────────────────────────
+Alberta
+British Columbia
+Manitoba
+New Brunswick
+Newfoundland
+Northwest Territories
+Nova Scotia
+Nunavut
+Ontario
+Prince Edward Island
+Quebec
+Saskatchewan
+Yukon
+
+# ── Australian states & territories ───────────────────────────────────────
+Australian Capital Territory
+New South Wales
+Northern Territory
+Queensland
+South Australia
+Tasmania
+Victoria
+Western Australia
+
+# ── Indian states & UTs (most common) ─────────────────────────────────────
+Andhra Pradesh
+Arunachal Pradesh
+Assam
+Bihar
+Chhattisgarh
+Goa
+Gujarat
+Haryana
+Himachal Pradesh
+Jharkhand
+Karnataka
+Kerala
+Madhya Pradesh
+Maharashtra
+Manipur
+Meghalaya
+Mizoram
+Nagaland
+Odisha
+Punjab
+Rajasthan
+Sikkim
+Tamil Nadu
+Telangana
+Tripura
+Uttarakhand
+Uttar Pradesh
+West Bengal
+
+# ── Major rivers ───────────────────────────────────────────────────────────
+Amazon
+Amur
+Colorado River
+Congo River
+Danube
+Euphrates
+Ganges
+Huang He
+Indus
+Lena
+Mekong
+Mississippi
+Missouri River
+Niger River
+Nile
+Ob River
+Orinoco
+Rhine
+St. Lawrence
+Tigris
+Volga
+Yangtze
+Yellow River
+Yenisei
+Yukon River
+Zambia
+Zambezi
+
+# ── Major mountain ranges & peaks ─────────────────────────────────────────
+Aconcagua
+Alps
+Andes
+Appalachians
+Carpathians
+Caucasus
+Denali
+Everest
+Himalayas
+K2
+Karakoram
+Kilimanjaro
+McKinley
+Mont Blanc
+Monte Rosa
+Olympus
+Rocky Mountains
+Sierra Nevada
+Ural Mountains
+Vinson Massif
+
+# ── Major deserts ──────────────────────────────────────────────────────────
+Antarctic Desert
+Arabian Desert
+ArcticDesert
+Atacama Desert
+Gobi Desert
+Kalahari
+Mojave
+Namib
+Patagonian Desert
+Rub al Khali
+Sahara
+Sonoran Desert
+Syrian Desert
+Thar Desert
+
+# ── Notable regions & areas ────────────────────────────────────────────────
+Amazon Basin
+Anatolia
+Arabian Peninsula
+Balkan Peninsula
+Balkans
+Baltic States
+Benelux
+Central America
+Central Asia
+Central Europe
+East Africa
+Eastern Europe
+Fertile Crescent
+Great Plains
+Horn of Africa
+Iberian Peninsula
+Indochina
+Kashmir
+Latin America
+Levant
+Maghreb
+Mesoamerica
+Middle East
+Northern Europe
+Northern Ireland
+Pacific Islands
+Pacific Northwest
+Persian Gulf
+Sahel
+Scandanavia
+Scandinavia
+Southeast Asia
+Southern Africa
+Sub-Saharan Africa
+Tibet
+West Africa
+Western Europe
+
+# ── Common demonyms & nationality adjectives ──────────────────────────────
+Afghan
+African
+Albanian
+Algerian
+American
+Andorran
+Angolan
+Arab
+Argentine
+Armenia
+Armenian
+Asian
+Australian
+Austrian
+Azerbaijani
+Bangladeshi
+Belgian
+Belizean
+Bhutanese
+Bolivian
+Bosnia
+Bosnian
+Botswanan
+Brazilian
+British
+Bulgarian
+Cambodian
+Cameroonian
+Canadian
+Central African
+Chilean
+Chinese
+Colombian
+Congolese
+CostaRican
+Costa Rican
+Croatian
+Cuban
+Cypriote
+Cypriot
+Czech
+Danish
+Djiboutian
+Dominican
+Ecuadorian
+Egyptian
+English
+Erithrean
+Erithrean
+Estonian
+Ethiopian
+European
+Fijian
+Finnish
+French
+Gabonese
+Gambian
+Georgian
+German
+Ghanaian
+Greek
+Guatemalan
+Guinean
+Haitian
+Honduran
+Hungarian
+Icelandic
+Indian
+Indonesian
+Iranian
+Iraqi
+Irish
+Israeli
+Italian
+Ivorian
+Jamaican
+Japanese
+Jordanian
+Kazakh
+Kenyan
+Korean
+Kyrgyz
+Laotian
+Latvian
+Lebanese
+Liberian
+Libyan
+Lithuanian
+Luxembourgian
+Malagasy
+Malawian
+Malaysian
+Maldivian
+Malian
+Maltese
+Mauritanian
+Mauritanian
+Mexican
+Moldovan
+Monegasque
+Mongolian
+Montenegrin
+Moroccan
+Mozambican
+Nepalese
+Netherlands
+Nicaraguan
+Nigerien
+Nigerian
+Norwegian
+Omani
+Pakistani
+Panamaian
+Panamanian
+Paraguayan
+Peruvian
+Philippine
+Polish
+Portuguese
+Qatari
+Romanian
+Russian
+Rwandan
+Salvadoran
+Saudi
+Senegaleese
+Senegalese
+Serbian
+Singaporean
+Somali
+South African
+Spanish
+SriLankan
+Sri Lankan
+Sudanese
+Swedish
+Swiss
+Syrian
+Taiwanese
+Tajik
+Tanzanian
+Thai
+Togolese
+Trinidadian
+Tunisian
+Turkish
+Turkmen
+Ugandan
+Ukrainian
+Uruguayan
+Uzbek
+Venezuelan
+Vietnamese
+Yemeni
+Zambian
+Zimbabwean
