@@ -31,9 +31,7 @@ public class ClipboardMonitor {
 
     private static final int SCREENSHOT_RETRY_DELAY_MS = 600;
     private static final int SCREENSHOT_MAX_RETRIES    = 4;
-
     private static final int MAX_SAVE_PX = 1280;
-
     private static final int JPEG_QUALITY = 72;
 
     private final Context          mContext;
@@ -66,9 +64,7 @@ public class ClipboardMonitor {
 
     public void setup() {
         if (mClipboardManager == null || mClipListener != null) return;
-
         evictStaleFileProviderClip();
-
         mScreenshotObserver = new android.database.ContentObserver(mMainHandler) {
             @Override
             public void onChange(boolean selfChange, Uri uri) {
@@ -87,44 +83,25 @@ public class ClipboardMonitor {
         mClipListener = () -> {
             if (mContext instanceof SwiftLiteIME) {
                 EditorInfo info = ((SwiftLiteIME) mContext).getCurrentInputEditorInfo();
-                if (PrivacyHandler.isSensitiveField(info)) {
-                    return;
-                }
+                if (PrivacyHandler.isSensitiveField(info)) return;
             }
-
             final long captureSequence = ++mClipboardCaptureSequence;
             ClipData clip = mClipboardManager.getPrimaryClip();
-
             if (clip == null || clip.getItemCount() == 0) {
-                mExecutor.execute(() -> {
-                    if (mClipboardRepo != null) mClipboardRepo.removeAllUnpinnedText();
-                    notifyView();
-                });
+                mExecutor.execute(() -> { if (mClipboardRepo != null) mClipboardRepo.removeAllUnpinnedText(); notifyView(); });
                 return;
             }
-
             ClipData.Item item = clip.getItemAt(0);
             CharSequence text = item.getText();
-
             if (text != null && TextUtils.isEmpty(text.toString().trim())) {
-                mExecutor.execute(() -> {
-                    if (mClipboardRepo != null) mClipboardRepo.removeAllUnpinnedText();
-                    notifyView();
-                });
+                mExecutor.execute(() -> { if (mClipboardRepo != null) mClipboardRepo.removeAllUnpinnedText(); notifyView(); });
                 return;
             }
-
             Uri uri = item.getUri();
             if (uri != null) {
-                if (FILE_PROVIDER_AUTHORITY.equals(uri.getAuthority())) {
-                    evictStaleFileProviderClip();
-                    return;
-                }
+                if (FILE_PROVIDER_AUTHORITY.equals(uri.getAuthority())) { evictStaleFileProviderClip(); return; }
                 if (uri.toString().equals(mLastSelfCopiedUri)) return;
-                mExecutor.execute(() -> {
-                    byte[] bytes = readUriBytes(uri);
-                    if (bytes != null) saveImageClipFromBytes(bytes, captureSequence);
-                });
+                mExecutor.execute(() -> { byte[] bytes = readUriBytes(uri); if (bytes != null) saveImageClipFromBytes(bytes, captureSequence); });
             } else if (!TextUtils.isEmpty(text)) {
                 processTextFallback(text.toString());
             }
@@ -137,21 +114,15 @@ public class ClipboardMonitor {
         Uri toRead = baseUri;
         if (Objects.equals(baseUri, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)) {
             String[] proj = {MediaStore.Images.Media._ID};
-            try (Cursor cursor = mContext.getContentResolver().query(
-                    baseUri, proj, null, null,
-                    MediaStore.Images.Media.DATE_ADDED + " DESC")) {
-                if (cursor != null && cursor.moveToFirst())
-                    toRead = Uri.withAppendedPath(baseUri, "" + cursor.getLong(0));
+            try (Cursor cursor = mContext.getContentResolver().query(baseUri, proj, null, null, MediaStore.Images.Media.DATE_ADDED + " DESC")) {
+                if (cursor != null && cursor.moveToFirst()) toRead = Uri.withAppendedPath(baseUri, "" + cursor.getLong(0));
             } catch (Exception ignored) {}
         }
         byte[] bytes = readUriBytes(toRead);
         if (bytes != null) { saveImageClipFromBytes(bytes, captureSequence); return; }
         if (attempt < SCREENSHOT_MAX_RETRIES) {
             long delay = SCREENSHOT_RETRY_DELAY_MS * (long) Math.pow(2, attempt);
-            mMainHandler.postDelayed(
-                    () -> mExecutor.execute(
-                            () -> retryReadScreenshot(baseUri, captureSequence, attempt + 1)),
-                    delay);
+            mMainHandler.postDelayed(() -> mExecutor.execute(() -> retryReadScreenshot(baseUri, captureSequence, attempt + 1)), delay);
         }
     }
 
@@ -159,29 +130,22 @@ public class ClipboardMonitor {
         try {
             Bitmap src = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             if (src == null) return;
-
             Bitmap bmp = scaledDown(src, MAX_SAVE_PX);
             if (bmp != src) src.recycle();
-
             File dir  = new File(mContext.getFilesDir(), CLIP_IMG_DIR);
             if (!dir.exists() && !dir.mkdirs()) { bmp.recycle(); return; }
             File file = new File(dir, System.currentTimeMillis() + ".jpg");
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-                bmp.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, fos);
-            }
+            try (FileOutputStream fos = new FileOutputStream(file)) { bmp.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, fos); }
             bmp.recycle();
-
             Uri contentUri = FileProvider.getUriForFile(mContext, FILE_PROVIDER_AUTHORITY, file);
             if (mClipboardRepo == null) return;
-            if (captureSequence != mClipboardCaptureSequence) {
-                file.delete();
-                return;
-            }
+            if (captureSequence != mClipboardCaptureSequence) { file.delete(); return; }
             final String uriString = contentUri.toString();
             mExecutor.execute(() -> {
                 mClipboardRepo.addImageItem(uriString, file);
                 mMainHandler.post(() -> {
                     if (captureSequence != mClipboardCaptureSequence) return;
+                    mClipboardManager.setPrimaryClip(ClipData.newUri(mContext.getContentResolver(), "image", contentUri));
                     notifyView();
                 });
             });
@@ -207,9 +171,7 @@ public class ClipboardMonitor {
             if (uri != null && FILE_PROVIDER_AUTHORITY.equals(uri.getAuthority())) {
                 mClipboardManager.setPrimaryClip(ClipData.newPlainText("", ""));
             }
-        } catch (Exception e) {
-            Log.w("SwiftLite", "Failed to evict stale clipboard entry", e);
-        }
+        } catch (Exception e) { Log.w("SwiftLite", "Failed to evict stale clipboard entry", e); }
     }
 
     private byte[] readUriBytes(Uri uri) {
@@ -225,29 +187,13 @@ public class ClipboardMonitor {
 
     private void processTextFallback(String text) {
         if (mClipboardRepo == null) return;
-        mExecutor.execute(() -> {
-            mClipboardRepo.addItem(text);
-            mMainHandler.post(this::notifyView);
-        });
+        mExecutor.execute(() -> { mClipboardRepo.addItem(text); mMainHandler.post(this::notifyView); });
     }
 
-    private void notifyView() {
-        if (mKeyboardView != null) {
-            mKeyboardView.setShowingIdleItems(true);
-            mKeyboardView.notifyClipboardChanged();
-        }
-    }
-
-    public void setLastSelfCopiedUri(String uri) {
-        mLastSelfCopiedUri = uri;
-    }
-
+    private void notifyView() { if (mKeyboardView != null) { mKeyboardView.setShowingIdleItems(true); mKeyboardView.notifyClipboardChanged(); } }
+    public void setLastSelfCopiedUri(String uri) { mLastSelfCopiedUri = uri; }
     public void destroy() {
-        if (mScreenshotObserver != null)
-            try { mContext.getContentResolver().unregisterContentObserver(mScreenshotObserver); } catch (Exception ignored) {}
-        if (mClipboardManager != null && mClipListener != null) {
-            mClipboardManager.removePrimaryClipChangedListener(mClipListener);
-            mClipListener = null;
-        }
+        if (mScreenshotObserver != null) try { mContext.getContentResolver().unregisterContentObserver(mScreenshotObserver); } catch (Exception ignored) {}
+        if (mClipboardManager != null && mClipListener != null) { mClipboardManager.removePrimaryClipChangedListener(mClipListener); mClipListener = null; }
     }
 }

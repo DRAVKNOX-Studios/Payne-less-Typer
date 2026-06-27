@@ -38,6 +38,8 @@ public class PrivacyHandler {
             isWhatsAppPIN = hintMatchesPIN || noEnterAction;
         }
 
+        if ("com.instagram.android".equals(info.packageName) && !isPassword) return false;
+
         return isPassword || isNoLearning || isNoSuggestions || isEmail || isWhatsAppPIN;
     }
 

@@ -240,19 +240,22 @@ public class SwiftLiteIME extends InputMethodService {
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
         Uri uri = Uri.parse(uriStr);
         if (mClipboardMonitor != null) mClipboardMonitor.setLastSelfCopiedUri(uriStr);
+        android.content.ClipboardManager cm = (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        if (cm != null) {
+            android.content.ClipData clip = android.content.ClipData.newUri(getContentResolver(), "image", uri);
+            cm.setPrimaryClip(clip);
+        }
         EditorInfo editorInfo = mCurrentEditorInfo;
         if (editorInfo == null || editorInfo.packageName == null) return;
         try { grantUriPermission(editorInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION); } catch (Exception ignored) {}
         String[] supportedMimes = EditorInfoCompat.getContentMimeTypes(editorInfo);
-        boolean editorSupportsPng = false;
-        for (String mime : supportedMimes) {
-            if (android.content.ClipDescription.compareMimeTypes("image/png", mime)) { editorSupportsPng = true; break; }
+        String bestMime = null;
+        for (String m : supportedMimes) {
+            if (m.startsWith("image/")) { if (bestMime == null || m.equals("image/jpeg")) bestMime = m; }
         }
-        if (editorSupportsPng) {
-            InputContentInfoCompat info = new InputContentInfoCompat(
-                uri, new android.content.ClipDescription("image", new String[]{"image/png"}), null);
-            InputConnectionCompat.commitContent(ic, editorInfo, info,
-                InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION, null);
+        if (bestMime != null) {
+            InputContentInfoCompat info = new InputContentInfoCompat(uri, new android.content.ClipDescription("image", new String[]{bestMime}), null);
+            InputConnectionCompat.commitContent(ic, editorInfo, info, InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION, null);
         }
         if (mKeyboardView != null) mKeyboardView.showPanel(KeyboardView.PANEL_KEYS);
     }

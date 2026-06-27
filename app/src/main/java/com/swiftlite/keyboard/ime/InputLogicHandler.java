@@ -85,10 +85,10 @@ public class InputLogicHandler {
 
     private void checkGooglyTrigger(InputConnection ic) {
         if (PrivacyHandler.isSensitiveField(mIME.getCurrentInputEditorInfo())) return;
-        int len = GOOGLY_TRIGGER.length() + 1;
+        int len = GOOGLY_TRIGGER.length();
         CharSequence before = ic.getTextBeforeCursor(len, 0);
         if (before == null || before.length() < len) return;
-        if (!before.toString().toLowerCase().equals(GOOGLY_TRIGGER + " ")) return;
+        if (!before.toString().toLowerCase().equals(GOOGLY_TRIGGER)) return;
 
         KeyboardView kv = mIME.getKeyboardView();
         if (kv != null) kv.forceShowGooglyEyes();
