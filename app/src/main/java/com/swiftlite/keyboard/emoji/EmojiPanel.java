@@ -49,7 +49,7 @@ public class EmojiPanel extends LinearLayout {
         mSkinPopupManager = new SkinTonePopupManager(context, this);
         setOrientation(VERTICAL);
         setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(230)));
+                ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(240)));
 
         EmojiData.init(context.getAssets());
         EmojiSkinToneHelper.init(context);

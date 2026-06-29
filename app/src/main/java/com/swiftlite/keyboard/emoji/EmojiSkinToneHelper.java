@@ -60,6 +60,10 @@ public class EmojiSkinToneHelper {
 
     public static boolean isToneSupportedEmoji(String emoji) {
         if (emoji == null || emoji.isEmpty()) return false;
+        
+        // Exclude complex family/multi-person sequences from being toned as they often render incorrectly
+        if (emoji.contains(ZWJ) && countHumanBases(emoji) > 1) return false;
+
         if (emoji.length() >= 2 && SIMPLE_TONE_BASES.contains(emoji.substring(0, 2))) return true;
         if (emoji.contains(ZWJ)) {
             for (String base : ZWJ_HUMAN_BASES) if (emoji.contains(base)) return true;
@@ -67,22 +71,43 @@ public class EmojiSkinToneHelper {
         return false;
     }
 
+    private static int countHumanBases(String emoji) {
+        if (ZWJ_HUMAN_BASES == null) return 0;
+        int count = 0;
+        for (String base : ZWJ_HUMAN_BASES) {
+            int pos = -1;
+            while ((pos = emoji.indexOf(base, pos + 1)) != -1) count++;
+        }
+        return count;
+    }
+
     public static String applyTone(String base, String modifier) {
         if (modifier == null) return base;
-        if (!base.contains(ZWJ)) return base + modifier;
+        if (!base.contains(ZWJ)) {
+            return stripTone(base) + modifier;
+        }
         String[] parts = base.split(ZWJ, -1);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < parts.length; i++) {
-            String seg = stripTone(parts[i]);
-            sb.append(seg);
-            if (seg.length() >= 2 && ZWJ_HUMAN_BASES.contains(seg.substring(0, 2))) sb.append(modifier);
+            String seg = parts[i];
+            String baseSeg = stripTone(seg);
+            boolean isHuman = baseSeg.length() >= 2 && ZWJ_HUMAN_BASES.contains(baseSeg.substring(0, 2));
+            sb.append(baseSeg);
+            if (isHuman) sb.append(modifier);
+            else if (seg.endsWith("\uFE0F")) sb.append("\uFE0F");
             if (i < parts.length - 1) sb.append(ZWJ);
         }
         return sb.toString();
     }
 
-    private static String stripTone(String seg) {
-        for (String t : SKIN_TONES) if (seg.endsWith(t)) return seg.substring(0, seg.length() - t.length());
-        return seg;
+    public static String stripTone(String seg) {
+        if (seg == null) return null;
+        String res = seg;
+        while (res.endsWith("\uFE0F")) res = res.substring(0, res.length() - 1);
+        if (SKIN_TONES == null) return res;
+        for (String t : SKIN_TONES) {
+            if (res.endsWith(t)) return res.substring(0, res.length() - t.length());
+        }
+        return res;
     }
 }

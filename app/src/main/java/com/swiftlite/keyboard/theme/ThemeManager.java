@@ -22,6 +22,7 @@ public class ThemeManager {
     private static final String KEY_AUTOAPOSTROPHE  = "autoapostrophe";
     private static final String KEY_DICTIONARY      = "user_dictionary";
     private static final String KEY_VIBRATE         = "vibrate_on_keypress";
+    private static final String KEY_NUMBER_ROW      = "number_row";
     private static final String KEY_FONT_SIZE       = "font_size_multiplier";
 
     public static final int THEME_LIGHT  = 0;
@@ -110,6 +111,7 @@ public class ThemeManager {
     public boolean isAutoSpaceEnabled()     { return mPrefs.getBoolean(KEY_AUTOSPACE,      true); }
     public boolean isAutoApostropheEnabled(){ return mPrefs.getBoolean(KEY_AUTOAPOSTROPHE, true); }
     public boolean isVibrateEnabled()       { return mPrefs.getBoolean(KEY_VIBRATE,        true); }
+    public boolean isNumberRowEnabled()     { return mPrefs.getBoolean(KEY_NUMBER_ROW,     false); }
 
     public String getUserDictionary()         { return mPrefs.getString(KEY_DICTIONARY, ""); }
     public float  getFontSizeMultiplier()     { return mPrefs.getFloat(KEY_FONT_SIZE, 1.0f); }
@@ -119,6 +121,7 @@ public class ThemeManager {
     public void setAutoSpaceEnabled(boolean v)      { mPrefs.edit().putBoolean(KEY_AUTOSPACE,      v).apply(); }
     public void setAutoApostropheEnabled(boolean v) { mPrefs.edit().putBoolean(KEY_AUTOAPOSTROPHE, v).apply(); }
     public void setVibrateEnabled(boolean v)        { mPrefs.edit().putBoolean(KEY_VIBRATE,        v).apply(); }
+    public void setNumberRowEnabled(boolean v)      { mPrefs.edit().putBoolean(KEY_NUMBER_ROW,     v).apply(); }
     public void setUserDictionary(String words)     { mPrefs.edit().putString(KEY_DICTIONARY, words).apply(); }
     public void setFontSizeMultiplier(float v)      { mPrefs.edit().putFloat(KEY_FONT_SIZE,  v).apply(); }
 

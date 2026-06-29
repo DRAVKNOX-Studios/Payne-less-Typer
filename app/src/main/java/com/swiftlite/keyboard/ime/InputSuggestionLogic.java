@@ -21,9 +21,9 @@ public class InputSuggestionLogic {
         }
         CharSequence before = ic.getTextBeforeCursor(50, 0);
         if (TextUtils.isEmpty(before)) { mIME.clearSuggestions(); return; }
-        int end = before.length(), start = end;
-        while (start > 0 && (Character.isLetter(before.charAt(start - 1)) || before.charAt(start - 1) == '\'')) start--;
-        String currentWord = start < end ? before.subSequence(start, end).toString() : null;
+        
+        String currentWord = SuggestionUtils.getCurrentWord(before);
+        int start = currentWord != null ? before.length() - currentWord.length() : before.length();
         String prevWord    = SuggestionUtils.findWordBefore(before, start);
         if (currentWord != null && currentWord.length() >= 1) {
             mIME.updateSuggestions(prevWord, currentWord);
@@ -37,18 +37,29 @@ public class InputSuggestionLogic {
     public void commitSuggestion(InputConnection ic, String suggestion) {
         String lastWordTyped = null;
         CharSequence before = ic.getTextBeforeCursor(50, 0);
+        CharSequence after = ic.getTextAfterCursor(50, 0);
 
-        if (TextUtils.isEmpty(before)) {
-            ic.commitText(suggestion + " ", 1);
-        } else {
+        int beforeDelete = 0, afterDelete = 0;
+        if (!TextUtils.isEmpty(before)) {
             int end = before.length(), start = end;
-            while (start > 0 && (Character.isLetter(before.charAt(start - 1)) || before.charAt(start - 1) == '\'')) start--;
+            while (start > 0 && (Character.isLetter(before.charAt(start - 1)) 
+                    || before.charAt(start - 1) == '\'' 
+                    || before.charAt(start - 1) == ':')) start--;
             if (start < end) {
                 lastWordTyped = before.subSequence(start, end).toString();
-                ic.deleteSurroundingText(end - start, 0);
+                beforeDelete = end - start;
             }
-            ic.commitText(suggestion + " ", 1);
         }
+        if (!TextUtils.isEmpty(after)) {
+            int end = 0;
+            while (end < after.length() && (Character.isLetter(after.charAt(end)) 
+                    || after.charAt(end) == '\'' 
+                    || after.charAt(end) == ':')) end++;
+            afterDelete = end;
+        }
+
+        ic.deleteSurroundingText(beforeDelete, afterDelete);
+        ic.commitText(suggestion + " ", 1);
 
         if (!PrivacyHandler.isSensitiveField(mIME.getCurrentInputEditorInfo())) mIME.learnWordUse(suggestion);
 

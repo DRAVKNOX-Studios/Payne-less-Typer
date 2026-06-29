@@ -77,7 +77,9 @@ public class SuggestionUtils {
     public static String getCurrentWord(CharSequence before) {
         if (before == null || before.length() == 0) return null;
         int end = before.length(), start = end;
-        while (start > 0 && (Character.isLetter(before.charAt(start - 1)) || before.charAt(start - 1) == '\'')) start--;
+        while (start > 0 && (Character.isLetter(before.charAt(start - 1)) 
+                || before.charAt(start - 1) == '\'' 
+                || before.charAt(start - 1) == ':')) start--;
         if (start < end) return before.subSequence(start, end).toString();
         return null;
     }

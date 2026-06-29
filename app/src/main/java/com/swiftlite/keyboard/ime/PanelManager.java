@@ -18,7 +18,7 @@ public class PanelManager {
     private final SwiftLiteIME    mIME;
     private final KeyboardView    mKbv;
     private final FrameLayout     mContainer;
-    private final int             mPanelPx;
+    private int mPanelPx;
     private final SuggestionBarView mSuggestionBar;
 
     private KeysCanvas         mKeysCanvas;
@@ -31,9 +31,10 @@ public class PanelManager {
     private int mBasePanel    = KeyboardView.PANEL_KEYS;
 
     PanelManager(Context ctx, SwiftLiteIME ime, KeyboardView kbv,
-                 FrameLayout container, int panelPx, SuggestionBarView bar) {
+                 FrameLayout container, int unused, SuggestionBarView bar) {
         mCtx = ctx; mIME = ime; mKbv = kbv;
-        mContainer = container; mPanelPx = panelPx; mSuggestionBar = bar;
+        mContainer = container; mSuggestionBar = bar;
+        mPanelPx = calculatePanelPx();
 
         mKeysCanvas = new KeysCanvas(ctx, ime, kbv);
         mContainer.addView(mKeysCanvas, matchPanel());
@@ -74,6 +75,11 @@ public class PanelManager {
         if (panel == KeyboardView.PANEL_KEYS || panel == KeyboardView.PANEL_NUMBERS)
             mBasePanel = panel;
         View in = get(panel);
+
+        if (mContainer.getLayoutParams() != null) {
+            mContainer.getLayoutParams().height = mPanelPx;
+            mContainer.requestLayout();
+        }
 
         transition(out, in, animate, dpToPx(6));
         if (panel == KeyboardView.PANEL_CLIPBOARD && mClipboardPanel != null)
@@ -131,10 +137,31 @@ public class PanelManager {
 
     public void applyTheme(KeyboardTheme t) {
         mTheme = t;
-        if (mKeysCanvas     != null) mKeysCanvas.setTheme(t);
+        mPanelPx = calculatePanelPx();
+        if (mContainer.getLayoutParams() != null) {
+            mContainer.getLayoutParams().height = mPanelPx;
+            mContainer.requestLayout();
+        }
+        if (mKeysCanvas     != null) {
+            mKeysCanvas.setTheme(t);
+        }
         if (mNumbersCanvas  != null) mNumbersCanvas.setTheme(t);
-        if (mEmojiPanel     != null) mEmojiPanel.setTheme(t);
-        if (mClipboardPanel != null) mClipboardPanel.setTheme(t);
+        if (mEmojiPanel     != null) {
+            mEmojiPanel.setTheme(t);
+            mEmojiPanel.getLayoutParams().height = mPanelPx;
+        }
+        if (mClipboardPanel != null) {
+            mClipboardPanel.setTheme(t);
+            mClipboardPanel.updateHeight(mPanelPx);
+        }
+    }
+
+    private int calculatePanelPx() {
+        float density = mCtx.getResources().getDisplayMetrics().density;
+        int kh = Math.round(BaseKeyCanvas.KEY_HEIGHT_DP * density);
+        int pad = Math.round(BaseKeyCanvas.KEY_PAD_DP * density);
+        int rows = mIME.getThemeManager().isNumberRowEnabled() ? 5 : 4;
+        return kh * rows + pad * (rows * 2 + 2);
     }
 
     public void trimMemory() {

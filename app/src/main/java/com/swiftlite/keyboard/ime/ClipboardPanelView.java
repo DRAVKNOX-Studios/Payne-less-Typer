@@ -99,6 +99,13 @@ public class ClipboardPanelView extends LinearLayout {
         if (mClipboardAdapter != null) mClipboardAdapter.setTheme(theme);
     }
 
+    public void updateHeight(int heightPx) {
+        if (getLayoutParams() != null) {
+            getLayoutParams().height = heightPx;
+            requestLayout();
+        }
+    }
+
     public void refreshClipboard() {
         ClipboardRepository repo = mIME.getClipboardRepository();
         if (repo == null) return;

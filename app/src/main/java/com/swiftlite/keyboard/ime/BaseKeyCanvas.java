@@ -86,8 +86,11 @@ public abstract class BaseKeyCanvas extends View {
     }
 
     @Override protected void onMeasure(int wSpec, int hSpec) {
-        int w = MeasureSpec.getSize(wSpec); mKeyHeight = (int) (KEY_HEIGHT_DP * mDensity); mPad = (int) (KEY_PAD_DP * mDensity);
-        setMeasuredDimension(w, mKeyHeight * 4 + mPad * 10);
+        int w = MeasureSpec.getSize(wSpec);
+        mKeyHeight = Math.round(KEY_HEIGHT_DP * mDensity);
+        mPad = Math.round(KEY_PAD_DP * mDensity);
+        int rows = mIME.getThemeManager().isNumberRowEnabled() ? 5 : 4;
+        setMeasuredDimension(w, mKeyHeight * rows + mPad * (rows * 2 + 2));
     }
 
     @Override protected void onSizeChanged(int w, int h, int oW, int oH) { mWidth = w; rebuildKeys(); }

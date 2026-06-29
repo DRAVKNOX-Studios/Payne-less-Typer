@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.view.inputmethod.EditorInfo;
 
+import com.swiftlite.keyboard.theme.KeyboardTheme;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,6 +28,7 @@ public class KeysCanvas extends BaseKeyCanvas {
     private boolean mIsSearchField  = false;
 
     private static Object[][] ROW1, ROW2, ROW3, ROW4;
+    private static Object[][] NUM_ROW, NUM_ROW_SHIFTED;
     private static final Map<Character, String[]> LONG_PRESS     = new HashMap<>();
     private static final Map<Character, String[]> SUB_LONG_PRESS = new HashMap<>();
     private static List<String> EMAIL_DOMAINS = new ArrayList<>();
@@ -42,6 +45,11 @@ public class KeysCanvas extends BaseKeyCanvas {
             ROW2 = parseRow(keys.getJSONArray("row2"));
             ROW3 = parseRow(keys.getJSONArray("row3"));
             ROW4 = parseRow(keys.getJSONArray("row4"));
+
+            String jsonNum = readAsset(ctx, "number_row.json");
+            JSONObject objNum = new JSONObject(jsonNum);
+            NUM_ROW = parseRow(objNum.getJSONArray("normal"));
+            NUM_ROW_SHIFTED = parseRow(objNum.getJSONArray("shifted"));
             
             JSONArray domains = obj.getJSONArray("email_domains");
             for (int i = 0; i < domains.length(); i++) EMAIL_DOMAINS.add(domains.getString(i));
@@ -89,11 +97,35 @@ public class KeysCanvas extends BaseKeyCanvas {
     @Override void rebuildKeys() {
         mKeys.clear(); if (mWidth == 0) return;
 
-        layoutEqualRow(ROW1, mPad, 10);
-        layoutRow2(mPad + mKeyHeight + mPad);
-        layoutRow3(mPad + (mKeyHeight + mPad) * 2);
-        layoutRow4(mPad + (mKeyHeight + mPad) * 3);
+        boolean numRow = mIME.getThemeManager().isNumberRowEnabled();
+        int y = mPad;
+        if (numRow) {
+            layoutEqualRow((mShiftOn || mCapsLock) ? NUM_ROW_SHIFTED : NUM_ROW, y, 10);
+            y += mKeyHeight + mPad;
+        }
+
+        layoutEqualRow(ROW1, y, 10);
+        y += mKeyHeight + mPad;
+        layoutRow2(y);
+        y += mKeyHeight + mPad;
+        layoutRow3(y);
+        y += mKeyHeight + mPad;
+        layoutRow4(y);
+        
         clampActionHitRects(); extendEdgeHitRects();
+        
+        if (numRow) {
+            // If number row is enabled, we might want to remove numeric sublabels from ROW1
+            for (Key k : mKeys) {
+                if (k.y >= (mPad + mKeyHeight + mPad) && k.y < (mPad + (mKeyHeight + mPad) * 2)) {
+                    if (k.subLabel != null && !k.subLabel.isEmpty() && Character.isDigit(k.subLabel.charAt(0))) {
+                        char ch = Character.toLowerCase((char) k.code);
+                        String[] alts = LONG_PRESS.get(ch);
+                        k.subLabel = (alts != null && alts.length > 0) ? alts[0] : "";
+                    }
+                }
+            }
+        }
 
         if (mIsEmailField) {
             for (Key k : mKeys) {
@@ -217,8 +249,19 @@ public class KeysCanvas extends BaseKeyCanvas {
         k.isAction = isActionCode(k.code); return k;
     }
 
+    @Override public void setTheme(KeyboardTheme theme) {
+        super.setTheme(theme);
+        rebuildKeys();
+        requestLayout();
+    }
+
     public void setShowingNumbers(boolean showing) { mShowingNumbers = showing; invalidate(); }
-    public void updateShift(boolean shift, boolean caps) { mShiftOn = shift; mCapsLock = caps; invalidate(); }
+    public void updateShift(boolean shift, boolean caps) {
+        boolean changed = (mShiftOn != shift) || (mCapsLock != caps);
+        mShiftOn = shift; mCapsLock = caps;
+        if (changed && mIME.getThemeManager().isNumberRowEnabled()) rebuildKeys();
+        invalidate();
+    }
 
     public void updateEditorInfo(EditorInfo info) {
         mIsEmailField = PrivacyHandler.isEmailField(info);

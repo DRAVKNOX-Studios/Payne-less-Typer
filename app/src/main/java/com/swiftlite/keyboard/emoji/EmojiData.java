@@ -15,8 +15,8 @@ public final class EmojiData {
 
     private static final String ASSET_PATH = "emoji_data.json";
 
-    static volatile String[][] ALL;
-    static volatile String[] TAB_ICONS;
+    public static volatile String[][] ALL;
+    public static volatile String[] TAB_ICONS;
 
     private static final Object LOCK = new Object();
 

@@ -87,7 +87,7 @@ public class SwiftLiteIME extends InputMethodService {
         mExecutor = Executors.newSingleThreadExecutor(); mMainHandler = new Handler(Looper.getMainLooper());
         mPrefListener = (prefs, key) -> mMainHandler.post(() -> {
             if (key == null) return;
-            if (key.equals("theme_id") || key.equals("accent_color") || key.equals("font_size_multiplier")) {
+            if (key.equals("theme_id") || key.equals("accent_color") || key.equals("font_size_multiplier") || key.equals("number_row")) {
                 mThemeManager.reload(); if (mKeyboardView != null) mKeyboardView.setTheme(mThemeManager.getCurrentTheme());
             } else if (key.equals("user_dictionary")) {
                 if (mSuggestionEngine != null) mSuggestionEngine.reloadUserDictionary();

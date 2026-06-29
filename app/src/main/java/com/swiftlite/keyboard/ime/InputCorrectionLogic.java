@@ -46,7 +46,14 @@ public class InputCorrectionLogic {
         String prevWord = SuggestionUtils.findWordBefore(before, start);
         String corrected = mSuggestionEngine.getTopCorrection(prevWord, typed);
         if (corrected != null && !corrected.equals(typed)) {
-            ic.deleteSurroundingText(end - start, 0);
+            int afterDelete = 0;
+            CharSequence after = ic.getTextAfterCursor(50, 0);
+            if (!TextUtils.isEmpty(after)) {
+                int e = 0;
+                while (e < after.length() && (Character.isLetter(after.charAt(e)) || after.charAt(e) == '\'')) e++;
+                afterDelete = e;
+            }
+            ic.deleteSurroundingText(end - start, afterDelete);
             ic.commitText(corrected, 1);
             mLastTypedWord = typed;
             mLastCorrectedWord = corrected;
@@ -89,7 +96,14 @@ public class InputCorrectionLogic {
         
         String finalCorrection = ContractionHelper.getContraction(word);
         if (finalCorrection != null) {
-            ic.deleteSurroundingText(word.length() + 1, 0);
+            int afterDelete = 0;
+            CharSequence after = ic.getTextAfterCursor(50, 0);
+            if (!TextUtils.isEmpty(after)) {
+                int e = 0;
+                while (e < after.length() && (Character.isLetter(after.charAt(e)) || after.charAt(e) == '\'')) e++;
+                afterDelete = e;
+            }
+            ic.deleteSurroundingText(word.length() + 1, afterDelete);
             ic.commitText(finalCorrection, 1);
             mLastTypedWord = word + "'";
             mLastCorrectedWord = finalCorrection;

@@ -27,7 +27,6 @@ public class KeyboardView extends FrameLayout {
     public static final int PANEL_CLIPBOARD = 2;
     public static final int PANEL_NUMBERS   = 3;
 
-    private static final int PANEL_HEIGHT_DP = 240;
     private static final int GOOGLY_ODDS     = 20;
 
     private static final int MP = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -70,13 +69,12 @@ public class KeyboardView extends FrameLayout {
         mSuggestionBar = new SuggestionBarView(getContext(), mIME, this);
         root.addView(mSuggestionBar);
 
-        int panelPx = dpToPx(PANEL_HEIGHT_DP);
         FrameLayout container = new FrameLayout(getContext());
-        container.setLayoutParams(new LinearLayout.LayoutParams(MP, panelPx));
+        container.setLayoutParams(new LinearLayout.LayoutParams(MP, WC));
         root.addView(container);
         addView(root);
 
-        mPanels = new PanelManager(getContext(), mIME, this, container, panelPx, mSuggestionBar);
+        mPanels = new PanelManager(getContext(), mIME, this, container, 0, mSuggestionBar);
     }
 
     public void maybeShowGooglyEyes() {
@@ -137,7 +135,10 @@ public class KeyboardView extends FrameLayout {
     }
 
     public void notifyEmojiUsed() {
-        if (mPanels != null && mPanels.emoji() != null) mPanels.emoji().refreshRecents();
+        if (mPanels != null) {
+            if (mPanels.emoji() != null) mPanels.emoji().refreshRecents();
+            if (mPanels.numbers() != null) mPanels.numbers().refreshRecents();
+        }
     }
 
     public void setTheme(KeyboardTheme theme) {

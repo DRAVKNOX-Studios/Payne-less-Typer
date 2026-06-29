@@ -33,6 +33,8 @@ public class NumbersCanvas extends BaseKeyCanvas {
             P2_MISC = parseRow(obj.getJSONArray("p2_misc"));
             P2_CURR = parseRow(obj.getJSONArray("p2_curr"));
             P2_MATH = parseRow(obj.getJSONArray("p2_math"));
+            com.swiftlite.keyboard.emoji.EmojiData.init(ctx.getAssets());
+            com.swiftlite.keyboard.emoji.EmojiSkinToneHelper.init(ctx);
             sLoaded = true;
         } catch (Exception e) { throw new RuntimeException("Failed to load numbers_layout.json", e); }
     }
@@ -59,22 +61,68 @@ public class NumbersCanvas extends BaseKeyCanvas {
         super(context, ime, parent); init(context);
     }
 
+    private void layoutEmojiRow(int yTop) {
+        String skin = mIME.getSelectedEmojiSkin();
+        String[] recents = mIME.getRecentEmojis();
+        List<String> emojis = new ArrayList<>();
+        mTextPaint.setTextSize(mDensity * 16 * mFontSizeMultiplier);
+
+        if (recents != null) {
+            for (String e : recents) {
+                if (emojis.size() >= 10) break;
+                String toned = com.swiftlite.keyboard.emoji.EmojiSkinToneHelper.isToneSupportedEmoji(e)
+                        ? com.swiftlite.keyboard.emoji.EmojiSkinToneHelper.applyTone(e, skin) : e;
+                if (mTextPaint.hasGlyph(toned) && !emojis.contains(toned)) emojis.add(toned);
+            }
+        }
+
+        if (emojis.size() < 10 && com.swiftlite.keyboard.emoji.EmojiData.ALL != null) {
+            for (String[] cat : com.swiftlite.keyboard.emoji.EmojiData.ALL) {
+                if (emojis.size() >= 10) break;
+                for (String e : cat) {
+                    if (emojis.size() >= 10) break;
+                    String toned = com.swiftlite.keyboard.emoji.EmojiSkinToneHelper.isToneSupportedEmoji(e)
+                            ? com.swiftlite.keyboard.emoji.EmojiSkinToneHelper.applyTone(e, skin) : e;
+                    if (mTextPaint.hasGlyph(toned) && !emojis.contains(toned)) emojis.add(toned);
+                }
+            }
+        }
+        
+        float keyW = (mWidth - mPad * 11) / 10f;
+        float x = mPad;
+        for (String emoji : emojis) {
+            Key k = new Key();
+            k.label = emoji;
+            k.code = 0;
+            k.x = x; k.y = yTop; k.w = keyW; k.h = mKeyHeight;
+            k.hitX = x; k.hitW = keyW;
+            mKeys.add(k);
+            x += keyW + mPad;
+        }
+    }
+
     @Override
     void rebuildKeys() {
         mKeys.clear();
         if (mWidth <= 0) mWidth = getWidth();
         if (mWidth <= 0) return;
+
+        int kh = mKeyHeight, pad = mPad;
+        boolean numRowEnabled = mIME.getThemeManager().isNumberRowEnabled();
+        int startRow = numRowEnabled ? 1 : 0;
+
+        if (numRowEnabled) layoutEmojiRow(pad);
+
         if (mIME.isNumberMode()) {
-            layoutNumberPad();
+            layoutNumberPad(startRow);
         } else {
-            int kh = mKeyHeight, pad = mPad;
             String[][][] page = mPage == 0
                     ? new String[][][]{P1_NUM, P1_SYM1, P1_SYM2}
                     : new String[][][]{P2_MISC, P2_CURR, P2_MATH};
             int[] counts = new int[]{10, 10, 7};
             for (int row = 0; row < 3; row++)
-                layoutSymRow(page[row], pad + (kh + pad) * row, counts[row], row == 2);
-            layoutBottomRow(pad + (kh + pad) * 3);
+                layoutSymRow(page[row], pad + (kh + pad) * (row + startRow), counts[row], row == 2);
+            layoutBottomRow(pad + (kh + pad) * (3 + startRow));
         }
         clampActionHitRects();
         extendEdgeHitRects();
@@ -91,21 +139,22 @@ public class NumbersCanvas extends BaseKeyCanvas {
         }
     }
 
-    private void layoutNumberPad() {
+    private void layoutNumberPad(int startRow) {
         int kh = mKeyHeight, pad = mPad;
+        int yOff = startRow * (kh + pad);
         float colW = (mWidth - pad * 5) / 4f;
         float x2 = pad + colW + pad, x3 = pad + (colW + pad) * 2, x4 = pad + (colW + pad) * 3;
-        addKey("1", pad, pad, colW, kh); addKey("2", x2, pad, colW, kh);
-        addKey("3", x3, pad, colW, kh);
-        addSpecial(KeyboardView.KEY_DELETE, x4, pad, colW, kh, false, KeyIcons.IC_BACKSPACE);
-        addKey("4", pad, pad+kh+pad, colW, kh); addKey("5", x2, pad+kh+pad, colW, kh);
-        addKey("6", x3, pad+kh+pad, colW, kh);
-        addSpecial(KeyboardView.KEY_ENTER, x4, pad+kh+pad, colW, kh*3+pad*2, true, KeyIcons.IC_ENTER);
-        addKey("7", pad, pad+(kh+pad)*2, colW, kh); addKey("8", x2, pad+(kh+pad)*2, colW, kh);
-        addKey("9", x3, pad+(kh+pad)*2, colW, kh);
-        addSpecial(KeyboardView.KEY_NUMBERS, pad, pad+(kh+pad)*3, colW, kh, false, KeyIcons.IC_ALPHA);
-        addKey("0", x2, pad+(kh+pad)*3, colW, kh);
-        addKey(".", x3, pad+(kh+pad)*3, colW, kh);
+        addKey("1", pad, pad + yOff, colW, kh); addKey("2", x2, pad + yOff, colW, kh);
+        addKey("3", x3, pad + yOff, colW, kh);
+        addSpecial(KeyboardView.KEY_DELETE, x4, pad + yOff, colW, kh, false, KeyIcons.IC_BACKSPACE);
+        addKey("4", pad, pad+kh+pad + yOff, colW, kh); addKey("5", x2, pad+kh+pad + yOff, colW, kh);
+        addKey("6", x3, pad+kh+pad + yOff, colW, kh);
+        addSpecial(KeyboardView.KEY_ENTER, x4, pad+kh+pad + yOff, colW, kh*3+pad*2, true, KeyIcons.IC_ENTER);
+        addKey("7", pad, pad+(kh+pad)*2 + yOff, colW, kh); addKey("8", x2, pad+(kh+pad)*2 + yOff, colW, kh);
+        addKey("9", x3, pad+(kh+pad)*2 + yOff, colW, kh);
+        addSpecial(KeyboardView.KEY_NUMBERS, pad, pad+(kh+pad)*3 + yOff, colW, kh, false, KeyIcons.IC_ALPHA);
+        addKey("0", x2, pad+(kh+pad)*3 + yOff, colW, kh);
+        addKey(".", x3, pad+(kh+pad)*3 + yOff, colW, kh);
     }
 
     private void addKey(String label, float x, float y, float w, float h) {
@@ -127,10 +176,16 @@ public class NumbersCanvas extends BaseKeyCanvas {
     void onNormalTap(Key key) {
         if (key.code == KeyboardView.KEY_NUMBERS) mParent.showPanel(KeyboardView.PANEL_KEYS);
         else if (key.code == KEY_PAGE) { mPage = 1 - mPage; rebuildKeys(); invalidate(); }
+        else if (key.code == 0 && key.label != null && !key.label.isEmpty()) {
+            mIME.commitEmoji(key.label);
+        }
         else mIME.onKeyPress(key.code, key.label);
     }
 
-    @Override boolean showKeyPreviewOnDown(Key key) { return !key.isAction && key.label != null && !key.label.isEmpty(); }
+    @Override boolean showKeyPreviewOnDown(Key key) {
+        if (key.code == 0 && key.label != null && key.label.length() > 1) return false;
+        return !key.isAction && key.label != null && !key.label.isEmpty();
+    }
     @Override String subLabelFor(Key key) { return firstSub(key.subLabel); }
 
     private void layoutSymRow(String[][] defs, int yTop, int count, boolean withPage) {
@@ -188,6 +243,13 @@ public class NumbersCanvas extends BaseKeyCanvas {
         Key k = new Key(); k.code = code; k.label = ""; k.subLabel = "";
         k.x = x; k.y = y; k.w = w; k.h = h; k.hitX = x; k.hitW = w;
         k.isSpecial = true; k.isAccent = accent; k.icon = icon; k.isAction = true; mKeys.add(k);
+    }
+
+    public void refreshRecents() {
+        if (mIME.getThemeManager().isNumberRowEnabled()) {
+            rebuildKeys();
+            invalidate();
+        }
     }
 
     public void updateEditorInfo(EditorInfo info) {

@@ -60,6 +60,7 @@ public class SuggestionEngine implements SpellCheckerSession.SpellCheckerSession
     private volatile MmapDictionary mWords;
     private final UsageManager mUsageManager;
     private final CorrectionManager mCorrectionManager;
+    private final EmojiSuggestionProvider mEmojiProvider;
 
     private volatile SuggestionCallback mPendingCallback;
     private volatile Handler            mPendingHandler;
@@ -74,6 +75,7 @@ public class SuggestionEngine implements SpellCheckerSession.SpellCheckerSession
         mCtx = ctx.getApplicationContext();
         mUsageManager = new UsageManager(mCtx);
         mCorrectionManager = new CorrectionManager(mCtx, themeManager);
+        mEmojiProvider = new EmojiSuggestionProvider(mCtx);
     }
 
     public void reloadUserDictionary() {
@@ -216,6 +218,11 @@ public class SuggestionEngine implements SpellCheckerSession.SpellCheckerSession
         boolean hasCorrection = correction != null && !correction.equalsIgnoreCase(word);
         if (hasCorrection) { results.add(correction); results.add(word); }
         else                results.add(word);
+
+        List<String> emojis = mEmojiProvider.getEmojiSuggestions(word);
+        for (String e : emojis) {
+            if (!results.contains(e)) results.add(e);
+        }
 
         if (spellSuggestions != null) {
             for (String s : spellSuggestions) {
