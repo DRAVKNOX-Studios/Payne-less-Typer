@@ -38,7 +38,7 @@ We've packed in everything you actually need for daily typing:
 We spent a lot of time making sure this app doesn't hog your resources.
 
 *   **Memory (RAM):** It usually sits between 19MB and 25MB of RAM in Hidden State and ~40MB when actively used. (Used ADB profiling)
-*   **Storage:** The entire app takes up about 16MB on your phone. The main dictionary is a lean 5MB file.
+*   **Storage:** The entire app takes up about 4MB on your phone. The main dictionary is a lean 5MB file.
 *   **Speed:** Since we draw the keys directly to the screen (no slow Button views), the keyboard pops up instantly.
 
 ## Minimum Requirements
