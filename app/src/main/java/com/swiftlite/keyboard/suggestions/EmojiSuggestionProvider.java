@@ -1,6 +1,7 @@
 package com.swiftlite.keyboard.suggestions;
 
 import android.content.Context;
+import android.graphics.Paint;
 import org.json.JSONObject;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +16,7 @@ import java.util.List;
 public class EmojiSuggestionProvider {
     private static final String ASSET_NAME = "emoji_shortcodes.json";
     private JSONObject mMapping;
+    private final Paint mPaint = new Paint();
 
     public EmojiSuggestionProvider(Context context) {
         try (InputStream is = context.getAssets().open(ASSET_NAME)) {
@@ -45,12 +47,18 @@ public class EmojiSuggestionProvider {
             String key = keys.next();
             if (key.startsWith(q)) {
                 String emoji = mMapping.optString(key);
-                if (!results.contains(emoji)) {
+                if (canRender(emoji) && !results.contains(emoji)) {
                     results.add(emoji);
                 }
             }
             if (results.size() >= 3) break;
         }
         return results;
+    }
+
+    private boolean canRender(String emoji) {
+        if (emoji == null || emoji.isEmpty()) return false;
+        // API 26+ provides reliable glyph checking via Paint.
+        return mPaint.hasGlyph(emoji);
     }
 }
