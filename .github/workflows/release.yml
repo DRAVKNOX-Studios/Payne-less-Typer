@@ -42,18 +42,18 @@ jobs:
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-      # Get the version number from the tag (strips the leading 'v')
+      # Get the version number from the tag for the release title
       - name: Get version from tag
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
 
-      # Rename the APK to a clean, human-friendly filename
+      # Rename to a fixed filename so the /releases/latest/download/ URL never changes
       - name: Rename APK
         run: |
           mv app/build/outputs/apk/release/app-release.apk \
-             "Payne-less-Typer-${{ steps.version.outputs.VERSION }}.apk"
+             "Payne-less-Typer.apk"
 
-      # Clean up the keystore immediately after signing — don't leave it on the runner
+      # Clean up the keystore immediately after signing - don't leave it on the runner
       - name: Clean up keystore
         if: always()
         run: rm -f keystore.jks
@@ -64,5 +64,5 @@ jobs:
           name: "Payne-less: Typer ${{ steps.version.outputs.VERSION }}"
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
-          files: "Payne-less-Typer-${{ steps.version.outputs.VERSION }}.apk"
+          files: "Payne-less-Typer.apk"
           fail_on_unmatched_files: true
