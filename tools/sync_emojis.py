@@ -10,7 +10,7 @@ DATA_PATH = ROOT / "app/src/main/assets/emoji_data.json"
 SHORTCODES_PATH = ROOT / "app/src/main/assets/emoji_shortcodes.json"
 
 # Source
-UNICODE_URL = "https://www.unicode.org/Public/emoji/16.0/emoji-test.txt"
+UNICODE_URL = "https://www.unicode.org/Public/emoji/latest/emoji-test.txt"
 
 def clean_name(name):
     """Convert 'Grinning Face with Big Eyes' to 'grinning_face'"""
