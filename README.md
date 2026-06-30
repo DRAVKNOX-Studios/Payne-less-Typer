@@ -276,7 +276,7 @@ This keyboard focuses on speed, simplicity, privacy, and low resource usage firs
 
 ## Getting Started
 
-1.  **Download:** Grab the latest APK from the [Releases](https://github.com/thedinyamum/SwiftLite/releases) page.
+1.  **Download:** Grab the latest APK from the [Releases](https://github.com/DRAVKNOX-Studios/Payne-less-Typer/releases) page.
 2.  **Build it:** If you're a dev, just open this in Android Studio and hit Run. It needs Android 8.0 or newer.
 3.  **Setup:** Open the app once it's installed. It will walk you through enabling the keyboard in your system settings.
 4.  **Test it:** There's a built-in keyboard tester with a WPM counter so you can verify everything feels right before committing. It's in the setup app.
