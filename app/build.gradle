@@ -42,9 +42,12 @@ android {
 }
 
 tasks.register('syncEmojiShortcodes', Exec) {
+    // Skip on CI — emoji_shortcodes.json is already committed to the repo.
+    // The CI env var is set automatically by GitHub Actions (and most other CI platforms).
+    // Local builds run this as normal to keep emoji data fresh.
+    onlyIf { !System.getenv('CI') }
     workingDir "${project.rootDir}"
     commandLine 'python3', 'tools/sync_emojis.py'
-    // Optional: Only run if data changed
     inputs.file 'app/src/main/assets/emoji_data.json'
     outputs.file 'app/src/main/assets/emoji_shortcodes.json'
 }
