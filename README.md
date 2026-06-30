@@ -21,10 +21,14 @@ We've packed in everything you actually need for daily typing:
 *   **Long-Press Alternates:** Hold down any key and a popup shows all the alternate characters. Great for accented letters and symbols without switching layouts.
 *   **Undo:** There's an undo button right in the suggestion bar. It sends a standard Ctrl+Z, so it works in any app that supports it.
 *   **Key Previews:** A little magnified bubble pops up above each key as you press it, so you always know what you just typed.
+*   **Haptic Feedback:** Every key's a vibrator of different magnitudes. Optional if you prefer silence.
 *   **Emoji Central:** All your favorite emojis with a proper skin tone picker. It even remembers the ones you use most.
+*   **Suggested Emojis:** Typing an emoji's name will show relevant emojis in suggestions panel. No need to open emoji panel if you feel lazy!
 *   **Clipboard Memory:** A built-in manager that remembers your last 20 copies, including images. You can pin the stuff you use all the time so it never gets deleted. You can also share content straight into the clipboard from any app using the Android share sheet.
 *   **Your Own Dictionary:** Teach the keyboard new words it doesn't know. Add slang, names, or technical jargon, and it'll start suggesting them like anything else.
+*   **Takes Rejections Seriously!:** Auto-correct correcting a perfectly fine word? Backspacing will remove the auto-correct, 3+ rejections for the same word prevent auto-correct on it.
 *   **Themes:** Pick between Light, Dark, Forest, Ocean, or full AMOLED black. You can even swap between 8 different accent colors to match your vibe. Font size is adjustable too.
+*   **Number Row**: Use numbers frequently? Enable number row and the keyboard displays numbers in alphabetical keyboard and an emoji row in numerical keyboard.
 *   **Privacy:** No internet permission. Period. Your data stays on your phone where it belongs. No analytics, telemetry, cloud sync, or account sign-ins.
 *   **Sensitive Field Detection:** Prevents suggestions and learning new words from fields requiring sensitive info such as email, PIN, password.
 *   **The Secret:** Use it daily or type the **codeword** and unlock a little surprise! (There's also a hidden visual easter egg in the suggestion bar, just saying.)
@@ -33,8 +37,8 @@ We've packed in everything you actually need for daily typing:
 
 We spent a lot of time making sure this app doesn't hog your resources.
 
-*   **Memory (RAM):** It usually sits between 19MB and 25MB of RAM in Hidden State and ~40MB when actively used. (Used ADB profiling, based on PSS)
-*   **Storage:** The entire app takes up about 4MB on your phone. The main dictionary is a lean 5MB file.
+*   **Memory (RAM):** It usually sits between 19MB and 25MB of RAM in Hidden State and ~40MB when actively used. (Used ADB profiling)
+*   **Storage:** The entire app takes up about 16MB on your phone. The main dictionary is a lean 5MB file.
 *   **Speed:** Since we draw the keys directly to the screen (no slow Button views), the keyboard pops up instantly.
 
 ## Minimum Requirements
@@ -109,20 +113,31 @@ SwiftKey-Lite
 │   ├── ISSUE_TEMPLATE
 │   │   ├── bug_report.md
 │   │   ├── config.yml
-│   │   ├── feature_request.md
-│   │   └── PULL_REQUEST_TEMPLATE.md
-│   └── workflows
-│       ├── android.yml
-│       └── gradle.yml
+│   │   └── feature_request.md
+│   ├── workflows
+│   │   ├── android.yml
+│   │   ├── gradle.yml
+│   │   └── release.yml
+│   └── PULL_REQUEST_TEMPLATE.md
 ├── app
+│   ├── release
+│   │   ├── baselineProfiles
+│   │   │   ├── 0
+│   │   │   │   └── app-release.dm
+│   │   │   └── 1
+│   │   │       └── app-release.dm
+│   │   ├── app-release.apk
+│   │   └── output-metadata.json
 │   ├── src
 │   │   └── main
 │   │       ├── @xml
 │   │       ├── assets
 │   │       │   ├── emoji_data.json
+│   │       │   ├── emoji_shortcodes.json
 │   │       │   ├── emoji_skin_tones.json
 │   │       │   ├── engine_config.json
 │   │       │   ├── keyboard_layout.json
+│   │       │   ├── number_row.json
 │   │       │   ├── numbers_layout.json
 │   │       │   ├── predictions.json
 │   │       │   └── themes.json
@@ -182,6 +197,7 @@ SwiftKey-Lite
 │   │       │               │   ├── CorrectionManager.java
 │   │       │               │   ├── DictionaryLoader.java
 │   │       │               │   ├── DictWord.java
+│   │       │               │   ├── EmojiSuggestionProvider.java
 │   │       │               │   ├── MmapDictionary.java
 │   │       │               │   ├── PredictionData.java
 │   │       │               │   ├── PredictionEngine.java
@@ -201,6 +217,7 @@ SwiftKey-Lite
 │   └── proguard-rules.pro
 ├── gradle
 │   ├── wrapper
+│   │   ├── gradle-wrapper.jar
 │   │   └── gradle-wrapper.properties
 │   ├── gradle-daemon-jvm.properties
 │   └── libs.versions.toml
@@ -217,12 +234,15 @@ SwiftKey-Lite
 │   ├── dict_sep.py
 │   ├── folder_structure.txt
 │   ├── gen_tree.py
-│   └── priority_dedup.py
+│   ├── priority_dedup.py
+│   └── sync_emojis.py
 ├── .gitignore
 ├── build.gradle
 ├── CODE_DOCS.md
 ├── CONTRIBUTING.md
 ├── gradle.properties
+├── gradlew
+├── gradlew.bat
 ├── LICENSE
 ├── local.properties
 ├── README.md
@@ -256,7 +276,7 @@ This keyboard focuses on speed, simplicity, privacy, and low resource usage firs
 
 ## Getting Started
 
-1.  **Download:** Grab the latest APK from the [Releases](https://github.com/DRAVKNOX-Studios/Payne-less-Typer/releases) page.
+1.  **Download:** Grab the latest APK from the [Releases](https://github.com/thedinyamum/SwiftLite/releases) page.
 2.  **Build it:** If you're a dev, just open this in Android Studio and hit Run. It needs Android 8.0 or newer.
 3.  **Setup:** Open the app once it's installed. It will walk you through enabling the keyboard in your system settings.
 4.  **Test it:** There's a built-in keyboard tester with a WPM counter so you can verify everything feels right before committing. It's in the setup app.
