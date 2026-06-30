@@ -3,20 +3,31 @@ SwiftKey-Lite
 │   ├── ISSUE_TEMPLATE
 │   │   ├── bug_report.md
 │   │   ├── config.yml
-│   │   ├── feature_request.md
-│   │   └── PULL_REQUEST_TEMPLATE.md
-│   └── workflows
-│       ├── android.yml
-│       └── gradle.yml
+│   │   └── feature_request.md
+│   ├── workflows
+│   │   ├── android.yml
+│   │   ├── gradle.yml
+│   │   └── release.yml
+│   └── PULL_REQUEST_TEMPLATE.md
 ├── app
+│   ├── release
+│   │   ├── baselineProfiles
+│   │   │   ├── 0
+│   │   │   │   └── app-release.dm
+│   │   │   └── 1
+│   │   │       └── app-release.dm
+│   │   ├── app-release.apk
+│   │   └── output-metadata.json
 │   ├── src
 │   │   └── main
 │   │       ├── @xml
 │   │       ├── assets
 │   │       │   ├── emoji_data.json
+│   │       │   ├── emoji_shortcodes.json
 │   │       │   ├── emoji_skin_tones.json
 │   │       │   ├── engine_config.json
 │   │       │   ├── keyboard_layout.json
+│   │       │   ├── number_row.json
 │   │       │   ├── numbers_layout.json
 │   │       │   ├── predictions.json
 │   │       │   └── themes.json
@@ -76,6 +87,7 @@ SwiftKey-Lite
 │   │       │               │   ├── CorrectionManager.java
 │   │       │               │   ├── DictionaryLoader.java
 │   │       │               │   ├── DictWord.java
+│   │       │               │   ├── EmojiSuggestionProvider.java
 │   │       │               │   ├── MmapDictionary.java
 │   │       │               │   ├── PredictionData.java
 │   │       │               │   ├── PredictionEngine.java
@@ -95,6 +107,7 @@ SwiftKey-Lite
 │   └── proguard-rules.pro
 ├── gradle
 │   ├── wrapper
+│   │   ├── gradle-wrapper.jar
 │   │   └── gradle-wrapper.properties
 │   ├── gradle-daemon-jvm.properties
 │   └── libs.versions.toml
@@ -111,12 +124,15 @@ SwiftKey-Lite
 │   ├── dict_sep.py
 │   ├── folder_structure.txt
 │   ├── gen_tree.py
-│   └── priority_dedup.py
+│   ├── priority_dedup.py
+│   └── sync_emojis.py
 ├── .gitignore
 ├── build.gradle
 ├── CODE_DOCS.md
 ├── CONTRIBUTING.md
 ├── gradle.properties
+├── gradlew
+├── gradlew.bat
 ├── LICENSE
 ├── local.properties
 ├── README.md
