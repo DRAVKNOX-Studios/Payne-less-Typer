@@ -41,6 +41,20 @@ android {
     }
 }
 
+tasks.register('syncEmojiShortcodes', Exec) {
+    workingDir "${project.rootDir}"
+    commandLine 'python3', 'tools/sync_emojis.py'
+    // Optional: Only run if data changed
+    inputs.file 'app/src/main/assets/emoji_data.json'
+    outputs.file 'app/src/main/assets/emoji_shortcodes.json'
+}
+
+afterEvaluate {
+    tasks.named("preBuild").configure {
+        dependsOn "syncEmojiShortcodes"
+    }
+}
+
 dependencies {
     implementation libs.androidx.appcompat
     implementation libs.androidx.core
