@@ -176,3 +176,6 @@ Loads and provides access to logical next-word predictions from a JSON asset. it
 
 ## SuggestionSearcher.java
 Implements the core search logic for word suggestions. It performs prefix searches for autocomplete and fuzzy searches for error correction, ranking results using a combination of edit distance and usage-based scoring. It also integrates user-defined words into the search results.
+
+## EmojiSuggestionProvider.java
+Provides emoji suggestions based on typed shortcodes or names. It loads a mapping of shortcodes to emojis from a JSON asset and filters them based on the system's ability to render the glyph. It supports searching by partial matches and limits results to provide relevant suggestions efficiently.
