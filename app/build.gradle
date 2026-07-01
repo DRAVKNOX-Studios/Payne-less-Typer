@@ -1,69 +1,8 @@
+// Top-level build file
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.application) apply false
 }
 
-android {
-    namespace = 'com.swiftlite.keyboard'
-    compileSdk = 37
-
-    defaultConfig {
-        applicationId = "com.swiftlite.keyboard"
-        minSdk = 26
-        targetSdk = 37
-        versionCode = 1
-        versionName = "0.2.3"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled = true
-            shrinkResources = true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled = false
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        options.compilerArgs << "-Xlint:deprecation"
-    }
-
-    buildFeatures {
-        viewBinding = true
-    }
-
-    packaging {
-        resources {
-            excludes += ['META-INF/**', '**.kotlin_builtins']
-        }
-    }
-}
-
-tasks.register('syncEmojiShortcodes', Exec) {
-    onlyIf { !System.getenv('CI') }
-    workingDir = rootDir
-    commandLine = ['python3', 'tools/sync_emojis.py']
-    inputs.file layout.projectDirectory.file('src/main/assets/emoji_data.json')
-    outputs.file layout.projectDirectory.file('src/main/assets/emoji_shortcodes.json')
-}
-
-tasks.named("preBuild") {
-    dependsOn "syncEmojiShortcodes"
-}
-
-dependencies {
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.androidx.emoji2)
+tasks.register('clean', Delete) {
+    delete layout.buildDirectory
 }
