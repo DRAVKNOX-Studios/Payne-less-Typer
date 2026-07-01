@@ -45,6 +45,7 @@ public class CustomizeView extends LinearLayout {
         addCheckBox("Auto-spacing", mThemeManager.isAutoSpaceEnabled(), (v, checked) -> mThemeManager.setAutoSpaceEnabled(checked));
         addCheckBox("Auto-apostrophe", mThemeManager.isAutoApostropheEnabled(), (v, checked) -> mThemeManager.setAutoApostropheEnabled(checked));
         addCheckBox("Number row", mThemeManager.isNumberRowEnabled(), (v, checked) -> mThemeManager.setNumberRowEnabled(checked));
+        addCheckBox("Profanity filter", mThemeManager.isProfanityFilterEnabled(), (v, checked) -> mThemeManager.setProfanityFilterEnabled(checked));
         addCheckBox("Vibrate on keypress", mThemeManager.isVibrateEnabled(), (v, checked) -> mThemeManager.setVibrateEnabled(checked));
 
         addView(UIUtils.vspace(getContext(), UIUtils.dp(getContext(), 16), 0));
