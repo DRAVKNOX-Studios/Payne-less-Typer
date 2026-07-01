@@ -59,6 +59,7 @@ public class MmapDictionary implements Closeable {
     }
 
     public String getWord(int index) {
+        if (index < 0 || index >= mCount) return null;
         int entryOff = mDataStart + mBuf.getInt(mOffsetTableStart + index * 4);
         int len = mBuf.get(entryOff + 1) & 0xFF;
         byte[] bytes = new byte[len];
@@ -69,7 +70,8 @@ public class MmapDictionary implements Closeable {
     }
 
     public String getLowerWord(int index) {
-        return getWord(index).toLowerCase(Locale.ROOT);
+        String w = getWord(index);
+        return (w != null) ? w.toLowerCase(Locale.ROOT) : null;
     }
 
     public int binarySearch(String lowerTarget) {

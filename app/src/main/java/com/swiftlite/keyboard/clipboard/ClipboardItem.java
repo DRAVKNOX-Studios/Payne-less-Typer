@@ -2,6 +2,7 @@ package com.swiftlite.keyboard.clipboard;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "clipboard_items")
@@ -21,6 +22,7 @@ public class ClipboardItem {
 
     public ClipboardItem() {}
 
+    @Ignore
     public ClipboardItem(String content, boolean pinned) {
         this.content   = content;
         this.imageUri  = null;
@@ -28,6 +30,7 @@ public class ClipboardItem {
         this.timestamp = System.currentTimeMillis();
     }
 
+    @Ignore
     public ClipboardItem(String imageUri, boolean pinned, boolean isImage) {
         this.content   = null;
         this.imageUri  = imageUri;

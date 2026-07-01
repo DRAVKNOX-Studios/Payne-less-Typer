@@ -3,6 +3,7 @@ package com.swiftlite.keyboard.ime;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
@@ -51,11 +52,11 @@ public class KeyboardView extends FrameLayout {
     }
 
     private void buildSuggestionPaints() {
-        float sd = getContext().getResources().getDisplayMetrics().scaledDensity;
+        float sizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getContext().getResources().getDisplayMetrics());
         mSuggestionPaintNormal = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mSuggestionPaintNormal.setTextSize(12 * sd);
+        mSuggestionPaintNormal.setTextSize(sizePx);
         mSuggestionPaintBold = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mSuggestionPaintBold.setTextSize(12 * sd);
+        mSuggestionPaintBold.setTextSize(sizePx);
         mSuggestionPaintBold.setTypeface(Typeface.DEFAULT_BOLD);
     }
 

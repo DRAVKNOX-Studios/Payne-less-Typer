@@ -2,12 +2,12 @@ package com.swiftlite.keyboard.ime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.util.TypedValue;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -28,6 +28,11 @@ import com.swiftlite.keyboard.utils.VibrationUtils;
 
 import java.io.InputStream;
 
+/**
+ * The UI component located at the top of the keyboard that displays word suggestions,
+ * predictions, and clipboard clips. It also provides quick-access buttons for settings,
+ * emoji, and undo.
+ */
 public class SuggestionBarView extends LinearLayout {
 
     private static final int CHIP_PAD_DP = 8;
@@ -178,10 +183,10 @@ public class SuggestionBarView extends LinearLayout {
         }
         if (availablePx <= 0) return;
 
-        float sd = getContext().getResources().getDisplayMetrics().scaledDensity;
+        float sizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getContext().getResources().getDisplayMetrics());
         int cp = UIUtils.dp(getContext(), CHIP_PAD_DP);
-        Paint bp = new Paint(Paint.ANTI_ALIAS_FLAG); bp.setTextSize(12 * sd); bp.setTypeface(Typeface.DEFAULT_BOLD);
-        Paint rp = new Paint(Paint.ANTI_ALIAS_FLAG); rp.setTextSize(12 * sd);
+        Paint bp = new Paint(Paint.ANTI_ALIAS_FLAG); bp.setTextSize(sizePx); bp.setTypeface(Typeface.DEFAULT_BOLD);
+        Paint rp = new Paint(Paint.ANTI_ALIAS_FLAG); rp.setTextSize(sizePx);
 
         String[] fitting = SuggestionUtils.filterToFit(mPendingSuggestions, availablePx, rp, bp, cp, 1);
         if (fitting.length == 0) return;
@@ -225,41 +230,12 @@ public class SuggestionBarView extends LinearLayout {
     }
 
     private void addClipboardChip(ClipboardItem item) {
-        LinearLayout chip = new LinearLayout(getContext());
-        chip.setOrientation(HORIZONTAL); chip.setGravity(Gravity.CENTER);
-        chip.setPadding(UIUtils.dp(getContext(), 12), 0, UIUtils.dp(getContext(), 12), 0);
-        chip.setOnClickListener(v -> {
+        View chip = SuggestionChipFactory.createClipboardChip(getContext(), item, mTheme, mIME, mHandler, clickedItem -> {
             vibrate(VibrationUtils.VIBE_UTIL);
-            if (item.isImage()) mIME.commitClipboardImage(item.imageUri);
-            else mIME.commitClipboard(item.content);
+            if (clickedItem.isImage()) mIME.commitClipboardImage(clickedItem.imageUri);
+            else mIME.commitClipboard(clickedItem.content);
             setShowingIdleItems(false);
         });
-        if (item.isImage()) {
-            ImageView iv = new ImageView(getContext());
-            iv.setLayoutParams(new LayoutParams(UIUtils.dp(getContext(), 28), UIUtils.dp(getContext(), 28)));
-            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            iv.setPadding(0, 0, UIUtils.dp(getContext(), 4), 0);
-            GradientDrawable gd = new GradientDrawable(); gd.setCornerRadius(UIUtils.dp(getContext(), 4));
-            iv.setClipToOutline(true); iv.setBackground(gd);
-            mIME.getExecutor().execute(() -> {
-                try (InputStream is = getContext().getContentResolver().openInputStream(Uri.parse(item.imageUri))) {
-                    BitmapFactory.Options o = new BitmapFactory.Options(); o.inSampleSize = 2;
-                    Bitmap bmp = BitmapFactory.decodeStream(is, null, o);
-                    if (bmp != null) mHandler.post(() -> iv.setImageBitmap(bmp));
-                } catch (Exception ignored) {}
-            });
-            chip.addView(iv);
-            TextView tv = new TextView(getContext()); tv.setText("Image"); tv.setTextSize(12);
-            if (mTheme != null) tv.setTextColor(mTheme.keyText); chip.addView(tv);
-        } else if (item.content != null) {
-            TextView tv = new TextView(getContext());
-            String t = item.content.replace("\n", " ");
-            tv.setText(t.length() > 30 ? t.substring(0, 27) + "..." : t);
-            tv.setTextSize(12); tv.setSingleLine(true); tv.setEllipsize(TextUtils.TruncateAt.END);
-            if (mTheme != null) tv.setTextColor(mTheme.keyText); chip.addView(tv);
-        }
-        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        lp.weight = 1f; chip.setLayoutParams(lp);
         if (mSuggestionSpread != null) mSuggestionSpread.addView(chip);
     }
 

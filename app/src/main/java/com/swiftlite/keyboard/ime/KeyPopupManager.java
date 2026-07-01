@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -41,12 +42,17 @@ public class KeyPopupManager {
         mDensity = context.getResources().getDisplayMetrics().density;
     }
 
+    @SuppressWarnings("deprecation")
     private int windowWidth() {
         WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         if (wm != null) {
-            android.graphics.Point sz = new android.graphics.Point();
-            wm.getDefaultDisplay().getSize(sz);
-            if (sz.x > 0) return sz.x;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                return wm.getCurrentWindowMetrics().getBounds().width();
+            } else {
+                android.graphics.Point sz = new android.graphics.Point();
+                wm.getDefaultDisplay().getSize(sz);
+                if (sz.x > 0) return sz.x;
+            }
         }
         View root = mParentView.getRootView();
         return root.getWidth() > 0 ? root.getWidth() : mParentView.getWidth();

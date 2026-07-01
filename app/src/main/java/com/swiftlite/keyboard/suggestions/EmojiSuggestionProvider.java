@@ -10,8 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Provides emoji suggestions based on typed shortcodes or names.
- * Kept under 300 lines as per requirement.
+ * Provides emoji suggestions based on typed shortcodes or names. It loads a mapping
+ * of shortcodes to emojis from a JSON asset and filters them based on the system's
+ * ability to render the glyph. It supports searching by partial matches and limits
+ * results to provide relevant suggestions efficiently.
  */
 public class EmojiSuggestionProvider {
     private static final String ASSET_NAME = "emoji_shortcodes.json";

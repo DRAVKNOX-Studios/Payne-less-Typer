@@ -37,7 +37,7 @@ public abstract class ClipboardDatabase extends RoomDatabase {
                                     ClipboardDatabase.class,
                                     "clipboard_db")
                             .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
-                            .fallbackToDestructiveMigration()
+                            .fallbackToDestructiveMigration(true)
                             .build();
                 }
             }

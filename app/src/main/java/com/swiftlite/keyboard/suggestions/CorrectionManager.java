@@ -9,6 +9,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Manages text corrections, including grammar fixes and spelling adjustments. it uses a
+ * proximity map of the keyboard layout to calculate spatial distances between typed
+ * characters and candidate words. It also handles common contractions and contextual
+ * corrections for ambiguous words like "were" versus "we're".
+ */
 public class CorrectionManager {
 
     private final Map<String, String> mGrammarFixes = new HashMap<>();
@@ -88,7 +94,10 @@ public class CorrectionManager {
         if (!contextual.equalsIgnoreCase(word)) return matchCase(word, contextual);
 
         if (engine.isValidWord(lower)) {
-             return word;
+             if (mThemeManager.isProfanityFilterEnabled() && engine.isProfane(lower)) {
+             } else {
+                 return word;
+             }
         }
 
         if (!mThemeManager.isAutoCorrectEnabled()) return word;
@@ -96,24 +105,32 @@ public class CorrectionManager {
         if (word.length() <= 1) return word;
 
         String[] suggestions = engine.buildResults(lastWord, word, null, false);
-        if (suggestions.length > 1) {
-            String best = null;
-            double bestScore = Double.MAX_VALUE;
-
-            for (int i = 1; i < Math.min(suggestions.length, 4); i++) {
-                String candidate = suggestions[i];
-                double dist = spatialDistance(lower, candidate.toLowerCase(Locale.getDefault()));
-                
-                dist += Math.abs(word.length() - candidate.length()) * 0.5;
-
-                if (dist < bestScore) {
-                    bestScore = dist;
-                    best = candidate;
-                }
+        if (suggestions.length > 0) {
+            boolean wordProfane = mThemeManager.isProfanityFilterEnabled() && engine.isProfane(lower);
+            
+            if (wordProfane && !suggestions[0].equalsIgnoreCase(word)) {
+                return matchCase(word, suggestions[0]);
             }
 
-            if (best != null && bestScore <= 1.2) {
-                return matchCase(word, best);
+            if (suggestions.length > 1) {
+                String best = null;
+                double bestScore = Double.MAX_VALUE;
+
+                for (int i = (wordProfane ? 0 : 1); i < Math.min(suggestions.length, 4); i++) {
+                    String candidate = suggestions[i];
+                    if (candidate == null || (candidate.length() <= 1 && !candidate.equals("i") && !candidate.equals("I"))) continue;
+                    double dist = spatialDistance(lower, candidate.toLowerCase(Locale.getDefault()));
+                    dist += Math.abs(word.length() - candidate.length()) * 0.5;
+
+                    if (dist < bestScore) {
+                        bestScore = dist;
+                        best = candidate;
+                    }
+                }
+
+                if (best != null && (wordProfane || bestScore <= 1.2)) {
+                    return matchCase(word, best);
+                }
             }
         }
 

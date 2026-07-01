@@ -6,6 +6,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import com.swiftlite.keyboard.utils.SuggestionUtils;
 
+/**
+ * This class handles core input logic for the keyboard. It manages character insertion,
+ * space handling, enter key actions, and deletions. It also coordinates with correction
+ * and suggestion logic, and includes a "googly eyes" easter egg triggered by specific text.
+ */
 public class InputLogicHandler {
 
     private final SwiftLiteIME mIME;
@@ -15,7 +20,6 @@ public class InputLogicHandler {
     private final InputSuggestionLogic mSuggestionLogic;
     private boolean mJustReverted = false;
 
-    private static final String GOOGLY_TRIGGER = "googly eyes on";
 
     public InputLogicHandler(SwiftLiteIME ime,
             com.swiftlite.keyboard.suggestions.SuggestionEngine engine,
@@ -70,7 +74,7 @@ public class InputLogicHandler {
         CharSequence before = ic.getTextBeforeCursor(50, 0);
         String typedWord = SuggestionUtils.getTypedWord(before);
 
-        checkGooglyTrigger(ic);
+        SpecialFeatureHandler.checkTriggers(ic, mIME);
 
         if (!PrivacyHandler.isSensitiveField(mIME.getCurrentInputEditorInfo())) mCorrectionLogic.performAutoCorrect(ic);
 
@@ -83,16 +87,6 @@ public class InputLogicHandler {
         updateAutoCap(ic);
     }
 
-    private void checkGooglyTrigger(InputConnection ic) {
-        if (PrivacyHandler.isSensitiveField(mIME.getCurrentInputEditorInfo())) return;
-        int len = GOOGLY_TRIGGER.length();
-        CharSequence before = ic.getTextBeforeCursor(len, 0);
-        if (before == null || before.length() < len) return;
-        if (!before.toString().toLowerCase().equals(GOOGLY_TRIGGER)) return;
-
-        KeyboardView kv = mIME.getKeyboardView();
-        if (kv != null) kv.forceShowGooglyEyes();
-    }
 
     public void handleEnter(InputConnection ic, EditorInfo info) {
         if (!PrivacyHandler.isSensitiveField(mIME.getCurrentInputEditorInfo())) mCorrectionLogic.performAutoCorrect(ic);

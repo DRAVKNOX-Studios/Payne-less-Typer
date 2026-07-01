@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 
 public class ClipboardShareActivity extends AppCompatActivity {
     @Override
@@ -23,7 +24,7 @@ public class ClipboardShareActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             if (type.startsWith("image/")) {
-                Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                Uri imageUri = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Uri.class);
                 if (imageUri != null) {
                     String[] mimes = { type, "image/png", "image/jpeg", "image/*" };
                     ClipData clip = new ClipData("Image", mimes, new ClipData.Item(imageUri));

@@ -12,7 +12,7 @@ public class VibrationUtils {
     public static final int VIBE_SUGGESTION = 20;
 
     public static void vibrate(Context context, int duration) {
-        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator v = context.getSystemService(Vibrator.class);
         if (v != null && v.hasVibrator()) {
             v.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
         }

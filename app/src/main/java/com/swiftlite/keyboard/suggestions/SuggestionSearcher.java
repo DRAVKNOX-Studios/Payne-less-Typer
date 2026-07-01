@@ -22,7 +22,12 @@ public class SuggestionSearcher {
         int low = 0, high = words.size() - 1, startIdx = 0;
         while (low <= high) {
             int mid = (low + high) >>> 1;
-            char c = words.getLowerWord(mid).charAt(0);
+            String midWord = words.getLowerWord(mid);
+            if (midWord == null) {
+                low = mid + 1;
+                continue;
+            }
+            char c = midWord.charAt(0);
             if (c < first) { low  = mid + 1; }
             else           { startIdx = mid; high = mid - 1; }
         }
@@ -41,8 +46,18 @@ public class SuggestionSearcher {
 
         final Map<Integer, String> lowerCache = new HashMap<>();
         candidates.sort((a, b) -> {
-            String wa = lowerCache.get(a); if (wa == null) { wa = words.getLowerWord(a); lowerCache.put(a, wa); }
-            String wb = lowerCache.get(b); if (wb == null) { wb = words.getLowerWord(b); lowerCache.put(b, wb); }
+            String wa = lowerCache.get(a);
+            if (wa == null) {
+                wa = words.getLowerWord(a);
+                if (wa == null) wa = "";
+                lowerCache.put(a, wa);
+            }
+            String wb = lowerCache.get(b);
+            if (wb == null) {
+                wb = words.getLowerWord(b);
+                if (wb == null) wb = "";
+                lowerCache.put(b, wb);
+            }
             int d1 = SuggestionUtils.editDistance(lower, wa);
             int d2 = SuggestionUtils.editDistance(lower, wb);
             if (d1 != d2) return d1 - d2;
@@ -51,6 +66,7 @@ public class SuggestionSearcher {
 
         for (int idx : candidates) {
             String dw   = lowerCache.get(idx);
+            if (dw == null || dw.isEmpty()) continue;
             int    dist = SuggestionUtils.editDistance(lower, dw);
             if (dist > 1 && lower.length() < 4) continue;
             if (dist > 2) continue;
@@ -82,6 +98,7 @@ public class SuggestionSearcher {
         List<Integer> candidates = new ArrayList<>();
         for (int i = startIdx; i < words.size(); i++) {
             String w = words.getLowerWord(i);
+            if (w == null) continue;
             if (!w.startsWith(lp)) break;
             if (w.equals(lp)) continue;
             if (!isExcluded(words.getWord(i), exclude)) {
@@ -106,6 +123,7 @@ public class SuggestionSearcher {
         String[] user = dict.getUserWords();
         if (user == null) return out;
         for (String w : user) {
+            if (w == null) continue;
             if (w.toLowerCase(Locale.ROOT).startsWith(lp) && !isExcluded(w, exclude)) {
                 out.add(w);
                 if (out.size() >= max) break;
@@ -119,6 +137,7 @@ public class SuggestionSearcher {
         String[] user = dict.getUserWords();
         if (user == null || max <= 0) return out;
         for (String w : user) {
+            if (w == null) continue;
             String wl = w.toLowerCase(Locale.ROOT);
             int dist = SuggestionUtils.editDistance(lower, wl);
             if (dist <= 1 && !isExcluded(w, exclude)) {

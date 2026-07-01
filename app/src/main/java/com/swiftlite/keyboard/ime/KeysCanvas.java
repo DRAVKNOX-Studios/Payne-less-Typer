@@ -26,72 +26,11 @@ public class KeysCanvas extends BaseKeyCanvas {
     private boolean mShowingNumbers = false;
     private boolean mIsEmailField   = false;
     private boolean mIsSearchField  = false;
-
-    private static Object[][] ROW1, ROW2, ROW3, ROW4;
-    private static Object[][] NUM_ROW, NUM_ROW_SHIFTED;
-    private static final Map<Character, String[]> LONG_PRESS     = new HashMap<>();
-    private static final Map<Character, String[]> SUB_LONG_PRESS = new HashMap<>();
-    private static List<String> EMAIL_DOMAINS = new ArrayList<>();
-    private static List<String> SEARCH_DOMAINS = new ArrayList<>();
-    private static boolean sLoaded = false;
-
-    public static void init(Context ctx) {
-        if (sLoaded) return;
-        try {
-            String json = readAsset(ctx, "keyboard_layout.json");
-            JSONObject obj  = new JSONObject(json);
-            JSONObject keys = obj.getJSONObject("keys");
-            ROW1 = parseRow(keys.getJSONArray("row1"));
-            ROW2 = parseRow(keys.getJSONArray("row2"));
-            ROW3 = parseRow(keys.getJSONArray("row3"));
-            ROW4 = parseRow(keys.getJSONArray("row4"));
-
-            String jsonNum = readAsset(ctx, "number_row.json");
-            JSONObject objNum = new JSONObject(jsonNum);
-            NUM_ROW = parseRow(objNum.getJSONArray("normal"));
-            NUM_ROW_SHIFTED = parseRow(objNum.getJSONArray("shifted"));
-            
-            JSONArray domains = obj.getJSONArray("email_domains");
-            for (int i = 0; i < domains.length(); i++) EMAIL_DOMAINS.add(domains.getString(i));
-            
-            JSONArray sDomains = obj.getJSONArray("search_domains");
-            for (int i = 0; i < sDomains.length(); i++) SEARCH_DOMAINS.add(sDomains.getString(i));
-
-            JSONObject lp = obj.getJSONObject("long_press");
-            Iterator<String> lpIt = lp.keys();
-            while (lpIt.hasNext()) { String k = lpIt.next(); LONG_PRESS.put(k.charAt(0), toStringArray(lp.getJSONArray(k))); }
-            JSONObject slp = obj.getJSONObject("sub_long_press");
-            Iterator<String> slpIt = slp.keys();
-            while (slpIt.hasNext()) { String k = slpIt.next(); SUB_LONG_PRESS.put(k.charAt(0), toStringArray(slp.getJSONArray(k))); }
-            sLoaded = true;
-        } catch (Exception e) { throw new RuntimeException("Critical: Failed to load keyboard_layout.json", e); }
-    }
-
-    private static Object[][] parseRow(JSONArray arr) throws Exception {
-        Object[][] row = new Object[arr.length()][];
-        for (int i = 0; i < arr.length(); i++) {
-            JSONArray key = arr.getJSONArray(i); row[i] = new Object[key.length()];
-            for (int j = 0; j < key.length(); j++) row[i][j] = key.get(j);
-        }
-        return row;
-    }
-
-    private static String[] toStringArray(JSONArray arr) throws Exception {
-        String[] res = new String[arr.length()];
-        for (int i = 0; i < arr.length(); i++) res[i] = arr.getString(i);
-        return res;
-    }
-
-    private static String readAsset(Context ctx, String path) throws Exception {
-        try (InputStream is = ctx.getAssets().open(path)) {
-            byte[] buffer = new byte[is.available()];
-            is.read(buffer);
-            return new String(buffer, StandardCharsets.UTF_8);
-        }
-    }
+    private final KeyboardLayout mLayout;
 
     public KeysCanvas(Context context, SwiftLiteIME ime, KeyboardView parent) {
-        super(context, ime, parent); init(context);
+        super(context, ime, parent);
+        mLayout = KeyboardLayout.getInstance(context);
     }
 
     @Override void rebuildKeys() {
@@ -100,11 +39,11 @@ public class KeysCanvas extends BaseKeyCanvas {
         boolean numRow = mIME.getThemeManager().isNumberRowEnabled();
         int y = mPad;
         if (numRow) {
-            layoutEqualRow((mShiftOn || mCapsLock) ? NUM_ROW_SHIFTED : NUM_ROW, y, 10);
+            layoutEqualRow((mShiftOn || mCapsLock) ? mLayout.numRowShifted : mLayout.numRow, y, 10);
             y += mKeyHeight + mPad;
         }
 
-        layoutEqualRow(ROW1, y, 10);
+        layoutEqualRow(mLayout.row1, y, 10);
         y += mKeyHeight + mPad;
         layoutRow2(y);
         y += mKeyHeight + mPad;
@@ -120,7 +59,7 @@ public class KeysCanvas extends BaseKeyCanvas {
                 if (k.y >= (mPad + mKeyHeight + mPad) && k.y < (mPad + (mKeyHeight + mPad) * 2)) {
                     if (k.subLabel != null && !k.subLabel.isEmpty() && Character.isDigit(k.subLabel.charAt(0))) {
                         char ch = Character.toLowerCase((char) k.code);
-                        String[] alts = LONG_PRESS.get(ch);
+                        String[] alts = mLayout.longPress.get(ch);
                         k.subLabel = (alts != null && alts.length > 0) ? alts[0] : "";
                     }
                 }
@@ -151,22 +90,22 @@ public class KeysCanvas extends BaseKeyCanvas {
         if (mIsEmailField && k.code == (int) '@' && "@".equals(k.label)) return true;
         if (mIsSearchField && k.code == (int) '.' && ".".equals(k.label)) return true;
         char ch = Character.toLowerCase((char) k.code);
-        return (k.subLabel != null && !k.subLabel.isEmpty()) || LONG_PRESS.containsKey(ch) || SUB_LONG_PRESS.containsKey(ch);
+        return (k.subLabel != null && !k.subLabel.isEmpty()) || mLayout.longPress.containsKey(ch) || mLayout.subLongPress.containsKey(ch);
     }
 
     @Override void onLongPress(Key key) {
         if (mIsEmailField && key.code == (int) '@' && "@".equals(key.label)) {
-            mPopupManager.showScrollablePopup(key, EMAIL_DOMAINS, mTheme);
+            mPopupManager.showScrollablePopup(key, mLayout.emailDomains, mTheme);
             mLongPressFired = true; vibrate(); return;
         }
         if (mIsSearchField && key.code == (int) '.' && ".".equals(key.label)) {
-            mPopupManager.showScrollablePopup(key, SEARCH_DOMAINS, mTheme);
+            mPopupManager.showScrollablePopup(key, mLayout.searchDomains, mTheme);
             mLongPressFired = true; vibrate(); return;
         }
         char ch = (char) key.code; String sub = key.subLabel;
-        String[] alts  = LONG_PRESS.get(Character.toLowerCase(ch));
-        String[] sAlts = SUB_LONG_PRESS.get(Character.toLowerCase(ch));
-        if (sAlts == null && sub != null && !sub.isEmpty()) sAlts = SUB_LONG_PRESS.get(sub.charAt(0));
+        String[] alts  = mLayout.longPress.get(Character.toLowerCase(ch));
+        String[] sAlts = mLayout.subLongPress.get(Character.toLowerCase(ch));
+        if (sAlts == null && sub != null && !sub.isEmpty()) sAlts = mLayout.subLongPress.get(sub.charAt(0));
         List<String> opts = new ArrayList<>();
         if (sub != null && !sub.isEmpty()) opts.add(sub);
         if (alts  != null) Collections.addAll(opts, alts);
@@ -198,18 +137,18 @@ public class KeysCanvas extends BaseKeyCanvas {
     }
 
     private void layoutRow2(int yTop) {
-        int count = ROW2.length;
+        int count = mLayout.row2.length;
         float keyW = (mWidth - mPad * (count + 1)) / (float) count;
         float x = (mWidth - (keyW * count + mPad * (count - 1))) / 2f;
-        for (Object[] def : ROW2) { mKeys.add(makeKey(def, x, yTop, keyW, mKeyHeight)); x += keyW + mPad; }
+        for (Object[] def : mLayout.row2) { mKeys.add(makeKey(def, x, yTop, keyW, mKeyHeight)); x += keyW + mPad; }
     }
 
     private void layoutRow3(int yTop) {
         float unitW = (mWidth - mPad * 10) / 10f, specialW = unitW * 1.5f, x = mPad;
-        Key shift = makeKey(ROW3[0], x, yTop, specialW, mKeyHeight);
+        Key shift = makeKey(mLayout.row3[0], x, yTop, specialW, mKeyHeight);
         shift.isSpecial = true; shift.icon = KeyIcons.IC_SHIFT; shift.isAction = true; mKeys.add(shift); x += specialW + mPad;
-        for (int i = 1; i <= 7; i++) { mKeys.add(makeKey(ROW3[i], x, yTop, unitW, mKeyHeight)); x += unitW + mPad; }
-        Key del = makeKey(ROW3[8], x, yTop, mWidth - x - mPad, mKeyHeight);
+        for (int i = 1; i <= 7; i++) { mKeys.add(makeKey(mLayout.row3[i], x, yTop, unitW, mKeyHeight)); x += unitW + mPad; }
+        Key del = makeKey(mLayout.row3[8], x, yTop, mWidth - x - mPad, mKeyHeight);
         del.isSpecial = true; del.icon = KeyIcons.IC_BACKSPACE; del.isAction = true; mKeys.add(del);
     }
 
@@ -222,13 +161,13 @@ public class KeysCanvas extends BaseKeyCanvas {
         float spaceW = mWidth - mPad * 6 - numsW - commaW - dotW - enterW;
 
         float x = mPad;
-        Key nums = makeKey(ROW4[0], x, yTop, numsW, mKeyHeight);
+        Key nums = makeKey(mLayout.row4[0], x, yTop, numsW, mKeyHeight);
         nums.isSpecial = true; nums.icon = KeyIcons.IC_NUMBERS; nums.isAction = true; mKeys.add(nums); x += numsW + mPad;
-        mKeys.add(makeKey(ROW4[1], x, yTop, commaW, mKeyHeight)); x += commaW + mPad;
-        Key space = makeKey(ROW4[2], x, yTop, spaceW, mKeyHeight);
+        mKeys.add(makeKey(mLayout.row4[1], x, yTop, commaW, mKeyHeight)); x += commaW + mPad;
+        Key space = makeKey(mLayout.row4[2], x, yTop, spaceW, mKeyHeight);
         space.isSpecial = true; space.icon = KeyIcons.IC_SPACE; space.isAction = true; mKeys.add(space); x += spaceW + mPad;
-        mKeys.add(makeKey(ROW4[3], x, yTop, dotW, mKeyHeight)); x += dotW + mPad;
-        Key enter = makeKey(ROW4[4], x, yTop, mWidth - x - mPad, mKeyHeight);
+        mKeys.add(makeKey(mLayout.row4[3], x, yTop, dotW, mKeyHeight)); x += dotW + mPad;
+        Key enter = makeKey(mLayout.row4[4], x, yTop, mWidth - x - mPad, mKeyHeight);
         enter.isSpecial = true; enter.isAccent = true; enter.icon = KeyIcons.IC_ENTER; enter.isAction = true; mKeys.add(enter);
     }
 

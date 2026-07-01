@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -49,10 +50,10 @@ public class PopupViewFactory {
                                            float density, int maxW, float itemHDp, float padHDp, float textSp) {
         int itemH = (int)(density * itemHDp);
         int hPad = (int)(density * padHDp);
-        float sd = context.getResources().getDisplayMetrics().scaledDensity;
+        float sizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSp, context.getResources().getDisplayMetrics());
 
         Paint measPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        measPaint.setTextSize(textSp * sd);
+        measPaint.setTextSize(sizePx);
         int[] itemWidths = new int[opts.size()];
         for (int i = 0; i < opts.size(); i++) {
             itemWidths[i] = (int) Math.ceil(measPaint.measureText(opts.get(i))) + hPad;

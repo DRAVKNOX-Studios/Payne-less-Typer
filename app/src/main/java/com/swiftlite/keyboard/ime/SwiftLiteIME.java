@@ -136,6 +136,7 @@ public class SwiftLiteIME extends InputMethodService {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         if (level >= TRIM_MEMORY_MODERATE && mKeyboardView != null) mKeyboardView.trimMemory();
@@ -236,27 +237,10 @@ public class SwiftLiteIME extends InputMethodService {
 
     public void commitClipboardImage(String uriStr) {
         userInteraction();
-        if (uriStr == null || uriStr.isEmpty()) return;
-        InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
-        Uri uri = Uri.parse(uriStr);
+        InputConnection ic = getCurrentInputConnection();
+        if (uriStr == null || uriStr.isEmpty() || ic == null) return;
         if (mClipboardMonitor != null) mClipboardMonitor.setLastSelfCopiedUri(uriStr);
-        android.content.ClipboardManager cm = (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        if (cm != null) {
-            android.content.ClipData clip = android.content.ClipData.newUri(getContentResolver(), "image", uri);
-            cm.setPrimaryClip(clip);
-        }
-        EditorInfo editorInfo = mCurrentEditorInfo;
-        if (editorInfo == null || editorInfo.packageName == null) return;
-        try { grantUriPermission(editorInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION); } catch (Exception ignored) {}
-        String[] supportedMimes = EditorInfoCompat.getContentMimeTypes(editorInfo);
-        String bestMime = null;
-        for (String m : supportedMimes) {
-            if (m.startsWith("image/")) { if (bestMime == null || m.equals("image/jpeg")) bestMime = m; }
-        }
-        if (bestMime != null) {
-            InputContentInfoCompat info = new InputContentInfoCompat(uri, new android.content.ClipDescription("image", new String[]{bestMime}), null);
-            InputConnectionCompat.commitContent(ic, editorInfo, info, InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION, null);
-        }
+        RichContentHandler.commitImage(this, ic, mCurrentEditorInfo, uriStr);
         if (mKeyboardView != null) mKeyboardView.showPanel(KeyboardView.PANEL_KEYS);
     }
 
