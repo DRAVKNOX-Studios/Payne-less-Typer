@@ -1,37 +1,43 @@
 plugins {
-    alias libs.plugins.android.application
+    alias(libs.plugins.android.application)
 }
 
 android {
-    namespace 'com.swiftlite.keyboard'
-    compileSdk 37
+    namespace = 'com.swiftlite.keyboard'
+    compileSdk = 37
 
     defaultConfig {
-        applicationId "com.swiftlite.keyboard"
-        minSdk 26
-        targetSdk 37
-        versionCode 1
-        versionName "0.2.2"
+        applicationId = "com.swiftlite.keyboard"
+        minSdk = 26
+        targetSdk = 37
+        versionCode = 1
+        versionName = "0.2.3"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled false
+            minifyEnabled = false
         }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs << "-Xlint:deprecation"
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding = true
     }
 
     packaging {
@@ -42,27 +48,22 @@ android {
 }
 
 tasks.register('syncEmojiShortcodes', Exec) {
-    // Skip on CI — emoji_shortcodes.json is already committed to the repo.
-    // The CI env var is set automatically by GitHub Actions (and most other CI platforms).
-    // Local builds run this as normal to keep emoji data fresh.
     onlyIf { !System.getenv('CI') }
-    workingDir "${project.rootDir}"
-    commandLine 'python3', 'tools/sync_emojis.py'
-    inputs.file 'app/src/main/assets/emoji_data.json'
-    outputs.file 'app/src/main/assets/emoji_shortcodes.json'
+    workingDir = rootDir
+    commandLine = ['python3', 'tools/sync_emojis.py']
+    inputs.file layout.projectDirectory.file('src/main/assets/emoji_data.json')
+    outputs.file layout.projectDirectory.file('src/main/assets/emoji_shortcodes.json')
 }
 
-afterEvaluate {
-    tasks.named("preBuild").configure {
-        dependsOn "syncEmojiShortcodes"
-    }
+tasks.named("preBuild") {
+    dependsOn "syncEmojiShortcodes"
 }
 
 dependencies {
-    implementation libs.androidx.appcompat
-    implementation libs.androidx.core
-    implementation libs.androidx.recyclerview
-    implementation libs.androidx.room.runtime
-    annotationProcessor libs.androidx.room.compiler
-    implementation libs.androidx.emoji2
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.emoji2)
 }
