@@ -30,6 +30,7 @@ SwiftKey-Lite
 │   │       │   ├── number_row.json
 │   │       │   ├── numbers_layout.json
 │   │       │   ├── predictions.json
+│   │       │   ├── profanity.json
 │   │       │   └── themes.json
 │   │       ├── java
 │   │       │   └── com
@@ -62,6 +63,7 @@ SwiftKey-Lite
 │   │       │               │   ├── InputLogicHandler.java
 │   │       │               │   ├── InputSuggestionLogic.java
 │   │       │               │   ├── Key.java
+│   │       │               │   ├── KeyboardLayout.java
 │   │       │               │   ├── KeyboardView.java
 │   │       │               │   ├── KeyIcons.java
 │   │       │               │   ├── KeyPopupManager.java
@@ -72,8 +74,11 @@ SwiftKey-Lite
 │   │       │               │   ├── PanelManager.java
 │   │       │               │   ├── PopupViewFactory.java
 │   │       │               │   ├── PrivacyHandler.java
+│   │       │               │   ├── RichContentHandler.java
+│   │       │               │   ├── SpecialFeatureHandler.java
 │   │       │               │   ├── SuggestionBarView.java
 │   │       │               │   ├── SuggestionChipBuilder.java
+│   │       │               │   ├── SuggestionChipFactory.java
 │   │       │               │   ├── SwiftLiteIME.java
 │   │       │               │   └── UndoManager.java
 │   │       │               ├── setup
@@ -92,12 +97,14 @@ SwiftKey-Lite
 │   │       │               │   ├── PredictionData.java
 │   │       │               │   ├── PredictionEngine.java
 │   │       │               │   ├── SuggestionEngine.java
+│   │       │               │   ├── SuggestionResultBuilder.java
 │   │       │               │   ├── SuggestionSearcher.java
 │   │       │               │   └── UsageManager.java
 │   │       │               ├── theme
 │   │       │               │   ├── KeyboardTheme.java
 │   │       │               │   └── ThemeManager.java
 │   │       │               ├── utils
+│   │       │               │   ├── ProfanityFilter.java
 │   │       │               │   ├── SuggestionUtils.java
 │   │       │               │   ├── UIUtils.java
 │   │       │               │   └── VibrationUtils.java
@@ -128,8 +135,12 @@ SwiftKey-Lite
 │   └── sync_emojis.py
 ├── .gitignore
 ├── build.gradle
+├── classes.txt
 ├── CODE_DOCS.md
 ├── CONTRIBUTING.md
+├── documented.txt
+├── documented_classes.txt
+├── found.txt
 ├── gradle.properties
 ├── gradlew
 ├── gradlew.bat
