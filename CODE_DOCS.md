@@ -1,7 +1,7 @@
 # Project SwiftLite Code Documentation
 
 ## InputLogicHandler.java
-This class handles core input logic for the keyboard. It manages character insertion, space handling, enter key actions, and deletions. It also coordinates with correction and suggestion logic, and includes a "googly eyes" easter egg triggered by specific text.
+This class handles core input logic for the keyboard. It manages character insertion, space handling, enter key actions, and deletions. It coordinates with correction and suggestion logic, and integrates with SpecialFeatureHandler to trigger specialized actions like easter eggs.
 
 ## SwiftLiteIME.java
 The main Input Method Service for SwiftLite. It initializes the keyboard view, theme manager, suggestion engine, and other components. It handles keyboard events, shift/caps lock states, and manages different panels like emoji and clipboard. It also implements idle detection and interactions with the input connection.
@@ -16,7 +16,7 @@ The engine responsible for providing text suggestions and predictions. It integr
 Provides next-word predictions based on the previous word. It prioritizes learned bigrams from user history, followed by logical predictions from static data, grammar-based fallbacks, and global usage patterns. It also ensures appropriate casing for the predicted words.
 
 ## CorrectionManager.java
-Manages text corrections, including grammar fixes and spelling adjustments. it uses a proximity map of the keyboard layout to calculate spatial distances between typed characters and candidate words. It also handles common contractions and contextual corrections for ambiguous words like "were" versus "we're".
+Manages text corrections, including grammar fixes and spelling adjustments. it uses a proximity map of the keyboard layout to calculate spatial distances between typed characters and candidate words. It also handles common contractions, contextual corrections for ambiguous words, and integrates with the profanity filter.
 
 ## ThemeManager.java
 Handles the keyboard's visual themes and user preferences. It loads theme and accent color definitions from assets, manages shared preferences for settings like auto-correct and auto-capitalization, and constructs the current KeyboardTheme based on user selection.
@@ -64,7 +64,7 @@ Handles incoming share intents to add text or images directly to the clipboard h
 Manages the loading and filtering of emoji data from assets. It initializes emoji categories and tab icons from a JSON file and provides a filtering mechanism to exclude emojis that the system font cannot render.
 
 ## EmojiPanel.java
-The primary UI component for selecting emojis. It features a tabbed interface for different emoji categories, including a "recents" tab. It handles tab switching, grid rendering, and coordinates with the skin tone popup manager for emojis that support variations.
+The primary UI component for selecting emojis. It features a tabbed interface for different emoji categories, including a "recents" tab. It handles tab switching, grid rendering, and coordinates with the skin tone popup manager. It also uses EmojiCompat to ensure emojis are rendered correctly across different OS versions.
 
 ## EmojiAdapter.java
 GridView adapter for rendering individual emoji cells. It applies skin tone modifiers to supported emojis and handles touch events to trigger either a direct emoji commitment or the skin tone selection popup.
@@ -133,7 +133,7 @@ Handles the display of transient key previews (magnified bubbles) that appear ab
 Utility for analyzing input field metadata (EditorInfo) to identify sensitive contexts. It helps the keyboard decide when to disable features like learning, suggestions, and clipboard monitoring for privacy protection.
 
 ## SuggestionBarView.java
-The UI component located at the top of the keyboard that displays word suggestions, predictions, and clipboard clips. It also provides quick-access buttons for settings, emoji, and undo.
+The UI component located at the top of the keyboard that displays word suggestions, predictions, and clipboard clips. It provides quick-access buttons for settings, emoji, and undo, and utilizes SuggestionChipFactory for rendering specialized content like clipboard history.
 
 ## SuggestionChipBuilder.java
 A layout utility that populates the suggestion bar with individual suggestion "chips". It manages the creation and recycling of TextViews and applies appropriate styling based on the importance of each suggestion.
@@ -179,3 +179,21 @@ Implements the core search logic for word suggestions. It performs prefix search
 
 ## EmojiSuggestionProvider.java
 Provides emoji suggestions based on typed shortcodes or names. It loads a mapping of shortcodes to emojis from a JSON asset and filters them based on the system's ability to render the glyph. It supports searching by partial matches and limits results to provide relevant suggestions efficiently.
+
+## KeyboardLayout.java
+Manages the definition of keyboard layouts, including main keys, number rows, and long-press alternatives. It loads these definitions from JSON assets and provides a centralized way to access character mappings and domain-specific suggestions for email and search fields.
+
+## RichContentHandler.java
+Provides utility methods for handling rich content, specifically committing images to input fields. It manages URI permissions, identifies supported MIME types, and uses InputConnectionCompat to insert image content directly into compatible applications.
+
+## SpecialFeatureHandler.java
+Detects specific text sequences to trigger special keyboard features. Currently, it manages the activation of the "googly eyes" easter egg when the user types the trigger phrase.
+
+## SuggestionChipFactory.java
+A factory class for creating specialized suggestion chips, such as those used for displaying clipboard history items (text and images) within the SuggestionBarView.
+
+## SuggestionResultBuilder.java
+Handles the final construction of suggestion lists. It combines auto-corrections, spell checker results, prefix matches, fuzzy matches, and emoji suggestions into a prioritized list, applying profanity filtering and case matching.
+
+## ProfanityFilter.java
+Provides functionality to detect profane or sensitive language. It loads a list of banned words from a JSON asset and includes basic matching logic for word variations and suffixes.

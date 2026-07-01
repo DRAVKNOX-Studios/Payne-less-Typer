@@ -121,13 +121,6 @@ SwiftKey-Lite
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── app
 │   ├── release
-│   │   ├── baselineProfiles
-│   │   │   ├── 0
-│   │   │   │   └── app-release.dm
-│   │   │   └── 1
-│   │   │       └── app-release.dm
-│   │   ├── app-release.apk
-│   │   └── output-metadata.json
 │   ├── src
 │   │   └── main
 │   │       ├── @xml
@@ -140,6 +133,7 @@ SwiftKey-Lite
 │   │       │   ├── number_row.json
 │   │       │   ├── numbers_layout.json
 │   │       │   ├── predictions.json
+│   │       │   ├── profanity.json
 │   │       │   └── themes.json
 │   │       ├── java
 │   │       │   └── com
@@ -172,6 +166,7 @@ SwiftKey-Lite
 │   │       │               │   ├── InputLogicHandler.java
 │   │       │               │   ├── InputSuggestionLogic.java
 │   │       │               │   ├── Key.java
+│   │       │               │   ├── KeyboardLayout.java
 │   │       │               │   ├── KeyboardView.java
 │   │       │               │   ├── KeyIcons.java
 │   │       │               │   ├── KeyPopupManager.java
@@ -182,8 +177,11 @@ SwiftKey-Lite
 │   │       │               │   ├── PanelManager.java
 │   │       │               │   ├── PopupViewFactory.java
 │   │       │               │   ├── PrivacyHandler.java
+│   │       │               │   ├── RichContentHandler.java
+│   │       │               │   ├── SpecialFeatureHandler.java
 │   │       │               │   ├── SuggestionBarView.java
 │   │       │               │   ├── SuggestionChipBuilder.java
+│   │       │               │   ├── SuggestionChipFactory.java
 │   │       │               │   ├── SwiftLiteIME.java
 │   │       │               │   └── UndoManager.java
 │   │       │               ├── setup
@@ -202,12 +200,14 @@ SwiftKey-Lite
 │   │       │               │   ├── PredictionData.java
 │   │       │               │   ├── PredictionEngine.java
 │   │       │               │   ├── SuggestionEngine.java
+│   │       │               │   ├── SuggestionResultBuilder.java
 │   │       │               │   ├── SuggestionSearcher.java
 │   │       │               │   └── UsageManager.java
 │   │       │               ├── theme
 │   │       │               │   ├── KeyboardTheme.java
 │   │       │               │   └── ThemeManager.java
 │   │       │               ├── utils
+│   │       │               │   ├── ProfanityFilter.java
 │   │       │               │   ├── SuggestionUtils.java
 │   │       │               │   ├── UIUtils.java
 │   │       │               │   └── VibrationUtils.java
@@ -238,8 +238,12 @@ SwiftKey-Lite
 │   └── sync_emojis.py
 ├── .gitignore
 ├── build.gradle
+├── classes.txt
 ├── CODE_DOCS.md
 ├── CONTRIBUTING.md
+├── documented.txt
+├── documented_classes.txt
+├── found.txt
 ├── gradle.properties
 ├── gradlew
 ├── gradlew.bat
@@ -276,7 +280,7 @@ This keyboard focuses on speed, simplicity, privacy, and low resource usage firs
 
 ## Getting Started
 
-1.  **Download:** Grab the latest APK from the [Releases](https://github.com/DRAVKNOX-Studios/Payne-less-Typer/releases) page.
+1.  **Download:** Grab the latest APK from the [Releases](https://github.com/DRAVKNOX-Studios/payne-less-typer/releases) page.
 2.  **Build it:** If you're a dev, just open this in Android Studio and hit Run. It needs Android 8.0 or newer.
 3.  **Setup:** Open the app once it's installed. It will walk you through enabling the keyboard in your system settings.
 4.  **Test it:** There's a built-in keyboard tester with a WPM counter so you can verify everything feels right before committing. It's in the setup app.
