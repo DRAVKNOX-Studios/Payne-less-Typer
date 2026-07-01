@@ -3,7 +3,6 @@ agp = "9.2.1"
 appcompat = "1.7.1"
 core = "1.19.0"
 emoji2 = "1.6.0"
-gradle = "9.2.1"
 recyclerview = "1.4.0"
 room = "2.8.4"
 
@@ -14,7 +13,6 @@ androidx-emoji2 = { group = "androidx.emoji2", name = "emoji2", version.ref = "e
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
