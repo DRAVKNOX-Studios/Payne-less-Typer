@@ -10,10 +10,13 @@ import android.os.Build;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.List;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -88,11 +91,26 @@ public class SetupView extends LinearLayout {
     }
 
     private boolean isKeyboardEnabled() {
-        String s = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ENABLED_INPUT_METHODS);
-        return s != null && s.contains(getContext().getPackageName());
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) return false;
+        List<InputMethodInfo> enabledInputMethodList = imm.getEnabledInputMethodList();
+        String packageName = getContext().getPackageName();
+        for (InputMethodInfo info : enabledInputMethodList) {
+            if (info.getPackageName().equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isKeyboardDefault() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                InputMethodInfo currentImeInfo = imm.getCurrentInputMethodInfo();
+                return currentImeInfo != null && currentImeInfo.getPackageName().equals(getContext().getPackageName());
+            }
+        }
         String s = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
         return s != null && s.contains(getContext().getPackageName());
     }
