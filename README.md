@@ -1,5 +1,6 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Build](https://github.com/DRAVKNOX-Studios/payne-less-typer/actions/workflows/android.yml/badge.svg)
+![GitHub Release](https://img.shields.io/github/v/release/DRAVKNOX-Studios/payne-less-typer)
 ![Android](https://img.shields.io/badge/Android-8.0%2B-brightgreen)
 
 # Payne-less: Typer (SwiftLite)
