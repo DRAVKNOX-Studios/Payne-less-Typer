@@ -1,3 +1,7 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)]
+[![Build](https://github.com/DRAVKNOX-Studios/payne-less-typer/actions/workflows/android.yml/badge.svg)]
+[![Android](https://img.shields.io/badge/Android-8.0%2B-brightgreen)]
+
 # Payne-less: Typer (SwiftLite)
 
 Welcome to Payne-less: Typer! You might see it called SwiftLite in the code, but to the world, it's the keyboard that just works without making your phone sweat.
@@ -101,160 +105,29 @@ Chocolava 🤤
 </table>
 
 <sub>Fonts, Emojis, Rendered Visual are subjected to Android Version and Hardware, please understand this statement before commenting</sub>
-  
-## Folder Structure
 
-<details>
-<summary><b>Project Structure</b></summary>
+## Distribution
 
-```text
-SwiftKey-Lite
-├── .github
-│   ├── ISSUE_TEMPLATE
-│   │   ├── bug_report.md
-│   │   ├── config.yml
-│   │   └── feature_request.md
-│   ├── workflows
-│   │   ├── android.yml
-│   │   ├── gradle.yml
-│   │   └── release.yml
-│   └── PULL_REQUEST_TEMPLATE.md
-├── app
-│   ├── release
-│   ├── src
-│   │   └── main
-│   │       ├── @xml
-│   │       ├── assets
-│   │       │   ├── emoji_data.json
-│   │       │   ├── emoji_shortcodes.json
-│   │       │   ├── emoji_skin_tones.json
-│   │       │   ├── engine_config.json
-│   │       │   ├── keyboard_layout.json
-│   │       │   ├── number_row.json
-│   │       │   ├── numbers_layout.json
-│   │       │   ├── predictions.json
-│   │       │   ├── profanity.json
-│   │       │   └── themes.json
-│   │       ├── java
-│   │       │   └── com
-│   │       │       └── swiftlite
-│   │       │           └── keyboard
-│   │       │               ├── clipboard
-│   │       │               │   ├── ClipboardAdapter.java
-│   │       │               │   ├── ClipboardDao.java
-│   │       │               │   ├── ClipboardDatabase.java
-│   │       │               │   ├── ClipboardItem.java
-│   │       │               │   ├── ClipboardRepository.java
-│   │       │               │   └── ClipboardShareActivity.java
-│   │       │               ├── emoji
-│   │       │               │   ├── EmojiAdapter.java
-│   │       │               │   ├── EmojiData.java
-│   │       │               │   ├── EmojiPanel.java
-│   │       │               │   ├── EmojiSkinToneHelper.java
-│   │       │               │   └── SkinTonePopupManager.java
-│   │       │               ├── ime
-│   │       │               │   ├── BaseKeyCanvas.java
-│   │       │               │   ├── ClipboardMonitor.java
-│   │       │               │   ├── ClipboardPanelView.java
-│   │       │               │   ├── ContractionHelper.java
-│   │       │               │   ├── EmojiHistoryManager.java
-│   │       │               │   ├── ExtraIcons.java
-│   │       │               │   ├── GooglyEyesView.java
-│   │       │               │   ├── IconButton.java
-│   │       │               │   ├── IconView.java
-│   │       │               │   ├── InputCorrectionLogic.java
-│   │       │               │   ├── InputLogicHandler.java
-│   │       │               │   ├── InputSuggestionLogic.java
-│   │       │               │   ├── Key.java
-│   │       │               │   ├── KeyboardLayout.java
-│   │       │               │   ├── KeyboardView.java
-│   │       │               │   ├── KeyIcons.java
-│   │       │               │   ├── KeyPopupManager.java
-│   │       │               │   ├── KeyPreviewManager.java
-│   │       │               │   ├── KeysCanvas.java
-│   │       │               │   ├── KeyVibrator.java
-│   │       │               │   ├── NumbersCanvas.java
-│   │       │               │   ├── PanelManager.java
-│   │       │               │   ├── PopupViewFactory.java
-│   │       │               │   ├── PrivacyHandler.java
-│   │       │               │   ├── RichContentHandler.java
-│   │       │               │   ├── SpecialFeatureHandler.java
-│   │       │               │   ├── SuggestionBarView.java
-│   │       │               │   ├── SuggestionChipBuilder.java
-│   │       │               │   ├── SuggestionChipFactory.java
-│   │       │               │   ├── SwiftLiteIME.java
-│   │       │               │   └── UndoManager.java
-│   │       │               ├── setup
-│   │       │               │   ├── CustomizeView.java
-│   │       │               │   ├── SetupView.java
-│   │       │               │   ├── TesterView.java
-│   │       │               │   ├── ThemePickerView.java
-│   │       │               │   └── UserDictionaryView.java
-│   │       │               ├── suggestions
-│   │       │               │   ├── CompactDictionary.java
-│   │       │               │   ├── CorrectionManager.java
-│   │       │               │   ├── DictionaryLoader.java
-│   │       │               │   ├── DictWord.java
-│   │       │               │   ├── EmojiSuggestionProvider.java
-│   │       │               │   ├── MmapDictionary.java
-│   │       │               │   ├── PredictionData.java
-│   │       │               │   ├── PredictionEngine.java
-│   │       │               │   ├── SuggestionEngine.java
-│   │       │               │   ├── SuggestionResultBuilder.java
-│   │       │               │   ├── SuggestionSearcher.java
-│   │       │               │   └── UsageManager.java
-│   │       │               ├── theme
-│   │       │               │   ├── KeyboardTheme.java
-│   │       │               │   └── ThemeManager.java
-│   │       │               ├── utils
-│   │       │               │   ├── ProfanityFilter.java
-│   │       │               │   ├── SuggestionUtils.java
-│   │       │               │   ├── UIUtils.java
-│   │       │               │   └── VibrationUtils.java
-│   │       │               └── SetupActivity.java
-│   │       └── AndroidManifest.xml
-│   ├── build.gradle
-│   └── proguard-rules.pro
-├── gradle
-│   ├── wrapper
-│   │   ├── gradle-wrapper.jar
-│   │   └── gradle-wrapper.properties
-│   ├── gradle-daemon-jvm.properties
-│   └── libs.versions.toml
-├── screenshots
-│   ├── Clipboard.png
-│   ├── Customize.jpg
-│   ├── Emoji.png
-│   ├── Numbers.png
-│   ├── Setup.png
-│   └── Typing.png
-├── tools
-│   ├── build_dict.py
-│   ├── dict_join.py
-│   ├── dict_sep.py
-│   ├── folder_structure.txt
-│   ├── gen_tree.py
-│   ├── priority_dedup.py
-│   └── sync_emojis.py
-├── .gitignore
-├── build.gradle
-├── classes.txt
-├── CODE_DOCS.md
-├── CONTRIBUTING.md
-├── documented.txt
-├── documented_classes.txt
-├── found.txt
-├── gradle.properties
-├── gradlew
-├── gradlew.bat
-├── LICENSE
-├── local.properties
-├── README.md
-└── settings.gradle
-```
+Official releases are available through:
 
-</details>
+- Google Play (Closed Testing)
+- GitHub Releases
+- F-Droid (planned)
 
+The GitHub repository is the canonical source code location.
+
+## Privacy
+
+Payne-less: Typer:
+
+- Does not require internet access
+- Does not send typing data anywhere
+- Does not use analytics
+- Does not use telemetry
+- Does not require an account
+- Does not sync data to cloud services
+
+All learning, predictions, and personalization happen locally on the device.
 
 ## Who This Is For
 
@@ -286,6 +159,60 @@ This keyboard focuses on speed, simplicity, privacy, and low resource usage firs
 4.  **Test it:** There's a built-in keyboard tester with a WPM counter so you can verify everything feels right before committing. It's in the setup app.
 5.  **Start Typing:** Tap into any text box and you're good to go.
 
+## Build From Source
+
+### Reproducible Builds
+
+The application can be built directly from source using Gradle.
+
+Developer maintenance tools in `tools/` are optional and are not required for normal application builds.
+
+### Requirements
+
+- Java 21+
+- Android SDK
+- Android Build Tools
+
+### Clone
+
+```bash
+git clone https://github.com/DRAVKNOX-Studios/payne-less-typer.git
+cd payne-less-typer
+```
+
+### Build Debug APK
+
+```bash
+./gradlew assembleDebug
+```
+
+### Build Release APK
+
+```bash
+./gradlew assembleRelease
+```
+
+### ANDROID SDK Configure
+
+The Android SDK location must be configured via either:
+
+```properties
+sdk.dir=/path/to/Android/Sdk
+```
+
+**OR**
+
+in `local.properties`,
+```bash
+export ANDROID_HOME=/path/to/Android/Sdk
+```
+
+### Signing
+
+Official releases are signed by GitHub Actions.
+
+Local builds do **not** require the project's signing key and can be built normally.
+
 ## For the Developers
 
 If you want to *poke the internals* 🍑, check out our [Code Documentation](CODE_DOCS.md).
@@ -297,14 +224,34 @@ We did a few neat things under the hood:
 *   **Custom Canvas:** All the keys and popups are rendered using the Canvas API for maximum FPS.
 *   **Bigram Learning:** The prediction engine builds a personal bigram model from your typing history. It starts smart and keeps getting smarter the more you use it.
 
-### Dictionary Tools
+### Optional Development Tools
 
-The `tools/` folder has Python scripts for working with the dictionary if you want to rebuild or modify it:
+The `tools/` directory is not required to build, run, or package Payne-less: Typer.
 
-*   `build_dict.py` - builds the binary dictionary from source word lists.
-*   `dict_join.py` / `dict_sep.py` - joins or splits dictionary files for easier editing.
-*   `priority_dedup.py` - deduplicates word entries while preserving priority ordering.
-*   `gen_tree.py` - generates the folder structure text (that's how we made the tree above).
+These scripts are only used for project maintenance:
+
+- `build_dict.py` – rebuild dictionary data
+- `dict_join.py` / `dict_sep.py` – dictionary editing helpers
+- `priority_dedup.py` – dictionary cleanup
+- `sync_emojis.py` – update emoji metadata from Unicode
+- `gen_tree.py` – generate `folder_structure.txt`
+
+### Emoji Metadata
+
+The repository already contains:
+
+- `emoji_data.json`
+- `emoji_shortcodes.json`
+
+Normal builds do not require running `sync_emojis.py`.
+
+The sync tool is only used when updating emoji definitions from Unicode.
+
+### Dictionary Data
+
+The repository already contains the dictionary assets required for normal operation.
+
+Rebuilding the dictionary is optional and only required when modifying dictionary sources.
 
 The main dictionary config lives in `assets/engine_config.json` and `assets/predictions.json` if you want to tune suggestion behavior.
 
@@ -312,13 +259,22 @@ The main dictionary config lives in `assets/engine_config.json` and `assets/pred
 
 There are two GitHub Actions workflows in `.github/workflows/`. `android.yml` builds the APK on every push. `gradle.yml` handles the Gradle dependency and build validation. If you fork this and want builds without *touching* Android Studio, those are your friends.
 
+## Project Structure
+
+The project structure is automatically generated and kept up to date.
+
+See:
+
+- [folder_structure.txt](folder_structure.txt)
+
 ## Contributing
 
 Want to help? Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR. Issues and PRs both have templates, so please fill them out rather than leaving them blank. It helps a lot.
 
 ## License
 
-[MIT](LICENSE) with a branding restriction. The code is yours to use and fork freely, but the name "Payne-less: Typer", the app icon, and the screenshots stay with DRAVKNOX Studios. Full details in the LICENSE file.
+Only the source code is under [MIT](LICENSE).
+The Payne-less: Typer name, logo, screenshots, and branding assets are trademarks/copyrighted assets of DRAVKNOX Studios.
 
 ---
 
