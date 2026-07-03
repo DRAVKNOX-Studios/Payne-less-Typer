@@ -66,7 +66,11 @@ output = "\n".join(lines)
 
 print(output)
 
-with open("folder_structure.txt", "w", encoding="utf-8") as f:
+output_file = ROOT / "folder_structure.txt"
+
+with open(output_file, "w", encoding="utf-8") as f:
     f.write(output)
+
+print(f"\nSaved to {output_file}")
 
 print("\nSaved to folder_structure.txt")
