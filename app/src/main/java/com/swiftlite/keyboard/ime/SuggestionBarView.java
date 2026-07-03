@@ -2,21 +2,16 @@ package com.swiftlite.keyboard.ime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
 import android.util.TypedValue;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.swiftlite.keyboard.SetupActivity;
 import com.swiftlite.keyboard.clipboard.ClipboardItem;
@@ -26,20 +21,11 @@ import com.swiftlite.keyboard.utils.SuggestionUtils;
 import com.swiftlite.keyboard.utils.UIUtils;
 import com.swiftlite.keyboard.utils.VibrationUtils;
 
-import java.io.InputStream;
-
-/**
- * The UI component located at the top of the keyboard that displays word suggestions,
- * predictions, and clipboard clips. It also provides quick-access buttons for settings,
- * emoji, and undo.
- */
 public class SuggestionBarView extends LinearLayout {
-
-    private static final int CHIP_PAD_DP = 8;
     private final SwiftLiteIME mIME;
     private final KeyboardView mParent;
     private LinearLayout mSuggestionSpread;
-    private IconButton mClipBtn, mEmojiBtn, mUndoBtn;
+    private IconButton mClipBtn, mEmojiBtn, mUndoBtn, mSettingsBtn, mResizeBtn;
     private KeyboardTheme mTheme;
     private boolean mShowIdleItems = true;
     private String[] mPendingSuggestions = new String[0];
@@ -50,209 +36,122 @@ public class SuggestionBarView extends LinearLayout {
     }
 
     private void init() {
-        setOrientation(VERTICAL);
-        setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        setTag("suggestion_wrapper");
-
+        setOrientation(VERTICAL); setLayoutParams(new LayoutParams(-1, -2));
         LinearLayout bar = new LinearLayout(getContext());
-        bar.setOrientation(HORIZONTAL);
-        bar.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, UIUtils.dp(getContext(), 40)));
-        bar.setGravity(Gravity.CENTER_VERTICAL);
-        bar.setTag("suggestion_bar");
+        bar.setOrientation(HORIZONTAL); bar.setLayoutParams(new LayoutParams(-1, UIUtils.dp(getContext(), 40)));
+        bar.setGravity(Gravity.CENTER_VERTICAL); bar.setTag("suggestion_bar");
 
-        mClipBtn = iconBtn(KeyIcons.IC_CLIPBOARD, "clip_btn",
-                v -> mParent.togglePanel(KeyboardView.PANEL_CLIPBOARD));
-        bar.addView(mClipBtn);
-        bar.addView(divider("div1"));
+        mClipBtn = iconBtn(KeyIcons.IC_CLIPBOARD, "clip", v -> mParent.togglePanel(KeyboardView.PANEL_CLIPBOARD));
+        mSettingsBtn = iconBtn(KeyIcons.IC_SETTINGS, "settings", v -> {
+            Intent i = new Intent(getContext(), SetupActivity.class); i.putExtra("target_tab", 1); i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); getContext().startActivity(i);
+        });
+        bar.addView(mClipBtn); bar.addView(mSettingsBtn); bar.addView(divider("d1"));
 
         mSuggestionSpread = new LinearLayout(getContext());
-        mSuggestionSpread.setOrientation(HORIZONTAL);
-        mSuggestionSpread.setLayoutParams(new LayoutParams(0, LayoutParams.MATCH_PARENT, 1));
-        mSuggestionSpread.setGravity(Gravity.CENTER_VERTICAL);
-        bar.addView(mSuggestionSpread);
+        mSuggestionSpread.setOrientation(HORIZONTAL); mSuggestionSpread.setLayoutParams(new LayoutParams(0, -1, 1));
+        mSuggestionSpread.setGravity(Gravity.CENTER_VERTICAL); bar.addView(mSuggestionSpread);
 
-        bar.addView(divider("div2"));
-        mUndoBtn = iconBtn(KeyIcons.IC_UNDO, "undo_btn",
-                v -> mIME.onKeyPress(KeyboardView.KEY_UNDO, ""));
-        bar.addView(mUndoBtn);
-        bar.addView(divider("div_undo"));
-        mEmojiBtn = iconBtn(KeyIcons.IC_EMOJI, "emoji_btn",
-                v -> mParent.togglePanel(KeyboardView.PANEL_EMOJI));
-        bar.addView(mEmojiBtn);
+        bar.addView(divider("d2"));
+        mUndoBtn = iconBtn(KeyIcons.IC_UNDO, "undo", v -> mIME.onKeyPress(KeyboardView.KEY_UNDO, ""));
+        mResizeBtn = iconBtn(KeyIcons.IC_RESIZE, "resize", v -> {
+            View o = mParent.findViewWithTag("resize_overlay");
+            if (o != null) { ((android.view.ViewGroup)o.getParent()).removeView(o); }
+            else { mParent.addView(new ResizeOverlay(getContext(), mParent, false), new FrameLayout.LayoutParams(-1, -1)); }
+            refreshIdleBar();
+        });
+        mEmojiBtn = iconBtn(KeyIcons.IC_EMOJI, "emoji", v -> mParent.togglePanel(KeyboardView.PANEL_EMOJI));
+        bar.addView(mUndoBtn); bar.addView(mResizeBtn); bar.addView(mEmojiBtn);
 
         addView(bar);
-        updateToolIcons();
-        View sep = new View(getContext());
-        sep.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
-        sep.setTag("suggestion_divider");
-        addView(sep);
+        View sep = new View(getContext()); sep.setLayoutParams(new LayoutParams(-1, 1));
+        sep.setTag("suggestion_divider"); addView(sep);
     }
 
-    private IconButton iconBtn(int icon, String tag, View.OnClickListener l) {
-        IconButton b = new IconButton(getContext(), icon, 0xFF888888);
-        b.setLayoutParams(new LayoutParams(UIUtils.dp(getContext(), 40), LayoutParams.MATCH_PARENT));
-        b.setOnClickListener(v -> {
-            vibrate(VibrationUtils.VIBE_UTIL);
-            l.onClick(v);
-        });
-        b.setTag(tag);
-        return b;
+    private IconButton iconBtn(int ic, String tag, View.OnClickListener l) {
+        IconButton b = new IconButton(getContext(), ic, 0xFF888888);
+        b.setLayoutParams(new LayoutParams(UIUtils.dp(getContext(), 38), -1));
+        b.setOnClickListener(v -> { if (mIME.getThemeManager().isVibrateEnabled()) VibrationUtils.vibrate(getContext(), VibrationUtils.VIBE_UTIL); l.onClick(v); });
+        b.setTag(tag); return b;
     }
 
-    private void vibrate(int duration) {
-        if (mIME != null && mIME.getThemeManager() != null && mIME.getThemeManager().isVibrateEnabled()) {
-            VibrationUtils.vibrate(getContext(), duration);
-        }
+    private View divider(String t) {
+        View v = new View(getContext()); LayoutParams lp = new LayoutParams(1, UIUtils.dp(getContext(), 20));
+        lp.gravity = Gravity.CENTER_VERTICAL; v.setLayoutParams(lp); v.setAlpha(0.25f); v.setTag(t); return v;
     }
 
-    private View divider(String tag) {
-        View v = new View(getContext());
-        LayoutParams lp = new LayoutParams(1, UIUtils.dp(getContext(), 20));
-        lp.gravity = Gravity.CENTER_VERTICAL;
-        v.setLayoutParams(lp);
-        v.setAlpha(0.25f);
-        v.setTag(tag);
-        return v;
+    public void setTheme(KeyboardTheme t) {
+        mTheme = t; View bar = findViewWithTag("suggestion_bar"); if (bar != null) bar.setBackgroundColor(t.suggestionBg);
+        for (IconButton b : new IconButton[]{mClipBtn, mUndoBtn, mEmojiBtn, mSettingsBtn, mResizeBtn}) if (b != null) b.setColor(t.keyText);
+        View sep = findViewWithTag("suggestion_divider"); if (sep != null) sep.setBackgroundColor(t.isDark ? 0x22FFFFFF : 0x22000000);
+        int dc = t.isDark ? 0x44FFFFFF : 0x44000000;
+        for (String s : new String[]{"d1", "d2"}) { View d = findViewWithTag(s); if (d != null) d.setBackgroundColor(dc); }
+        refreshIdleBar();
     }
 
-    public void updateToolIcons() {
-        int currentPanel = mParent.getCurrentPanelSafe();
-        int basePanel    = mParent.getBasePanelSafe();
-        int backIcon = (basePanel == KeyboardView.PANEL_NUMBERS) ? KeyIcons.IC_NUMBERS : KeyIcons.IC_ALPHA;
-
-        if (mEmojiBtn != null)
-            mEmojiBtn.setIcon(currentPanel == KeyboardView.PANEL_EMOJI ? backIcon : KeyIcons.IC_EMOJI);
-        if (mClipBtn != null)
-            mClipBtn.setIcon(currentPanel == KeyboardView.PANEL_CLIPBOARD ? backIcon : KeyIcons.IC_CLIPBOARD);
-    }
-
-    public boolean isShowingIdleItems() { return mShowIdleItems; }
-
-    public void setTheme(KeyboardTheme theme) {
-        mTheme = theme;
-        View bar = findViewWithTag("suggestion_bar");
-        if (bar != null) bar.setBackgroundColor(theme.suggestionBg);
-        if (mClipBtn  != null) mClipBtn.setColor(theme.keyText);
-        if (mUndoBtn  != null) mUndoBtn.setColor(theme.keyText);
-        if (mEmojiBtn != null) mEmojiBtn.setColor(theme.keyText);
-        View sep = findViewWithTag("suggestion_divider");
-        if (sep != null) sep.setBackgroundColor(theme.isDark ? 0x22FFFFFF : 0x22000000);
-        int dc = theme.isDark ? 0x44FFFFFF : 0x44000000;
-        for (String t : new String[]{"div1", "div2", "div_undo"}) {
-            View d = findViewWithTag(t); if (d != null) d.setBackgroundColor(dc);
-        }
-        if (mSuggestionSpread.getWidth() > 0) populateBar(mSuggestionSpread.getWidth());
-    }
-
-    public void setShowingIdleItems(boolean show) {
-        mShowIdleItems = show;
-        if (show) mPendingSuggestions = new String[0];
-        schedulePopulate();
-    }
-
-    public void refreshIdleBar() {
-        if (mShowIdleItems && mSuggestionSpread.getWidth() > 0)
-            populateBar(mSuggestionSpread.getWidth());
-    }
-
-    public void updateSuggestions(String[] suggestions) {
-        mPendingSuggestions = suggestions != null ? suggestions : new String[0];
-        if (mPendingSuggestions.length > 0) mShowIdleItems = false;
-        schedulePopulate();
-    }
+    public void setShowingIdleItems(boolean s) { mShowIdleItems = s; if (s) mPendingSuggestions = new String[0]; schedulePopulate(); }
+    public void refreshIdleBar() { mParent.updateLayout(); if (mShowIdleItems && mSuggestionSpread.getWidth() > 0) populateBar(mSuggestionSpread.getWidth()); }
+    public void updateSuggestions(String[] s) { mPendingSuggestions = s != null ? s : new String[0]; if (mPendingSuggestions.length > 0) mShowIdleItems = false; schedulePopulate(); }
 
     private void schedulePopulate() {
-        if (mSuggestionSpread.getWidth() > 0) {
-            populateBar(mSuggestionSpread.getWidth());
-        } else {
-            mSuggestionSpread.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override public void onGlobalLayout() {
-                        mSuggestionSpread.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        populateBar(mSuggestionSpread.getWidth());
-                    }
-                });
-        }
-    }
-
-    private void populateBar(int availablePx) {
-        if (mShowIdleItems || mPendingSuggestions.length == 0) {
-            mSuggestionSpread.removeAllViews();
-            populateIdleBar(availablePx);
-            return;
-        }
-        if (availablePx <= 0) return;
-
-        float sizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getContext().getResources().getDisplayMetrics());
-        int cp = UIUtils.dp(getContext(), CHIP_PAD_DP);
-        Paint bp = new Paint(Paint.ANTI_ALIAS_FLAG); bp.setTextSize(sizePx); bp.setTypeface(Typeface.DEFAULT_BOLD);
-        Paint rp = new Paint(Paint.ANTI_ALIAS_FLAG); rp.setTextSize(sizePx);
-
-        String[] fitting = SuggestionUtils.filterToFit(mPendingSuggestions, availablePx, rp, bp, cp, 1);
-        if (fitting.length == 0) return;
-
-        int[] natural = new int[fitting.length]; int total = 0;
-        for (int i = 0; i < fitting.length; i++) {
-            natural[i] = (int) Math.ceil(((i == 0) ? bp : rp).measureText(fitting[i])) + cp * 2;
-            total += natural[i];
-        }
-        int leftover = Math.max(0, availablePx - total - (fitting.length - 1));
-        int[] widths = new int[fitting.length]; int alloc = 0;
-        for (int i = 0; i < fitting.length; i++) {
-            if (i < fitting.length - 1) { int e = total > 0 ? (int)((long)leftover * natural[i] / total) : 0; widths[i] = natural[i] + e; alloc += e; }
-            else widths[i] = natural[i] + (leftover - alloc);
-            if (fitting.length == 1 && widths[i] > availablePx) widths[i] = availablePx;
-        }
-        SuggestionChipBuilder.build(getContext(), fitting, widths, cp, 1, mTheme, mIME, mSuggestionSpread);
-    }
-
-    private void populateIdleBar(int availablePx) {
-        int sw = UIUtils.dp(getContext(), 40);
-        IconButton sb = new IconButton(getContext(), KeyIcons.IC_SETTINGS, 0xFF888888);
-        if (mTheme != null) sb.setColor(mTheme.keyText);
-        sb.setLayoutParams(new LayoutParams(sw, LayoutParams.MATCH_PARENT));
-        sb.setOnClickListener(v -> {
-            vibrate(VibrationUtils.VIBE_UTIL);
-            Intent i = new Intent(getContext(), SetupActivity.class);
-            i.putExtra("target_tab", 1); i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getContext().startActivity(i);
+        if (mSuggestionSpread.getWidth() > 0) populateBar(mSuggestionSpread.getWidth());
+        else mSuggestionSpread.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() { mSuggestionSpread.getViewTreeObserver().removeOnGlobalLayoutListener(this); populateBar(mSuggestionSpread.getWidth()); }
         });
-        mSuggestionSpread.addView(sb);
-        if (availablePx - sw <= UIUtils.dp(getContext(), 50)) return;
-        mSuggestionSpread.addView(divider("idle_div"));
-        ClipboardRepository repo = mIME.getClipboardRepository();
-        if (repo == null) return;
+    }
+
+    private void populateBar(int av) {
+        mSuggestionSpread.removeAllViews();
+        if (mShowIdleItems || mPendingSuggestions.length == 0) { populateIdleBar(); return; }
+        float sz = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
+        int cp = UIUtils.dp(getContext(), 8);
+        Paint bp = new Paint(Paint.ANTI_ALIAS_FLAG); bp.setTextSize(sz); bp.setTypeface(Typeface.DEFAULT_BOLD);
+        Paint rp = new Paint(Paint.ANTI_ALIAS_FLAG); rp.setTextSize(sz);
+        String[] fit = SuggestionUtils.filterToFit(mPendingSuggestions, av, rp, bp, cp, 1);
+        if (fit.length == 0) return;
+        int[] w = new int[fit.length]; int tot = 0;
+        for (int i=0; i<fit.length; i++) { w[i] = (int)Math.ceil((i==0?bp:rp).measureText(fit[i])) + cp*2; tot += w[i]; }
+        int l = Math.max(0, av - tot); for (int i=0; i<fit.length; i++) w[i] += l / fit.length;
+        SuggestionChipBuilder.build(getContext(), fit, w, cp, 1, mTheme, mIME, mSuggestionSpread);
+    }
+
+    private void populateIdleBar() {
+        mSuggestionSpread.setGravity(Gravity.CENTER_VERTICAL);
+        boolean res = mParent.findViewWithTag("resize_overlay") != null;
+        if (mResizeBtn != null) mResizeBtn.setColor(res ? mTheme.accent : mTheme.keyText);
+
         mIME.getExecutor().execute(() -> {
-            ClipboardItem latest = repo.getLatest();
-            if (latest != null)
-                mHandler.post(() -> { if (mShowIdleItems && mSuggestionSpread.getChildCount() <= 2) addClipboardChip(latest); });
+            ClipboardItem it = mIME.getClipboardRepository().getLatest();
+            mHandler.post(() -> {
+                if (!mShowIdleItems) return;
+                if (it != null && mSuggestionSpread.getChildCount() == 0) addClipboardChip(it);
+            });
         });
     }
 
-    private void addClipboardChip(ClipboardItem item) {
-        View chip = SuggestionChipFactory.createClipboardChip(getContext(), item, mTheme, mIME, mHandler, clickedItem -> {
-            vibrate(VibrationUtils.VIBE_UTIL);
-            if (clickedItem.isImage()) mIME.commitClipboardImage(clickedItem.imageUri);
-            else mIME.commitClipboard(clickedItem.content);
-            setShowingIdleItems(false);
+    private void addClipboardChip(ClipboardItem it) {
+        View c = SuggestionChipFactory.createClipboardChip(getContext(), it, mTheme, mIME, mHandler, item -> {
+            if (mIME.getThemeManager().isVibrateEnabled()) VibrationUtils.vibrate(getContext(), VibrationUtils.VIBE_UTIL);
+            if (item.isImage()) mIME.commitClipboardImage(item.imageUri); else mIME.commitClipboard(item.content); setShowingIdleItems(false);
         });
-        if (mSuggestionSpread != null) mSuggestionSpread.addView(chip);
+        if (mSuggestionSpread != null) mSuggestionSpread.addView(c);
     }
 
     public void updateEditorInfo(android.view.inputmethod.EditorInfo info) {
         boolean s = PrivacyHandler.isSensitiveField(info);
-        setVisibility(mClipBtn, "clip_btn", "div1", s);
-        setVisibility(mUndoBtn, "undo_btn", "div_undo", s);
-        setVisibility(mEmojiBtn, "emoji_btn", "div2", s);
+        int v = s ? GONE : VISIBLE;
+        if (mClipBtn != null) mClipBtn.setVisibility(v); if (mSettingsBtn != null) mSettingsBtn.setVisibility(v);
+        if (mUndoBtn != null) mUndoBtn.setVisibility(v); if (mResizeBtn != null) mResizeBtn.setVisibility(v);
+        if (mEmojiBtn != null) mEmojiBtn.setVisibility(v);
+        View d1 = findViewWithTag("d1"), d2 = findViewWithTag("d2");
+        if (d1 != null) d1.setVisibility(v); if (d2 != null) d2.setVisibility(v);
         if (s) updateSuggestions(new String[0]);
     }
 
-    private void setVisibility(IconButton btn, String btnTag, String divTag, boolean hide) {
-        int v = hide ? GONE : VISIBLE;
-        if (btn != null) btn.setVisibility(v);
-        View d = findViewWithTag(divTag); if (d != null) d.setVisibility(v);
+    public void updateToolIcons() {
+        int cp = mParent.getCurrentPanelSafe(); int bp = mParent.getBasePanelSafe();
+        int bIcon = (bp == KeyboardView.PANEL_NUMBERS) ? KeyIcons.IC_NUMBERS : KeyIcons.IC_ALPHA;
+        if (mEmojiBtn != null) mEmojiBtn.setIcon(cp == KeyboardView.PANEL_EMOJI ? bIcon : KeyIcons.IC_EMOJI);
+        if (mClipBtn != null) mClipBtn.setIcon(cp == KeyboardView.PANEL_CLIPBOARD ? bIcon : KeyIcons.IC_CLIPBOARD);
     }
-
-    @Override
-    protected void onDetachedFromWindow() { super.onDetachedFromWindow(); }
+    public boolean isShowingIdleItems() { return mShowIdleItems; }
 }

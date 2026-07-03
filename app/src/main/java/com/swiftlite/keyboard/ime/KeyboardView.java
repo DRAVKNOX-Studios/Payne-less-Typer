@@ -76,6 +76,7 @@ public class KeyboardView extends FrameLayout {
         addView(root);
 
         mPanels = new PanelManager(getContext(), mIME, this, container, 0, mSuggestionBar);
+        updateLayout();
     }
 
     public void maybeShowGooglyEyes() {
@@ -114,6 +115,16 @@ public class KeyboardView extends FrameLayout {
             removeView(mGooglyEyes);
             mGooglyEyes = null;
         }
+    }
+
+    public SwiftLiteIME getIME() { return mIME; }
+
+    public void updateLayout() {
+        LayoutAdjuster.apply(this, mIME.getLayoutController());
+    }
+
+    public void notifyToolIcons() {
+        if (mSuggestionBar != null) mSuggestionBar.refreshIdleBar();
     }
 
     public void togglePanel(int panel)                { mPanels.toggle(panel); }

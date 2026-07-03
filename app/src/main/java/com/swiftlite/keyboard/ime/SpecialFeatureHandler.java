@@ -16,7 +16,6 @@ public class SpecialFeatureHandler {
             KeyboardView kv = ime.getKeyboardView();
             if (kv != null) {
                 kv.forceShowGooglyEyes();
-                ic.deleteSurroundingText(GOOGLY_TRIGGER.length(), 0);
             }
         }
     }

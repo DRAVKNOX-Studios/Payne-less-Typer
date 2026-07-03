@@ -34,6 +34,7 @@ public class SwiftLiteIME extends InputMethodService {
     private ClipboardMonitor mClipboardMonitor;
     private InputLogicHandler mInputLogic;
     private UndoManager mUndoManager;
+    private LayoutController mLayoutController;
 
     private boolean mCapsLock = false, mShiftOn = false, mNumberMode = false;
     private long mLastShiftTime = 0;
@@ -75,9 +76,11 @@ public class SwiftLiteIME extends InputMethodService {
     public ExecutorService getExecutor() { return mExecutor; }
     public Handler getMainHandler()      { return mMainHandler; }
     public ThemeManager getThemeManager(){ return mThemeManager; }
+    public LayoutController getLayoutController() { return mLayoutController; }
 
     @Override public void onCreate() {
         super.onCreate();
+        mLayoutController = new LayoutController(this);
         mThemeManager = new ThemeManager(this);
         mSuggestionEngine = new SuggestionEngine(this, mThemeManager);
         mEmojiHistory = new EmojiHistoryManager(this);
@@ -122,6 +125,7 @@ public class SwiftLiteIME extends InputMethodService {
         if (mSuggestionEngine != null) mSuggestionEngine.ensureLoaded();
         if (mKeyboardView != null) {
             mKeyboardView.setVisibility(View.VISIBLE);
+            mKeyboardView.updateLayout();
             if (!PrivacyHandler.isSensitiveField(info)) mKeyboardView.maybeShowGooglyEyes();
         }
         updatePrivacyAndPanel(info);

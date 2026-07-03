@@ -139,14 +139,13 @@ public class KeyPopupManager {
             if (v instanceof LinearLayout) {
                 LinearLayout row = (LinearLayout) v;
                 for (int i = 0; i < row.getChildCount(); i++) updateHighlight(row.getChildAt(i), theme, accent, r, inset, main.getChildCount(), rIdx, i, row.getChildCount());
-            } else if (v instanceof TextView) {
+            } else {
                 updateHighlight(v, theme, accent, r, inset, 1, 0, rIdx, main.getChildCount());
             }
         }
     }
 
     private void updateHighlight(View child, KeyboardTheme theme, int accent, float r, float inset, int rowCount, int rIdx, int i, int rowLen) {
-        if (!(child instanceof TextView)) return;
         int itemIdx = (Integer) child.getTag();
         if (itemIdx == mPopupHighlight) {
             boolean isFirst = (i == 0), isLast = (i == rowLen - 1);
@@ -154,12 +153,19 @@ public class KeyPopupManager {
             float bl = (rIdx == rowCount - 1 && isFirst) ? r : 0f, br = (rIdx == rowCount - 1 && isLast) ? r : 0f;
             GradientDrawable hl = new GradientDrawable(); hl.setColor(accent); hl.setCornerRadii(new float[]{tl,tl,tr,tr,br,br,bl,bl});
             child.setBackground(new InsetDrawable(hl, (int) inset));
-            ((TextView) child).setTextColor(Color.WHITE);
+            if (child instanceof TextView) ((TextView) child).setTextColor(Color.WHITE);
+            child.setTag(-2); // Mark as highlighted for custom drawing
+            child.setTag(R_TAG, itemIdx); // Keep original index
+            child.invalidate();
         } else {
             child.setBackground(null);
-            ((TextView) child).setTextColor(theme != null ? theme.keyText : Color.WHITE);
+            if (child instanceof TextView) ((TextView) child).setTextColor(theme != null ? theme.keyText : Color.WHITE);
+            child.setTag(-1); 
+            child.setTag(R_TAG, itemIdx);
+            child.invalidate();
         }
     }
+    private static final int R_TAG = 0x7f000001;
 
     public int popupIndexAt(float wx, float wy) {
         if (mPopupOpts == null || mPopup == null) return -1;
@@ -177,14 +183,20 @@ public class KeyPopupManager {
                     LinearLayout row = (LinearLayout) v;
                     for (int i = 0; i < row.getChildCount(); i++) {
                         View c = row.getChildAt(i);
-                        if (localX >= c.getLeft() && localX <= c.getRight()) return (Integer) c.getTag();
+                        if (localX >= c.getLeft() && localX <= c.getRight()) return getOriginalTag(c);
                     }
                 }
-            } else if (v instanceof TextView) {
-                if (localX >= v.getLeft() && localX <= v.getRight()) return (Integer) v.getTag();
+            } else {
+                if (localX >= v.getLeft() && localX <= v.getRight()) return getOriginalTag(v);
             }
         }
         return -1;
+    }
+
+    private int getOriginalTag(View v) {
+        Object tag = v.getTag(R_TAG);
+        if (tag instanceof Integer) return (Integer) tag;
+        return (v.getTag() instanceof Integer) ? (Integer) v.getTag() : -1;
     }
 
     public void dismissPopup() {

@@ -33,6 +33,14 @@ public class SetupView extends LinearLayout {
     private final KeyboardTheme mTheme;
     private TextView mStep1Status, mStep2Status, mStep3Status;
 
+    private final Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            updateStatus();
+            postDelayed(this, 1000);
+        }
+    };
+
     public SetupView(SetupActivity activity, KeyboardTheme theme) {
         super(activity);
         mActivity = activity;
@@ -88,6 +96,18 @@ public class SetupView extends LinearLayout {
         mStep2Status.setTextColor(selected ? 0xFF10B981 : 0xFFEF4444);
         mStep3Status.setText(perm ? "✓ Storage permission granted" : "○ Storage permission required");
         mStep3Status.setTextColor(perm ? 0xFF10B981 : 0xFFEF4444);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mStatusChecker.run();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        removeCallbacks(mStatusChecker);
     }
 
     private boolean isKeyboardEnabled() {

@@ -157,11 +157,7 @@ public class PanelManager {
     }
 
     private int calculatePanelPx() {
-        float density = mCtx.getResources().getDisplayMetrics().density;
-        int kh = Math.round(BaseKeyCanvas.KEY_HEIGHT_DP * density);
-        int pad = Math.round(BaseKeyCanvas.KEY_PAD_DP * density);
-        int rows = mIME.getThemeManager().isNumberRowEnabled() ? 5 : 4;
-        return kh * rows + pad * (rows * 2 + 2);
+        return AdaptiveHeight.getBaseHeight(mCtx);
     }
 
     public void trimMemory() {

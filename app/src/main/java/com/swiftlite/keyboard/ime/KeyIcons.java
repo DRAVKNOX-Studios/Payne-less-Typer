@@ -34,6 +34,9 @@ public final class KeyIcons {
     public static final int IC_SEND       = 22;
     public static final int IC_GO         = 23;
     public static final int IC_NEXT       = 24;
+    public static final int IC_RESIZE     = 25;
+    public static final int IC_ONEHAND_L  = 26;
+    public static final int IC_ONEHAND_R  = 27;
 
     private static final Paint sPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final Paint sFill  = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -92,6 +95,9 @@ public final class KeyIcons {
             case IC_DONE:       ExtraIcons.drawDone(c, cx, cy, r, sPaint); break;
             case IC_SEND:       case IC_GO: ExtraIcons.drawSend(c, cx, cy, r, sPaint); break;
             case IC_NEXT:       drawNext(c, cx, cy, r, sw); break;
+            case IC_RESIZE:     ExtraIcons.drawResize(c, cx, cy, r, sPaint); break;
+            case IC_ONEHAND_L:  ExtraIcons.drawOneHand(c, cx, cy, r, sPaint, true); break;
+            case IC_ONEHAND_R:  ExtraIcons.drawOneHand(c, cx, cy, r, sPaint, false); break;
         }
     }
 

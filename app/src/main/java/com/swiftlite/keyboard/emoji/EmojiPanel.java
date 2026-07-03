@@ -20,6 +20,11 @@ import com.swiftlite.keyboard.utils.VibrationUtils;
 
 import java.util.List;
 
+/**
+ * The primary UI component for selecting emojis. It features a tabbed interface for different
+ * emoji categories, including a "recents" tab. It handles tab switching, grid rendering,
+ * and coordinates with the skin tone popup manager for emojis that support variations.
+ */
 public class EmojiPanel extends LinearLayout {
 
     private static final int[] TAB_ICON_IDS = {
@@ -48,8 +53,9 @@ public class EmojiPanel extends LinearLayout {
         mTheme = theme;
         mSkinPopupManager = new SkinTonePopupManager(context, this);
         setOrientation(VERTICAL);
+        int totalH = com.swiftlite.keyboard.ime.AdaptiveHeight.getBaseHeight(context);
         setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(240)));
+                ViewGroup.LayoutParams.MATCH_PARENT, totalH));
 
         EmojiData.init(context.getAssets());
         EmojiSkinToneHelper.init(context);

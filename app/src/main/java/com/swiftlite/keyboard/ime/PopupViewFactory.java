@@ -1,6 +1,7 @@
 package com.swiftlite.keyboard.ime;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.GradientDrawable;
@@ -18,106 +19,74 @@ import java.util.List;
 public class PopupViewFactory {
 
     public static View createStandardPopup(Context context, List<String> opts, KeyboardTheme theme, int itemSz, float density) {
-        float rowCorner = density * 10f;
+        float r = density * 10f;
         LinearLayout row = new LinearLayout(context);
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setClipToOutline(true);
-        row.setClipChildren(true);
+        row.setOrientation(LinearLayout.HORIZONTAL); row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setClipToOutline(true); row.setClipChildren(true);
 
-        GradientDrawable rowBg = new GradientDrawable();
-        rowBg.setColor(theme != null ? theme.specialKey : 0xFF374151);
-        rowBg.setCornerRadius(rowCorner);
-        if (theme != null)
-            rowBg.setStroke(Math.round(0.9f * density * 1.5f), theme.keyBorder);
-        row.setBackground(rowBg);
-        row.setTag("popup_row");
+        GradientDrawable bg = new GradientDrawable();
+        bg.setColor(theme != null ? theme.specialKey : 0xFF374151); bg.setCornerRadius(r);
+        if (theme != null) bg.setStroke(Math.round(0.9f * density * 1.5f), theme.keyBorder);
+        row.setBackground(bg); row.setTag("popup_row");
 
         for (int i = 0; i < opts.size(); i++) {
-            TextView tv = new TextView(context);
-            tv.setText(opts.get(i));
-            tv.setTextSize(16);
-            tv.setTextColor(theme != null ? theme.keyText : Color.WHITE);
-            tv.setGravity(Gravity.CENTER);
-            tv.setLayoutParams(new LinearLayout.LayoutParams(itemSz, itemSz));
-            tv.setTag(i);
-            row.addView(tv);
+            String opt = opts.get(i); View v;
+            if (opt.startsWith("icon:")) {
+                String[] parts = opt.split(":");
+                final int ic = Integer.parseInt(parts[1]);
+                final boolean active = parts.length > 2 && "active".equals(parts[2]);
+                v = new View(context) {
+                    @Override protected void onDraw(Canvas c) {
+                        int col = (getTag() != null && (int)getTag() == -2) ? Color.WHITE : (active ? (theme != null ? theme.accent : Color.CYAN) : (theme != null ? theme.keyText : Color.WHITE));
+                        KeyIcons.draw(c, ic, getWidth()/2f, getHeight()/2f, 18, density, col);
+                    }
+                };
+            } else {
+                TextView tv = new TextView(context); tv.setText(opt); tv.setTextSize(16);
+                tv.setTextColor(theme != null ? theme.keyText : Color.WHITE);
+                tv.setGravity(Gravity.CENTER); v = tv;
+            }
+            v.setLayoutParams(new LinearLayout.LayoutParams(itemSz, itemSz)); v.setTag(i); row.addView(v);
         }
         return row;
     }
 
     public static View createScrollablePopup(Context context, List<String> opts, KeyboardTheme theme, 
                                            float density, int maxW, float itemHDp, float padHDp, float textSp) {
-        int itemH = (int)(density * itemHDp);
-        int hPad = (int)(density * padHDp);
-        float sizePx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSp, context.getResources().getDisplayMetrics());
+        int itemH = (int)(density * itemHDp), hPad = (int)(density * padHDp);
+        float szPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSp, context.getResources().getDisplayMetrics());
+        Paint p = new Paint(1); p.setTextSize(szPx);
+        int[] w = new int[opts.size()];
+        for (int i = 0; i < opts.size(); i++) w[i] = (int) Math.ceil(p.measureText(opts.get(i))) + hPad;
 
-        Paint measPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        measPaint.setTextSize(sizePx);
-        int[] itemWidths = new int[opts.size()];
+        int maxIt = (opts.size() > 5) ? (opts.size() + 1) / 2 : opts.size();
+        List<List<Integer>> rows = new ArrayList<>(); List<Integer> cur = new ArrayList<>(); int curW = 0;
         for (int i = 0; i < opts.size(); i++) {
-            itemWidths[i] = (int) Math.ceil(measPaint.measureText(opts.get(i))) + hPad;
+            if (!cur.isEmpty() && (curW + w[i] > maxW || cur.size() >= maxIt)) { rows.add(cur); cur = new ArrayList<>(); curW = 0; }
+            cur.add(i); curW += w[i];
         }
+        if (!cur.isEmpty()) rows.add(cur);
 
-        int maxItems = (opts.size() > 5) ? (opts.size() + 1) / 2 : opts.size();
-        List<List<Integer>> rows = new ArrayList<>();
-        List<Integer> currentRow = new ArrayList<>();
-        int currentRowW = 0;
-        for (int i = 0; i < opts.size(); i++) {
-            int w = itemWidths[i];
-            if (!currentRow.isEmpty() && (currentRowW + w > maxW || currentRow.size() >= maxItems)) {
-                rows.add(currentRow);
-                currentRow = new ArrayList<>();
-                currentRowW = 0;
-            }
-            currentRow.add(i);
-            currentRowW += w;
-        }
-        if (!currentRow.isEmpty()) rows.add(currentRow);
-
-        LinearLayout mainContainer = new LinearLayout(context);
-        mainContainer.setOrientation(LinearLayout.VERTICAL);
-        mainContainer.setTag("popup_main");
-
-        float r = density * 10f;
-        int bgColor = theme != null ? theme.specialKey : 0xFF374151;
-        int strokeColor = theme != null ? theme.keyBorder : 0;
-        int strokeW = Math.round(0.9f * density * 1.5f);
+        LinearLayout main = new LinearLayout(context); main.setOrientation(LinearLayout.VERTICAL); main.setTag("popup_main");
+        float r = density * 10f; int bgCol = theme != null ? theme.specialKey : 0xFF374151, sCol = theme != null ? theme.keyBorder : 0, sW = Math.round(0.9f * density * 1.5f);
 
         for (int rIdx = 0; rIdx < rows.size(); rIdx++) {
-            List<Integer> itemIndices = rows.get(rIdx);
-            LinearLayout row = new LinearLayout(context);
-            row.setOrientation(LinearLayout.HORIZONTAL);
-            row.setGravity(Gravity.CENTER_VERTICAL);
-            row.setTag("popup_row_" + rIdx);
-
-            GradientDrawable rowBg = new GradientDrawable();
-            rowBg.setColor(bgColor);
-            if (theme != null) rowBg.setStroke(strokeW, strokeColor);
-
-            float[] radii = new float[8];
-            if (rIdx == 0) { radii[0] = radii[1] = radii[2] = radii[3] = r; }
-            if (rIdx == rows.size() - 1) { radii[4] = radii[5] = radii[6] = radii[7] = r; }
-            rowBg.setCornerRadii(radii);
-            row.setBackground(rowBg);
+            List<Integer> ids = rows.get(rIdx); LinearLayout row = new LinearLayout(context);
+            row.setOrientation(LinearLayout.HORIZONTAL); row.setGravity(Gravity.CENTER_VERTICAL); row.setTag("popup_row_" + rIdx);
+            GradientDrawable rb = new GradientDrawable(); rb.setColor(bgCol); if (theme != null) rb.setStroke(sW, sCol);
+            float[] rad = new float[8]; if (rIdx == 0) rad[0] = rad[1] = rad[2] = rad[3] = r; if (rIdx == rows.size() - 1) rad[4] = rad[5] = rad[6] = rad[7] = r;
+            rb.setCornerRadii(rad); row.setBackground(rb);
 
             int rowW = 0;
-            for (int i : itemIndices) {
-                TextView tv = new TextView(context);
-                tv.setText(opts.get(i));
-                tv.setTextSize(textSp);
-                tv.setTextColor(theme != null ? theme.keyText : Color.WHITE);
-                tv.setGravity(Gravity.CENTER);
-                tv.setSingleLine(true);
-                tv.setLayoutParams(new LinearLayout.LayoutParams(itemWidths[i], itemH));
-                tv.setTag(i);
-                row.addView(tv);
-                rowW += itemWidths[i];
+            for (int i : ids) {
+                TextView tv = new TextView(context); tv.setText(opts.get(i)); tv.setTextSize(textSp);
+                tv.setTextColor(theme != null ? theme.keyText : Color.WHITE); tv.setGravity(Gravity.CENTER); tv.setSingleLine(true);
+                tv.setLayoutParams(new LinearLayout.LayoutParams(w[i], itemH)); tv.setTag(i); row.addView(tv); rowW += w[i];
             }
             LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(rowW, itemH);
             if (rIdx > 0) rowLp.topMargin = (int)(-1 * density);
-            mainContainer.addView(row, rowLp);
+            main.addView(row, rowLp);
         }
-        return mainContainer;
+        return main;
     }
 }
