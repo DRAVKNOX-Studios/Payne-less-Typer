@@ -42,6 +42,7 @@ Payne-less-Typer
 │   │       │               │   ├── EmojiSkinToneHelper.java
 │   │       │               │   └── SkinTonePopupManager.java
 │   │       │               ├── ime
+│   │       │               │   ├── AdaptiveHeight.java
 │   │       │               │   ├── BaseKeyCanvas.java
 │   │       │               │   ├── ClipboardMonitor.java
 │   │       │               │   ├── ClipboardPanelView.java
@@ -62,10 +63,13 @@ Payne-less-Typer
 │   │       │               │   ├── KeyPreviewManager.java
 │   │       │               │   ├── KeysCanvas.java
 │   │       │               │   ├── KeyVibrator.java
+│   │       │               │   ├── LayoutAdjuster.java
+│   │       │               │   ├── LayoutController.java
 │   │       │               │   ├── NumbersCanvas.java
 │   │       │               │   ├── PanelManager.java
 │   │       │               │   ├── PopupViewFactory.java
 │   │       │               │   ├── PrivacyHandler.java
+│   │       │               │   ├── ResizeOverlay.java
 │   │       │               │   ├── RichContentHandler.java
 │   │       │               │   ├── SpecialFeatureHandler.java
 │   │       │               │   ├── SuggestionBarView.java
