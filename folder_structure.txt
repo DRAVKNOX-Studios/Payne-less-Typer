@@ -127,6 +127,7 @@ Payne-less-Typer
 ├── build.gradle
 ├── CODE_DOCS.md
 ├── CONTRIBUTING.md
+├── folder_structure.txt
 ├── gradle.properties
 ├── gradlew
 ├── gradlew.bat
