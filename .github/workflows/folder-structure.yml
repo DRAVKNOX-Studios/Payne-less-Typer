@@ -1,0 +1,44 @@
+name: Generate Folder Structure
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  generate-tree:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Generate folder structure
+        run: |
+          cd tools
+          python gen_tree.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add folder_structure.txt
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "docs: update folder structure"
+            git push
+          fi
