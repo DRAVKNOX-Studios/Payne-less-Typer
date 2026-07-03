@@ -122,7 +122,6 @@ Payne-less-Typer
 │   ├── Setup.png
 │   └── Typing.png
 ├── tools
-│   ├── dict_sep.py
 │   ├── gen_tree.py
 │   └── sync_emojis.py
 ├── build.gradle
