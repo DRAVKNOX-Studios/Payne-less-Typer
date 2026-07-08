@@ -146,7 +146,7 @@ public class KeyPopupManager {
     }
 
     private void updateHighlight(View child, KeyboardTheme theme, int accent, float r, float inset, int rowCount, int rIdx, int i, int rowLen) {
-        int itemIdx = (Integer) child.getTag();
+        int itemIdx = getOriginalTag(child);
         if (itemIdx == mPopupHighlight) {
             boolean isFirst = (i == 0), isLast = (i == rowLen - 1);
             float tl = (rIdx == 0 && isFirst) ? r : 0f, tr = (rIdx == 0 && isLast) ? r : 0f;
@@ -173,13 +173,13 @@ public class KeyPopupManager {
         if (main == null) main = mPopup.findViewWithTag("popup_row");
         if (main == null) return -1;
 
-        float localY = wy - mPopupY, localX = wx - mPopupX;
-        if (localY < 0) return -1;
+        int[] loc = new int[2]; main.getLocationInWindow(loc);
+        float localX = wx - loc[0], localY = wy - loc[1];
         
         for (int rIdx = 0; rIdx < main.getChildCount(); rIdx++) {
             View v = main.getChildAt(rIdx);
             if (v instanceof LinearLayout) {
-                if (localY >= v.getTop() && localY <= v.getBottom()) {
+                if (localY >= v.getTop() && localY <= v.getBottom() + (rIdx == main.getChildCount() - 1 ? 40 * mDensity : 0)) {
                     LinearLayout row = (LinearLayout) v;
                     for (int i = 0; i < row.getChildCount(); i++) {
                         View c = row.getChildAt(i);

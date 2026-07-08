@@ -66,7 +66,12 @@ public class InputLogicHandler {
         EditorInfo info = mIME.getCurrentInputEditorInfo();
         if (PrivacyHandler.isUriField(info) || PrivacyHandler.isEmailField(info) || PrivacyHandler.isSearchField(info) || PrivacyHandler.isNumericField(info)) return;
         CharSequence before = ic.getTextBeforeCursor(2, 0);
-        if (before != null && before.length() >= 2 && (Character.isLetterOrDigit(before.charAt(0)) || before.charAt(0) == '\'' || before.charAt(0) == '\"')) ic.commitText(" ", 1);
+        if (before != null && before.length() >= 2) {
+            char prev = before.charAt(0);
+            char punc = before.charAt(1);
+            if (punc == '.' && Character.isDigit(prev)) return;
+            if (Character.isLetterOrDigit(prev) || prev == '\'' || prev == '\"') ic.commitText(" ", 1);
+        }
     }
 
     public void handleSpace(InputConnection ic, boolean shiftOn, boolean capsLock) {
@@ -136,7 +141,18 @@ public class InputLogicHandler {
         CharSequence before = ic.getTextBeforeCursor(50, 0);
         boolean cap = false;
         if (TextUtils.isEmpty(before)) { cap = true; }
-        else { String s = before.toString().trim(); if (s.isEmpty()) cap = true; else { char last = s.charAt(s.length() - 1); cap = (last == '.' || last == '!' || last == '?'); } }
+        else {
+            String s = before.toString().trim();
+            if (s.isEmpty()) cap = true;
+            else {
+                char last = s.charAt(s.length() - 1);
+                cap = (last == '.' || last == '!' || last == '?');
+                if (cap && last == '.' && s.length() >= 2 && Character.isDigit(s.charAt(s.length() - 2))
+                        && before.length() > 0 && before.charAt(before.length() - 1) == '.') {
+                    cap = false;
+                }
+            }
+        }
         mIME.setShift(cap);
     }
 }
