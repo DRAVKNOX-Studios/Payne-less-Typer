@@ -166,8 +166,6 @@ This keyboard focuses on speed, simplicity, privacy, and low resource usage firs
 
 The application can be built directly from source using Gradle.
 
-Developer maintenance tools in `tools/` are optional and are not required for normal application builds.
-
 ### Requirements
 
 - Java 21+
@@ -231,30 +229,7 @@ The `tools/` directory is not required to build, run, or package Payne-less: Typ
 
 These scripts are only used for project maintenance:
 
-- `build_dict.py` – rebuild dictionary data
-- `dict_join.py` / `dict_sep.py` – dictionary editing helpers
-- `priority_dedup.py` – dictionary cleanup
-- `sync_emojis.py` – update emoji metadata from Unicode
 - `gen_tree.py` – generate `folder_structure.txt`
-
-### Emoji Metadata
-
-The repository already contains:
-
-- `emoji_data.json`
-- `emoji_shortcodes.json`
-
-Normal builds do not require running `sync_emojis.py`.
-
-The sync tool is only used when updating emoji definitions from Unicode.
-
-### Dictionary Data
-
-The repository already contains the dictionary assets required for normal operation.
-
-Rebuilding the dictionary is optional and only required when modifying dictionary sources.
-
-The main dictionary config lives in `assets/engine_config.json` and `assets/predictions.json` if you want to tune suggestion behavior.
 
 ### CI Builds
 
