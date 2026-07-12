@@ -117,6 +117,7 @@ Payne-less-Typer
 ├── screenshots
 │   ├── Clipboard.png
 │   ├── Customize.jpg
+│   ├── Customize.png
 │   ├── Emoji.png
 │   ├── Numbers.png
 │   ├── Setup.png
