@@ -50,24 +50,24 @@ We spent a lot of time making sure this app doesn't hog your resources.
 
 * **Android Version:** Android 8.0 (Oreo/API 26).
 * **Google Services:** Nope.
-* **Internet Connection:** Nope. 
+* **Internet Connection:** Nope.
 * **Permissions:** Storage and External Media (optional, images in clipboard), Vibrate <sub><sub><sub>(can be used for your kinky stuff)</sub></sub></sub>
 * **RAM:** 1.0 GB
 * **DISK SPACE:** 50MB
-  
+
 * **Custom ROMs:** This keyboard was made entirely on a de-Googled Android 8.1 device. It should work on GrapheneOS, LineageOS, Stock Android (AOSP), and most custom ROMs<sup>*</sup>.<sup>**</sup>
-  
+
 <sub>* Test yourself</sub>
 <sub>** Suggestion quality partly depends on the Android system spell checker, which may behave differently if you've replaced or removed the default.</sub>
 ## Maximum Requirements:
 
 * **Android Version:** Android 16 (Baklava <sub><sub>
-Chocolava 🤤
-</sub></sub>, API 36)
+  Chocolava 🤤
+  </sub></sub>, API 36)
 
 ## Feast your eyes
 
-#### Shot on Android 8.1
+#### Shot on Android 15 Emulator
 
 <table>
 <tr>
@@ -89,7 +89,7 @@ Chocolava 🤤
 
 <tr>
 <td align="center">
-<img src="screenshots/Customize.jpg" width="180"><br>
+<img src="screenshots/Customize.png" width="180"><br>
 <b>Customization</b>
 </td>
 
